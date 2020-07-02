@@ -3,10 +3,10 @@ package client;
 /**
  * @author LvHao
  * @Description :
- * @date 2020-07-02 11:36
+ * @date 2020-07-02 12:27
  */
-public class Hello {
+public class Test {
     public static void main(String[] args) {
-        System.out.println("start!");
+        //测试GUI
     }
 }
