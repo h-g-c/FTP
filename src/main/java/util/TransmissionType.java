@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
  * @author yinchao
  * @date 2020/7/2 10:41
  */
+
 public enum TransmissionType {
     // 主动
     PASSIVE,
