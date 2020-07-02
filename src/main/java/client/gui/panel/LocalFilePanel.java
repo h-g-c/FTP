@@ -25,8 +25,8 @@ public class LocalFilePanel extends JPanel {
         setLayout(new GridBagLayout());
 
         JLabel jLabel = new JLabel("本地文件",JLabel.CENTER);
-        JButton jButton1 = new JButton("上传");
-        JButton jButton2 = new JButton("刷新");
+        JButton jButton1 = new JButton(" 上传 ");
+        JButton jButton2 = new JButton("   刷新  ");
         JTextField jTextField = new JTextField("C:\\",10);
         jTextField.setEditable(false);
         JComboBox jComboBox = new JComboBox();
