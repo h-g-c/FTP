@@ -2,11 +2,11 @@ package client;
 
 /**
  * @author LvHao
- * @Description hello
- * @date 2020-07-02 11:30
+ * @Description :
+ * @date 2020-07-02 11:36
  */
 public class Hello {
     public static void main(String[] args) {
-        System.out.println("begin");
+        System.out.println("start!");
     }
 }
