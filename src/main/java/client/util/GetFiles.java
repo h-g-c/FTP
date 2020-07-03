@@ -17,6 +17,8 @@ import java.util.Date;
  */
 public class GetFiles {
 
+    private static File[] files = null;
+    private static String[][] datas = null;
     /**
      * 获取文件或文件夹的大小
      * 这里用的递归 文件过大速度很慢
@@ -48,8 +50,8 @@ public class GetFiles {
      */
     public static String[][] getFiles(JComboBox jComboBox) {
         File file = (File) jComboBox.getSelectedItem();
-        File[] files = file.listFiles();
-        String[][] datas = new String[files.length][3];
+        files = file.listFiles();
+        datas = new String[files.length][3];
         for(int i = 0; i < files.length; i++){
             datas[i][0] = files[i].getName();
             datas[i][1] = fileSize(getTotalSizeOfFilesInDir(files[i]));
@@ -67,7 +69,7 @@ public class GetFiles {
         try{
             File file = new File(fileName);
             File[] files = file.listFiles();
-            String[][] datas = new String[files.length][3];
+            datas = new String[files.length][3];
             for(int i = 0; i < files.length; i++){
                 datas[i][0] = files[i].getName();
                 datas[i][1] = fileSize(getTotalSizeOfFilesInDir(files[i]));
