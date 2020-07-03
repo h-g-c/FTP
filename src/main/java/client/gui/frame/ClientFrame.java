@@ -22,6 +22,7 @@ public class ClientFrame extends JFrame {
      */
     public ClientFrame(){
         initLClient();
+        this.setDefaultCloseOperation(2);
     }
 
     /**
