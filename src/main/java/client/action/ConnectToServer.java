@@ -2,14 +2,17 @@ package client.action;
 
 import client.gui.frame.ClientFrame;
 import client.gui.panel.DefaultInfoPanel;
-import client.socket.passive.ConnectServer;
+import client.socket.initiative.ConnectServer;
 import client.util.IPUtil;
+import lombok.SneakyThrows;
 import util.Protocol;
 import util.TransmissionType;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 
 /**
  * @author LvHao
@@ -40,6 +43,7 @@ public class ConnectToServer implements ActionListener {
         }
     }
 
+    @SneakyThrows
     @Override
     public void actionPerformed(ActionEvent e) {
         Protocol protocol = new Protocol();
@@ -51,12 +55,19 @@ public class ConnectToServer implements ActionListener {
         protocol.setDataPort(port);
         protocol.setCommandPort(null);
 
-        ConnectServer connectServer = new ConnectServer(protocol);
-        clientFrame.setSocket(connectServer.createSocket());
+        if(type.equals("PASSIVE")){
+            ConnectServer connectServer = new ConnectServer(protocol);
+            clientFrame.setSocket(connectServer.createSocket());
+            Socket socket = clientFrame.getSocket();
+            if(socket.isConnected()){
+                ObjectOutputStream os = new ObjectOutputStream(socket.getOutputStream());
+                os.writeObject(protocol);
+                socket.getOutputStream().flush();
+            }
+        }else{
+            //TO DO something
+        }
         if(clientFrame.getSocket().isConnected()){
-            connectServer.test();
-            System.out.println("!!!");
-
             defaultInfoPanel.remove(jButton);
             defaultInfoPanel.add(jLabel);
             defaultInfoPanel.updateUI();

@@ -60,18 +60,20 @@ public class Server {
             // TODO Auto-generated constructor stub
             this.ss = ss;
             // socket的输出流（该流为字节流）
-            OutputStream out;
-            try {
-                out = ss.getOutputStream();
-                String msg = "服务器说你好\n";
-                out.write(msg.getBytes());
-                // 将流和socket关掉，不关掉客户端在未接受到消息的时候会断开连接
-                out.close();
-                ss.close();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+//            OutputStream out;
+//            try {
+//                out = ss.getOutputStream();
+//                String msg = "服务器说你好\n";
+//                out.write(msg.getBytes());
+//                // 将流和socket关掉，不关掉客户端在未接受到消息的时候会断开连接
+//                out.close();
+//                ss.close();
+//            } catch (IOException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            }
+            AcceptTest acceptTest = new AcceptTest(ss);
+            new Thread(acceptTest).start();
         }
     }
 }

@@ -20,15 +20,15 @@ import java.net.SocketAddress;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ClientSocket {
+public class SocketUtil {
     Protocol protocol;
 
-    public Socket createSocket(){
-        Socket socket = null;
+    public java.net.Socket createSocket(){
+        java.net.Socket socket = null;
         try{
             System.out.println(protocol.getTargetIp());
             System.out.println(protocol.getDataPort());
-            socket = new Socket();
+            socket = new java.net.Socket();
             SocketAddress socketAddress = new InetSocketAddress(protocol.getTargetIp(),protocol.getDataPort());
             socket.connect(socketAddress,100);
             socket.setSoTimeout(50);

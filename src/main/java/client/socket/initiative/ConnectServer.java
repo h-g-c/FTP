@@ -1,17 +1,12 @@
-package client.socket.passive;
+package client.socket.initiative;
 
-import client.socket.ClientSocket;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import client.socket.SocketUtil;
 import util.Protocol;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.Socket;
 import java.net.UnknownHostException;
 
 /**
@@ -19,13 +14,13 @@ import java.net.UnknownHostException;
  * @Description :
  * @date 2020-07-03 10:59
  */
-public class ConnectServer extends ClientSocket{
+public class ConnectServer extends SocketUtil {
     public ConnectServer(Protocol protocol){
         super(protocol);
     }
 
     public void test(){
-        Socket s = null;
+        java.net.Socket s = null;
         try {
             // 客户机连接服务端的IP地址和端口号
             s = this.createSocket();
