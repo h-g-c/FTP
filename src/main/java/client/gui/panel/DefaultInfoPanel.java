@@ -31,12 +31,15 @@ public class DefaultInfoPanel extends JPanel {
         JLabel j2 = new JLabel("用户名：");
         JLabel j3 = new JLabel("密码：");
         JLabel j4 = new JLabel("端口：");
+        JComboBox jComboBox = new JComboBox();
+        jComboBox.addItem("主动模式");
+        jComboBox.addItem("被动模式");
 
-        JTextField jt1 = new JTextField(ip, 20);
+        JTextField jt1 = new JTextField(ip, 16);
         JTextField jt2 = new JTextField(name, 15);
         JTextField jt3 = new JTextField(port, 10);
 
-        JPasswordField jPasswordField = new JPasswordField(password,15);
+        JPasswordField jPasswordField = new JPasswordField(password,10);
         JButton jButton = new JButton("连接");
 
         setLayout(new FlowLayout());
@@ -48,6 +51,7 @@ public class DefaultInfoPanel extends JPanel {
         add(jPasswordField);
         add(j4);
         add(jt3);
+        add(jComboBox);
         add(jButton);
     }
 }
