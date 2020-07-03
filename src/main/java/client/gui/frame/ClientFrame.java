@@ -24,6 +24,7 @@ public class ClientFrame extends JFrame {
      */
     public ClientFrame(){
         initLClient();
+        this.setDefaultCloseOperation(2);
     }
 
     public void setSocket(Socket socket){

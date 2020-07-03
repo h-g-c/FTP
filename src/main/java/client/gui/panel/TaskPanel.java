@@ -17,7 +17,7 @@ public class TaskPanel extends JTabbedPane {
     }
 
     private void init(){
-        String[][] datas = null;
+        String[][] datas = null;//表放的信息
         DefaultTableModel model1=new DefaultTableModel(datas, tableInfo);
         JTable jTable1 = new LocalFileTable(model1);
         DefaultTableModel model2=new DefaultTableModel(datas, tableInfo);

@@ -1,5 +1,7 @@
 package client.action;
 
+import client.gui.panel.NewClientPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,13 +19,13 @@ public class NewConnector implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JDialog jDialog = new JDialog();
+        JDialog jDialog = new NewClientPanel();
         jDialog.setTitle("新建连接");
-        jDialog.add(new JButton("asdasdsa"));
+        jDialog.setSize(600,800);
         /**
          * 窗口阻塞
          */
-        jDialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+
         jDialog.setSize(X,Y);
         jDialog.setLocationRelativeTo(null);
         jDialog.setVisible(true);
