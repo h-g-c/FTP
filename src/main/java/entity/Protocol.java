@@ -1,4 +1,4 @@
-package util;
+package entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +26,7 @@ public class Protocol implements Serializable {
     // 传输信息
     String message;
     // 命令端口号
-    Integer CommandPort;
+    Integer commandPort;
     // 数据传输端口号
-    Integer DataPort;
+    Integer dataPort;
 }
