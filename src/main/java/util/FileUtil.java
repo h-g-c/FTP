@@ -15,15 +15,15 @@ import java.util.Calendar;
 public class FileUtil {
 
 
-    public static ArrayList<FileCol> getFileList(String filePath)
+    public static ArrayList<FileModel> getFileList(String filePath)
     {
-        ArrayList<FileCol> list= new ArrayList<FileCol>();
+        ArrayList<FileModel> list= new ArrayList<FileModel>();
         File fatherFile=new File(filePath);
         System.out.println(fatherFile.getAbsolutePath());
         File[] fileList=fatherFile.listFiles();
         for(File kidFile:fileList)
         {
-            FileCol fileCol = FileCol.builder().fileName(kidFile.getName())
+            FileModel fileCol = FileModel.builder().fileName(kidFile.getName())
                 .filePath(kidFile.getAbsolutePath())
                 .changeTime(getChangeTime(kidFile))
                 .build();
@@ -52,12 +52,6 @@ public class FileUtil {
     }
 
 
-    public static void main(String[] args) {
-        ArrayList<FileCol> list=FileUtil.getFileList("/home/heguicai");
-        for(FileCol file:list)
-        {
-            System.out.println(file.toString());
-        }
-    }
+
 }
 

@@ -18,9 +18,9 @@ import java.io.Serializable;
 @Builder
 public class Protocol implements Serializable {
     // 目标ip
-    String targetIp;
+    String serviceIp;
     // 发送方ip
-    String sourceIp;
+    String clientIp;
     // 传输类型
     TransmissionType transmissionType;
     // 传输信息

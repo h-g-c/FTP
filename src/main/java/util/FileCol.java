@@ -6,25 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @类名 FileCol
- * @描述 用于传输文件结构
+ * @类名 Filecol
+ * @描述 用于客户端请求文件的通信
  * @作者 heguicai
- * @创建日期 2020/7/3 上午11:32
+ * @创建日期 2020/7/3 下午3:51
  **/
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class FileCol {
-    //文件名
-    String fileName;
-    //文件路径
-    String filePath;
-    //文件大小
-    String fileSize;
-    //修改时间
-    String changeTime;
-    //文件类型
-    String fileType;
-
+int operationType;
+String filePath;
 }

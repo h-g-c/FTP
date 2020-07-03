@@ -1,6 +1,11 @@
 package server;
 
+import lombok.Data;
+
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Logger;
@@ -13,26 +18,30 @@ import java.util.logging.Logger;
  * @创建日期 2020/7/2 下午3:26
  **/
 public class Port {
-    //命令端口
-    ServerSocket commandPort;
-    private static Logger logger = Logger.getLogger(String.valueOf(Port.class));
+    static Socket dataPort;
 
-    public Port () throws IOException {
-        commandPort=new ServerSocket(21);
+    /**
+     *
+     * @param address
+     * @param port
+     * @return
+     * @throws IOException
+     * 主动模式获取数据传输借口
+     */
+    public static Socket getDataPort(String address, String port) throws IOException {
+        dataPort = new Socket(address, Integer.parseInt(port));
+        return dataPort;
     }
 
-    public ServerSocket getCommandPort() {
-        return commandPort;
-    }
-
-    public static void main(String[] args) throws IOException {
-        Port service=new Port();
-        while (true)
-        {
-            Socket client=service.getCommandPort().accept();
-            logger.info("ip:"+client.getInetAddress()+"连接成功");
-            ConnectClient connectClient=new ConnectClient(client);
-        }
-
+    /**
+     *
+     * @param socket
+     * @return
+     * @throws IOException
+     * 获取主动模式数据传接口的getDataOutputStream
+     */
+    public static DataOutputStream getDataOutputStream(Socket socket) throws IOException {
+        DataOutputStream das=new DataOutputStream(socket.getOutputStream());
+        return  das;
     }
 }
