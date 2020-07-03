@@ -7,7 +7,7 @@ import java.net.Socket;
 
 /**
  * @author LvHao
- * @Description : 命令传输的实现
+ * @Description : 命令发送的实现
  * @date 2020-07-03 16:05
  */
 public class SendCommand{

@@ -1,5 +1,6 @@
 package client.socket.initiative;
 
+import client.thread.socket.ReceiveInfo;
 import client.thread.socket.SendCommand;
 import client.gui.frame.ClientFrame;
 import client.socket.SocketUtil;
@@ -15,5 +16,6 @@ public class ConnectServer extends SocketUtil {
         super(protocol);
         clientFrame.setSocket(this.createSocket());
         SendCommand.sendCommend(protocol,clientFrame.getSocket());
+        new Thread(new ReceiveInfo(clientFrame.getSocket())).start();
     }
 }

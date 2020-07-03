@@ -1,7 +1,6 @@
 package server;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -56,9 +55,13 @@ public class Server {
     class ClientServer {
         Socket ss;
 
-        public ClientServer(Socket ss) {
+        public ClientServer(Socket ss) throws IOException {
             // TODO Auto-generated constructor stub
             this.ss = ss;
+
+            PrintWriter printer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(ss.getOutputStream(), "utf-8")), true);
+            printer.println("as");
+
             // socket的输出流（该流为字节流）
 //            OutputStream out;
 //            try {

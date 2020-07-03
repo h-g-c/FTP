@@ -14,14 +14,18 @@ public class ReceiveInfo implements Runnable{
 
     private Socket socket;
 
+    public ReceiveInfo(Socket socket){
+        this.socket = socket;
+    }
+
     @Override
     public void run() {
         BufferedReader sr = null;
         try{
             sr = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            String command = null;
-            while((command = sr.readLine()) != null){
-                //TO DO something
+            String line;
+            while ((line=sr.readLine())!=null) {
+                System.out.println(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
