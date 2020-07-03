@@ -21,6 +21,7 @@ public class NewClientPanel extends JDialog{
     public NewClientPanel(){init();}
     private void init(){
         this.setDefaultCloseOperation(2);
+        setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
         JLabel j1 = new JLabel("主机地址:");
         JLabel j2 = new JLabel("用户名：");
         JLabel j3 = new JLabel("密码：");
