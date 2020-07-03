@@ -7,6 +7,7 @@ import client.gui.panel.TopPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.Socket;
 
 /**
  * @author LvHao
@@ -14,6 +15,7 @@ import java.awt.*;
  * @date 2020-07-03 1:48
  */
 public class ClientFrame extends JFrame {
+    public Socket socket = null;
     private final int WEIGHT = 1000;
     private final int HEIGHT = 720;
     private final ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("FTP图标.jpg"));
@@ -22,6 +24,14 @@ public class ClientFrame extends JFrame {
      */
     public ClientFrame(){
         initLClient();
+    }
+
+    public void setSocket(Socket socket){
+        this.socket = socket;
+    }
+
+    public Socket getSocket(){
+        return this.socket;
     }
 
     /**
@@ -50,7 +60,8 @@ public class ClientFrame extends JFrame {
         g1.gridwidth = 1;
         g1.gridheight = 1;
         g1.fill = GridBagConstraints.BOTH;
-        JPanel jPanel1 = new TopPanel();
+        DefaultInfoPanel jPanel2 = new DefaultInfoPanel(this);
+        JPanel jPanel1 = new TopPanel(this,jPanel2);
         add(jPanel1,g1);
 
         /**
@@ -62,7 +73,6 @@ public class ClientFrame extends JFrame {
         g1.gridwidth = 1;
         g1.gridheight = 1;
         g4.fill = GridBagConstraints.BOTH;
-        JPanel jPanel2 = new DefaultInfoPanel();
         add(jPanel2,g4);
 
         /**

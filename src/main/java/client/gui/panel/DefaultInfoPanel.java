@@ -1,7 +1,11 @@
 package client.gui.panel;
 
+import client.action.ConnectToServer;
+import client.gui.frame.ClientFrame;
+
 import javax.swing.*;
 import java.awt.*;
+import java.net.Socket;
 
 /**
  * @author LvHao
@@ -15,8 +19,22 @@ public class DefaultInfoPanel extends JPanel {
     private final String password = "123456";
     private final String port = "20";
 
-    public DefaultInfoPanel(){
-        init();
+    private JButton jButton = new JButton("连接");
+    private JLabel jLabel = new JLabel("已连接!");
+
+    public JButton getJButton(){
+        return jButton;
+    }
+    public JLabel getJLabel(){
+        return jLabel;
+    }
+
+    public DefaultInfoPanel getThis(){
+        return this;
+    }
+
+    public DefaultInfoPanel(ClientFrame clientFrame){
+        init(clientFrame);
     }
 
     /**
@@ -26,7 +44,7 @@ public class DefaultInfoPanel extends JPanel {
      * 密码：123456
      * 端口：20
      */
-    private void init(){
+    private void init(ClientFrame clientFrame){
         JLabel j1 = new JLabel("主机地址:");
         JLabel j2 = new JLabel("用户名：");
         JLabel j3 = new JLabel("密码：");
@@ -40,7 +58,6 @@ public class DefaultInfoPanel extends JPanel {
         JTextField jt3 = new JTextField(port, 10);
 
         JPasswordField jPasswordField = new JPasswordField(password,10);
-        JButton jButton = new JButton("连接");
 
         setLayout(new FlowLayout());
         add(j1);
@@ -53,6 +70,8 @@ public class DefaultInfoPanel extends JPanel {
         add(jt3);
         add(jComboBox);
         add(jButton);
+
+        jButton.addActionListener(new ConnectToServer(jt1,jt3,jComboBox,this,clientFrame));
     }
 }
 

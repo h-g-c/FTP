@@ -1,9 +1,12 @@
 package client.gui.panel;
 
 import client.action.NewConnector;
+import client.action.StopConnect;
+import client.gui.frame.ClientFrame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.Socket;
 
 /**
  * @author LvHao
@@ -11,17 +14,18 @@ import java.awt.*;
  * @date 2020-07-03 1:50
  */
 public class TopPanel extends JPanel {
-    public TopPanel(){
-        init();
+    public TopPanel(ClientFrame clientFrame,DefaultInfoPanel jPanel){
+        init(clientFrame,jPanel);
     }
 
-    private void init(){
+    private void init(ClientFrame clientFrame,DefaultInfoPanel jPanel){
         /**
          * 设置最上面的那两个按钮
          */
         JButton jButton1 = new JButton("新建连接");
         jButton1.addActionListener(new NewConnector());
         JButton jButton2 = new JButton("断开连接");
+        jButton2.addActionListener(new StopConnect(clientFrame,jPanel));
 
         //设置布局方式
         setLayout(new GridBagLayout());
