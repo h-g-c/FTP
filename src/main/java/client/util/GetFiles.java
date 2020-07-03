@@ -16,6 +16,14 @@ import java.util.Date;
  * @date 2020-07-03 2:02
  */
 public class GetFiles {
+
+    /**
+     * 获取文件或文件夹的大小
+     * 这里用的递归 文件过大速度很慢
+     * 需要后续优化
+     * @param file 需要计算的文件或文件夹大小
+     * @return
+     */
     private static long getTotalSizeOfFilesInDir(final File file) {
         if (file.isFile()) {
             return file.length();
@@ -33,6 +41,11 @@ public class GetFiles {
         return total;
     }
 
+    /**
+     * 返回文件信息的二维数组
+     * @param jComboBox 得到下拉列表是那个磁盘
+     * @return
+     */
     public static String[][] getFiles(JComboBox jComboBox) {
         File file = (File) jComboBox.getSelectedItem();
         File[] files = file.listFiles();
@@ -44,6 +57,12 @@ public class GetFiles {
         }
         return datas;
     }
+
+    /**
+     * 通过文件路径获取
+     * @param fileName
+     * @return
+     */
     public static String[][] getFiles(String fileName) {
         try{
             File file = new File(fileName);
