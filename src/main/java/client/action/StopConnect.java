@@ -21,19 +21,26 @@ public class StopConnect implements ActionListener {
     private JButton jButton;
     private JLabel jLabel;
     private ClientFrame clientFrame;
+    private JComboBox jComboBox;
     public StopConnect(ClientFrame clientFrame, DefaultInfoPanel defaultInfoPanel){
         this.defaultInfoPanel = defaultInfoPanel;
         this.jButton = defaultInfoPanel.getJButton();
         this.jLabel = defaultInfoPanel.getJLabel();
         this.clientFrame = clientFrame;
+        this.jComboBox = defaultInfoPanel.getJComboBox();
     }
 
 
     @SneakyThrows
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(clientFrame.getSocket() != null && !clientFrame.getSocket().isClosed()){
+        if((clientFrame.getSocket() != null && !clientFrame.getSocket().isClosed())){
             clientFrame.getSocket().close();
+            jComboBox.setEnabled(true);
+            defaultInfoPanel.getJt1().setEditable(true);
+            defaultInfoPanel.getJt2().setEditable(true);
+            defaultInfoPanel.getJt3().setEditable(true);
+            defaultInfoPanel.getjPasswordField().setEditable(true);
             defaultInfoPanel.remove(jLabel);
             defaultInfoPanel.add(jButton);
             defaultInfoPanel.updateUI();

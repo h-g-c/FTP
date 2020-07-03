@@ -11,8 +11,6 @@ import util.TransmissionType;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 
 /**
  * @author LvHao
@@ -20,57 +18,51 @@ import java.net.Socket;
  * @date 2020-07-03 11:16
  */
 public class ConnectToServer implements ActionListener {
-
-    private String ip;
-    private int port;
     private TransmissionType type;
     private DefaultInfoPanel defaultInfoPanel;
     private JButton jButton;
     private JLabel jLabel;
     private ClientFrame clientFrame;
-    public ConnectToServer(JTextField j1, JTextField j2, JComboBox jComboBox,DefaultInfoPanel defaultInfoPanel,ClientFrame clientFrame){
-        this.ip = j1.getText();
-        this.port = Integer.parseInt(j2.getText());
+    private JComboBox jComboBox;
+    public ConnectToServer(JComboBox jComboBox,DefaultInfoPanel defaultInfoPanel,ClientFrame clientFrame){
         this.defaultInfoPanel = defaultInfoPanel;
         this.jButton = defaultInfoPanel.getJButton();
         this.jLabel = defaultInfoPanel.getJLabel();
         this.clientFrame = clientFrame;
-
-        if(jComboBox.getSelectedItem().equals("主动模式")){
-            this.type = TransmissionType.PASSIVE;
-        }else{
-            this.type = TransmissionType.INITIATIVE;
-        }
+        this.jComboBox = jComboBox;
     }
 
     @SneakyThrows
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(jComboBox.getSelectedItem().equals("主动模式")){
+            type = TransmissionType.INITIATIVE;
+        }else{
+            type = TransmissionType.PASSIVE;
+        }
         Protocol protocol = new Protocol();
-        protocol.setTargetIp(ip);
-        System.out.println(ip);
+        protocol.setTargetIp(defaultInfoPanel.getJt1().getText());
         protocol.setSourceIp(IPUtil.getLocalIP());
         protocol.setTransmissionType(type);
         protocol.setMessage("adssadasd");
-        protocol.setDataPort(port);
+        protocol.setDataPort(Integer.valueOf(defaultInfoPanel.getJt3().getText()));
         protocol.setCommandPort(null);
 
-        if(type.equals("PASSIVE")){
-            ConnectServer connectServer = new ConnectServer(protocol);
-            clientFrame.setSocket(connectServer.createSocket());
-            Socket socket = clientFrame.getSocket();
-            if(socket.isConnected()){
-                ObjectOutputStream os = new ObjectOutputStream(socket.getOutputStream());
-                os.writeObject(protocol);
-                socket.getOutputStream().flush();
+        if(type.name().equals("INITIATIVE")){
+            new ConnectServer(protocol,clientFrame);
+            if(clientFrame.getSocket() != null && clientFrame.getSocket().isConnected()){
+                jComboBox.setEnabled(false);
+                defaultInfoPanel.getJt1().setEditable(false);
+                defaultInfoPanel.getJt2().setEditable(false);
+                defaultInfoPanel.getJt3().setEditable(false);
+                defaultInfoPanel.getjPasswordField().setEditable(false);
+                defaultInfoPanel.remove(jButton);
+                defaultInfoPanel.add(jLabel);
+                defaultInfoPanel.updateUI();
             }
         }else{
             //TO DO something
-        }
-        if(clientFrame.getSocket().isConnected()){
-            defaultInfoPanel.remove(jButton);
-            defaultInfoPanel.add(jLabel);
-            defaultInfoPanel.updateUI();
+
         }
     }
 }

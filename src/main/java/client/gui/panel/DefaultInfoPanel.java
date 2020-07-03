@@ -5,7 +5,6 @@ import client.gui.frame.ClientFrame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.Socket;
 
 /**
  * @author LvHao
@@ -17,16 +16,39 @@ public class DefaultInfoPanel extends JPanel {
     private final String ip = "127.0.0.1";
     private final String name = "root";
     private final String password = "123456";
+
+    public JPasswordField getjPasswordField() {
+        return jPasswordField;
+    }
+
+    public JTextField getJt2() {
+        return jt2;
+    }
+
     private final String port = "20";
 
+    private JTextField jt1 = new JTextField(ip, 16);
+    private JTextField jt2 = new JTextField(name, 15);
+    private JTextField jt3 = new JTextField(port, 10);
     private JButton jButton = new JButton("连接");
-    private JLabel jLabel = new JLabel("已连接!");
+    private JLabel jLabel = new JLabel(" 已连接!");
+    private JComboBox jComboBox = new JComboBox();
+    private JPasswordField jPasswordField = new JPasswordField(password,10);
 
     public JButton getJButton(){
         return jButton;
     }
     public JLabel getJLabel(){
         return jLabel;
+    }
+    public JComboBox getJComboBox(){
+        return jComboBox;
+    }
+    public JTextField getJt1(){
+        return jt1;
+    }
+    public JTextField getJt3(){
+        return jt3;
     }
 
     public DefaultInfoPanel getThis(){
@@ -49,15 +71,8 @@ public class DefaultInfoPanel extends JPanel {
         JLabel j2 = new JLabel("用户名：");
         JLabel j3 = new JLabel("密码：");
         JLabel j4 = new JLabel("端口：");
-        JComboBox jComboBox = new JComboBox();
         jComboBox.addItem("主动模式");
         jComboBox.addItem("被动模式");
-
-        JTextField jt1 = new JTextField(ip, 16);
-        JTextField jt2 = new JTextField(name, 15);
-        JTextField jt3 = new JTextField(port, 10);
-
-        JPasswordField jPasswordField = new JPasswordField(password,10);
 
         setLayout(new FlowLayout());
         add(j1);
@@ -71,7 +86,7 @@ public class DefaultInfoPanel extends JPanel {
         add(jComboBox);
         add(jButton);
 
-        jButton.addActionListener(new ConnectToServer(jt1,jt3,jComboBox,this,clientFrame));
+        jButton.addActionListener(new ConnectToServer(jComboBox,this,clientFrame));
     }
 }
 

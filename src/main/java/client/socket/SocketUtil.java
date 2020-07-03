@@ -6,9 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import util.Protocol;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.net.Socket;
 import java.net.SocketAddress;
 
 /**
@@ -21,19 +22,31 @@ import java.net.SocketAddress;
 @NoArgsConstructor
 @Builder
 public class SocketUtil {
+
+    private final int X = 300;
+    private final int Y = 200;
+
     Protocol protocol;
 
     public java.net.Socket createSocket(){
         java.net.Socket socket = null;
         try{
-            System.out.println(protocol.getTargetIp());
-            System.out.println(protocol.getDataPort());
             socket = new java.net.Socket();
             SocketAddress socketAddress = new InetSocketAddress(protocol.getTargetIp(),protocol.getDataPort());
             socket.connect(socketAddress,100);
             socket.setSoTimeout(50);
         } catch (IOException e) {
-            e.printStackTrace();
+            socket = null;
+            JDialog jDialog = new JDialog();
+            jDialog.setTitle("提示");
+            jDialog.add(new JLabel("连接失败！"));
+            /**
+             * 窗口阻塞
+             */
+            jDialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+            jDialog.setSize(X,Y);
+            jDialog.setLocationRelativeTo(null);
+            jDialog.setVisible(true);
         }
         return socket;
     }
