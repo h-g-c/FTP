@@ -27,6 +27,7 @@ public class MouseClickedTwiceListener extends MouseAdapter {
     private static  boolean flag = false;
     private static int clickNum = 1;
     private String[] tableInfo = {"文件名","大小","日期"};
+    private String systemFlag = File.separator;
 
     @NonNull
     private LocalFilePanel localFilePanel;
@@ -83,7 +84,7 @@ public class MouseClickedTwiceListener extends MouseAdapter {
             String[][] datas = GetFiles.getFiles(fileName);
             model = new DefaultTableModel(datas,tableInfo);
             localFilePanel.getJTable().setModel(model);
-            localFilePanel.getJTextField().setText(fileName+"\\");
+            localFilePanel.getJTextField().setText(fileName+systemFlag);
         }
     }
 }
