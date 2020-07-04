@@ -12,6 +12,7 @@ import util.FileUtil;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -40,17 +41,16 @@ public class ServerCommandHandler implements Runnable {
         }
         try (InputStream socketInputStream = commandSocket.getInputStream(); DataInputStream dataInputStream = new DataInputStream(socketInputStream); OutputStream socketOutputStream = commandSocket.getOutputStream(); ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(); ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream); ObjectInputStream objectInputStream = new ObjectInputStream(socketInputStream);) {
             // 读入协议信息
-            Protocol protocolFromSocket = (Protocol) objectInputStream.readObject();
-            // 如果是被动模式
-            if (ConnectType.PASSIVE.equals(protocolFromSocket.getConnectType())) {
-                mode = new PassiveMode();
-                // 主动模式
-            } else {
-                mode = new InitiativeMode();
-            }
             while (true) {
                 // 读入协议信息
-                protocolFromSocket = (Protocol) objectInputStream.readObject();
+               Protocol protocolFromSocket = (Protocol) objectInputStream.readObject();
+                // 如果是被动模式
+                if (ConnectType.PASSIVE.equals(protocolFromSocket.getConnectType())) {
+                    mode = new PassiveMode();
+                    // 主动模式
+                } else {
+                    mode = new InitiativeMode();
+                }
                 switch (protocolFromSocket.getOperateType()) {
                     case PAUSE: {
 
@@ -61,9 +61,16 @@ public class ServerCommandHandler implements Runnable {
                         break;
                     }
                     case DOWNLOAD: {
+                        Socket dataSocket=mode.getDataSocket(protocolFromSocket.getClientIp(),protocolFromSocket.getDataPort());
+                        mode.download(protocolFromSocket,objectOutputStream,new DataOutputStream(dataSocket.getOutputStream()));
                         break;
                     }
                     case FILE_PATH: {
+                        FileModel fileModel=(FileModel)protocolFromSocket.getData();
+                         Protocol sendProtocal = new Protocol();
+                        sendProtocal.setData( mode.getFileList(fileModel.getFilePath()));
+                        objectOutputStream.writeObject(sendProtocal);
+                        objectOutputStream.flush();
                         break;
                     }
                     case UPLOAD: {
