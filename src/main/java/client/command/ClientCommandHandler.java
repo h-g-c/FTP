@@ -3,12 +3,14 @@ package client.command;
 import client.gui.ClientFrame;
 import client.gui.panel.ServerFilePanel;
 import client.socket.CreatServer;
+import entity.FileModel;
 import entity.Protocol;
 import lombok.*;
 
 import javax.swing.table.DefaultTableModel;
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * @author LvHao
@@ -34,10 +36,6 @@ public class ClientCommandHandler implements Runnable{
     public void run() {
         Socket socket = clientFrame.socket;
         while (true){
-            String[][] def = {
-                    {"Asdasd","Adsadas","Asdas"},
-                    {"asdasd","asdasd","asdsad"}
-            };
             if(socket.isConnected()){
                 serverFilePanel = clientFrame.getJPanel3().getJPanel2();
                 model = serverFilePanel.getModel();
@@ -53,12 +51,20 @@ public class ClientCommandHandler implements Runnable{
 
                     //如果是主动模式
                     if(protocolFromSocket.getData() != null){
-
+                        int i = 0;
+                        ArrayList<FileModel> fileList=(ArrayList<FileModel>) protocolFromSocket.getData();
+                        String[][] data = null;
+                        for(FileModel f:fileList){
+                            data[i++][0]=f.getFileName();
+                            data[i++][1]=f.getFileSize();
+                            data[i++][2]=f.getChangeTime();
+                        }
+                        i=0;
                         //接下来判断命令的具体动作
                         new Thread(new CreatServer(protocolFromSocket,socket)).start();
                         //TODO something
                         model.setRowCount(0);
-                        model = new DefaultTableModel(def,tableInfo);
+                        model = new DefaultTableModel(data,tableInfo);
                         serverFilePanel.getJTable().setModel(model);
                         serverFilePanel.getJTextField().setText("asdsa");
                     }
