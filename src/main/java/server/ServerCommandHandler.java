@@ -1,6 +1,5 @@
 package server;
 
-import configuration_and_constant.ThreadPool;
 import entity.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,9 +7,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.*;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * 服务端处理命令输入的线程
@@ -30,13 +31,12 @@ public class ServerCommandHandler implements Runnable {
 
     @Override
     public void run() {
-        ThreadPoolExecutor threadPool = ThreadPool.getThreadPool();
         log.info("InputHandler is running...");
         if (commandSocket == null) {
             log.error("socket未建立");
             return;
         }
-        try (InputStream socketInputStream = commandSocket.getInputStream(); DataInputStream dataInputStream = new DataInputStream(socketInputStream); OutputStream socketOutputStream = commandSocket.getOutputStream(); ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(); ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream); ObjectInputStream objectInputStream = new ObjectInputStream(socketInputStream);) {
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(commandSocket.getOutputStream()); ObjectInputStream objectInputStream = new ObjectInputStream(commandSocket.getInputStream())) {
             // 读入协议信息
             Protocol protocolFromSocket = (Protocol) objectInputStream.readObject();
             // 如果是被动模式
@@ -47,21 +47,31 @@ public class ServerCommandHandler implements Runnable {
                 mode = new InitiativeMode();
             }
             while (true) {
-                // 读入协议信息
-                protocolFromSocket = (Protocol) objectInputStream.readObject();
                 switch (protocolFromSocket.getOperateType()) {
-                    case PAUSE:
-                    case FILE_PATH:
-                    case DOWNLOAD:
-                    case UPLOAD: {
-
+                    case PAUSE: {
+                        mode.pause();
                         break;
                     }
                     case CONNECT: {
-                        mode.initialization(objectOutputStream,protocolFromSocket);
+                        mode.initialization(objectOutputStream, protocolFromSocket);
+                        break;
+                    }
+                    case DOWNLOAD: {
+                        Socket dataSocket = mode.getDataSocket(protocolFromSocket.getClientIp(), protocolFromSocket.getDataPort());
+                        mode.download(protocolFromSocket, objectOutputStream, new DataOutputStream(dataSocket.getOutputStream()));
+                        break;
+                    }
+                    case FILE_PATH: {
+                        mode.getFileList((String) protocolFromSocket.getData());
+                        break;
+                    }
+                    case UPLOAD: {
+                        mode.upload();
                         break;
                     }
                 }
+                // 读入协议信息
+                protocolFromSocket = (Protocol) objectInputStream.readObject();
             }
         } catch (IOException e) {
             log.error(e.getMessage());
