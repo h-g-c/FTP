@@ -1,9 +1,7 @@
 package server;
 
 import configuration_and_constant.ThreadPool;
-import entity.FileEnum;
-import entity.Protocol;
-import entity.TransmissionType;
+import entity.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import util.CommonUtil;
 import util.FileUtil;
-import util.GenerateDataSocket;
 
 import java.io.*;
 import java.net.Socket;
@@ -31,50 +28,51 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class ServerCommandHandler implements Runnable {
     Socket commandSocket;
     Socket dataTransportSocket;
+    Mode mode;
 
     @Override
     public void run() {
         ThreadPoolExecutor threadPool = ThreadPool.getThreadPool();
-        while (true) {
-            log.info("InputHandler is running...");
-            if (commandSocket == null) {
-                log.error("socket未建立");
-                return;
+        log.info("InputHandler is running...");
+        if (commandSocket == null) {
+            log.error("socket未建立");
+            return;
+        }
+        try (InputStream socketInputStream = commandSocket.getInputStream(); DataInputStream dataInputStream = new DataInputStream(socketInputStream); OutputStream socketOutputStream = commandSocket.getOutputStream(); ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(); ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream); ObjectInputStream objectInputStream = new ObjectInputStream(socketInputStream);) {
+            // 读入协议信息
+            Protocol protocolFromSocket = (Protocol) objectInputStream.readObject();
+            // 如果是被动模式
+            if (ConnectType.PASSIVE.equals(protocolFromSocket.getConnectType())) {
+                mode passiveMode = new PassiveMode();
+                // 主动模式
+            } else {
+                mode = new InitiativeMode();
             }
-            try (InputStream socketInputStream = commandSocket.getInputStream(); DataInputStream dataInputStream = new DataInputStream(socketInputStream); OutputStream socketOutputStream = commandSocket.getOutputStream(); ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(); ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream); ObjectInputStream objectInputStream = new ObjectInputStream(socketInputStream);) {
+            while (true) {
                 // 读入协议信息
                 Protocol protocolFromSocket = (Protocol) objectInputStream.readObject();
-                // 如果是被动模式
-                if (TransmissionType.PASSIVE.equals(protocolFromSocket.getTransmissionType())) {
-                    // 产生一个随机端口
-                    Integer port = CommonUtil.generateRandomPort();
-                    // 构造协议信息(server 数据端口号)
-                    Protocol sendProtocal = Protocol.builder().dataPort(port).transmissionType(TransmissionType.PASSIVE).build();
-                    objectOutputStream.writeObject(protocolFromSocket);
-                    objectOutputStream.flush();
-                    // 等待客户端建立 data 端口
-                    dataTransportSocket = GenerateDataSocket.inPassiveMode(port);
-                    // 发送文件列表
-                    sendProtocal = Protocol.builder().data(FileUtil.getFileList("/")).transmissionType(TransmissionType.PASSIVE).build();
-                    objectOutputStream.writeObject(sendProtocal);
-                    objectOutputStream.flush();
-                    // 主动模式
-                } else if (TransmissionType.INITIATIVE.equals(protocolFromSocket.getTransmissionType())) {
-                    // 开始下载
-                }else if(TransmissionType.DOWNLOAD.equals(protocolFromSocket.getTransmissionType())){
-                    if(FileUtil.judgeFileType(protocolFromSocket.getMessage()).equals(FileEnum.BINARY)) {
-                        SendFileByByte sendFileByByte = new SendFileByByte();
-                        // todo
-                    }else {
-                        threadPool.submit(new SendFileByLine(protocolFromSocket.getMessage()));
+                switch (protocolFromSocket.getOperateType()) {
+                    case PAUSE: {
+                        break;
+                    }
+                    case CONNECT: {
+                        break;
+                    }
+                    case DOWNLOAD: {
+                        break;
+                    }
+                    case FILE_PATH: {
+                        break;
+                    }
+                    case UPLOAD: {
+                        break;
                     }
                 }
-            } catch (IOException e) {
-                log.error(e.getMessage());
-                return ;
-            } catch (ClassNotFoundException e) {
-                log.error("反序列化失败");
             }
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            log.error("反序列化失败");
         }
     }
 }
