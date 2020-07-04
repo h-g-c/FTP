@@ -26,12 +26,14 @@ public class ExceptFileByByte {
         byte[] value = new byte[1024 * 8];
         while (true) {
             int length = dis.read(value);
-            if (length == -1)
+            if (length == -1) {
                 break;
+            }
             rad.write(value);
             size += length;
-            if (size == fileLength)
+            if (size == fileLength) {
                 break;
+            }
         }
         dis.close();
         rad.close();

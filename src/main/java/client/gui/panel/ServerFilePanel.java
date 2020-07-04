@@ -1,7 +1,11 @@
 package client.gui.panel;
 
+import client.gui.ClientFrame;
 import client.gui.MyGridBagConstraints;
 import client.gui.table.LocalFileTable;
+import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -12,6 +16,7 @@ import java.awt.*;
  * @Description : 远程文件的遍历
  * @date 2020-07-03 2:09
  */
+@Data
 public class ServerFilePanel extends JPanel {
 
     private JLabel jLabel;
@@ -20,8 +25,8 @@ public class ServerFilePanel extends JPanel {
     private JButton jButton3;
     private JTextField jTextField;
     private JScrollPane jScrollPane;
-    private String[][] data = null;
     private String[] tableInfo = {"文件名","大小","日期"};
+    private String[][] data;
 
     public ServerFilePanel(){
         init();
@@ -36,7 +41,7 @@ public class ServerFilePanel extends JPanel {
         jButton3 = new JButton("获取远程文件目录");
         jTextField = new JTextField("远程文件目录",10);
         jTextField.setEditable(false);
-        DefaultTableModel model=new DefaultTableModel(null, tableInfo);
+        DefaultTableModel model=new DefaultTableModel(data, tableInfo);
         JTable jTable = new LocalFileTable(model);
         jScrollPane = new JScrollPane(jTable);
 

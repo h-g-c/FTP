@@ -4,6 +4,7 @@ import client.gui.panel.CenterPanel;
 import client.gui.panel.DefaultInfoPanel;
 import client.gui.panel.TaskPanel;
 import client.gui.panel.TopPanel;
+import lombok.Data;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,8 +15,10 @@ import java.net.Socket;
  * @Description : 客户端窗口
  * @date 2020-07-03 1:48
  */
+@Data
 public class ClientFrame extends JFrame {
     public Socket socket = null;
+    private CenterPanel jPanel3;
     private final int WEIGHT = 1000;
     private final int HEIGHT = 720;
     private final ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("FTP图标.jpg"));
