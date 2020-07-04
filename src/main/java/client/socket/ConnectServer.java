@@ -4,7 +4,7 @@ import client.thread.socket.ReceiveInfo;
 import client.thread.socket.SendCommand;
 import client.gui.frame.ClientFrame;
 import client.socket.SocketUtil;
-import util.Protocol;
+import entity.Protocol;
 
 /**
  * @author LvHao

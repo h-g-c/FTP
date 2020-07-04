@@ -2,8 +2,8 @@ package client.thread.transmission;
 
 import client.thread.socket.SendCommand;
 import client.util.IPUtil;
+import entity.Protocol;
 import lombok.*;
-import util.Protocol;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -44,8 +44,8 @@ public class CreatServer {
         try {
             serverSocket = new ServerSocket(0);
             socketLocal = serverSocket.accept();
-            protocolLocal.setTargetIp(protocolServer.getTargetIp());
-            protocolLocal.setSourceIp(IPUtil.getLocalIP());
+            protocolLocal.setServiceIp(protocolServer.getServiceIp());
+            protocolLocal.setClientIp(IPUtil.getLocalIP());
             protocolLocal.setTransmissionType(protocolServer.getTransmissionType());
             protocolLocal.setMessage(null);
             protocolLocal.setDataPort(serverSocket.getLocalPort());

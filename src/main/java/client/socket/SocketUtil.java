@@ -1,10 +1,10 @@
 package client.socket;
 
+import entity.Protocol;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import util.Protocol;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,7 +32,7 @@ public class SocketUtil {
         java.net.Socket socket = null;
         try{
             socket = new java.net.Socket();
-            SocketAddress socketAddress = new InetSocketAddress(protocol.getTargetIp(),protocol.getDataPort());
+            SocketAddress socketAddress = new InetSocketAddress(protocol.getClientIp(),protocol.getDataPort());
             socket.connect(socketAddress,100000);
             socket.setSoTimeout(100000);
         } catch (IOException e) {

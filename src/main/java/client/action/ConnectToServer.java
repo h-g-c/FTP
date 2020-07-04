@@ -4,9 +4,9 @@ import client.gui.frame.ClientFrame;
 import client.gui.panel.DefaultInfoPanel;
 import client.socket.initiative.ConnectServer;
 import client.util.IPUtil;
+import entity.Protocol;
+import entity.TransmissionType;
 import lombok.*;
-import util.Protocol;
-import util.TransmissionType;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -40,8 +40,8 @@ public class ConnectToServer implements ActionListener {
             type = TransmissionType.PASSIVE;
         }
         Protocol protocol = new Protocol();
-        protocol.setTargetIp(defaultInfoPanel.getJt1().getText());
-        protocol.setSourceIp(IPUtil.getLocalIP());
+        protocol.setServiceIp(defaultInfoPanel.getJt1().getText());
+        protocol.setClientIp(IPUtil.getLocalIP());
         protocol.setTransmissionType(type);
         protocol.setMessage(null);
         protocol.setDataPort(Integer.valueOf(defaultInfoPanel.getJt3().getText()));

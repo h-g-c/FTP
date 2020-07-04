@@ -1,6 +1,6 @@
 package client.thread.socket;
 
-import util.Protocol;
+import entity.Protocol;
 
 import java.io.*;
 import java.net.Socket;
@@ -11,7 +11,7 @@ import java.net.Socket;
  * @date 2020-07-03 16:05
  */
 public class SendCommand{
-    public static void sendCommend(Protocol protocol,Socket socket){
+    public static void sendCommend(Protocol protocol, Socket socket){
         ObjectOutputStream os = null;
         try{
             if(socket != null && socket.isConnected()){
