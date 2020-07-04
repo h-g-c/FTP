@@ -24,7 +24,7 @@ public class SendFileByByte {
         das.writeLong(fileLength);
         das.flush();
         System.out.println("======== 开始传输文件 ========");
-        byte[] bytes = new byte[1024];
+        byte[] bytes = new byte[1];
         int length = 0;
         long sendTotal=point;
         fileInputStream.skip(point);

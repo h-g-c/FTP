@@ -1,5 +1,7 @@
 package util;
 
+import entity.FileModel;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,7 +37,7 @@ public class FileUtil {
             }
             else {
                 fileCol.setFileType("1");
-                fileCol.setFileSize("0");
+                fileCol.setFileSize(String.valueOf(kidFile.length()));
             }
             list.add(fileCol);
         }
@@ -51,7 +53,13 @@ public class FileUtil {
         return time;
     }
 
-
+//    public static void main(String[] args) {
+//        ArrayList<FileModel> list=FileUtil.getFileList("/home");
+//        for(FileModel fileModel:list)
+//        {
+//            System.out.println(fileModel.toString());
+//        }
+//    }
 
 }
 
