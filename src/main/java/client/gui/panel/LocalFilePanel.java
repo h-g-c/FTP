@@ -4,8 +4,10 @@ import client.gui.action.Flush;
 import client.gui.action.LocalFileChange;
 import client.gui.action.MouseClickedTwiceListener;
 import client.gui.MyGridBagConstraints;
+import client.gui.action.Return;
 import client.gui.table.LocalFileTable;
 import client.util.GetFiles;
+import client.util.OSinfo;
 import lombok.Data;
 
 import javax.swing.*;
@@ -22,14 +24,16 @@ import java.io.File;
 public class LocalFilePanel extends JPanel {
 
     private JLabel jLabel = new JLabel("本地文件",JLabel.CENTER);
-    private JButton jButton1 = new JButton(" 上传 ");
+    private JButton jButton1 = new JButton("上传");
     private JButton jButton2 = new JButton("删除");
-    private JButton jButton3 = new JButton("   刷新  ");
+    private JButton jButton3 = new JButton("返回");
+    private JButton jButton4 = new JButton("刷新");
     private JTextField jTextField = new JTextField(" ",10);
     private JComboBox jComboBox;
     private JTable jTable;
     private final String[] tableInfo = {"文件名","大小","日期"};
     private String[][] data = null;
+    private File[] roots = null;
 
     public LocalFilePanel(){
         init();
@@ -39,11 +43,20 @@ public class LocalFilePanel extends JPanel {
         setLayout(new GridBagLayout());
 
         jTextField.setEditable(false);
+
+        //判断系统是window还是linux
+        //如果是windows则列出所有的盘符
+        //如果是linux则列出‘/’下的所谓文件
         jComboBox = new JComboBox();
-        File[] roots = File.listRoots();
+        if(OSinfo.getOS() == OSinfo.OS.LINUX){
+            roots = new File("/").listFiles();
+        }else{
+            roots = File.listRoots();
+        }
         for(int i = 0;i < roots.length;i++){
             jComboBox.addItem(roots[i]);
         }
+
         jTextField.setText(String.valueOf(jComboBox.getSelectedItem()));
         data = GetFiles.getFiles(jComboBox);
         DefaultTableModel model=new DefaultTableModel(data, tableInfo);
@@ -51,7 +64,8 @@ public class LocalFilePanel extends JPanel {
         jTable.addMouseListener(new MouseClickedTwiceListener(this,model));
         JScrollPane jScrollPane = new JScrollPane(jTable);
         jComboBox.addItemListener(new LocalFileChange(this,model));
-        jButton3.addActionListener(new Flush(this,model));
+        jButton3.addActionListener(new Return(this,model));
+        jButton4.addActionListener(new Flush(this,model));
 
         JPanel jPanel = new JPanel();
         jPanel.setLayout(new GridBagLayout());
@@ -59,7 +73,8 @@ public class LocalFilePanel extends JPanel {
         jPanel.add(jButton1,new MyGridBagConstraints(0,0,1,1).init2());
         jPanel.add(jButton2,new MyGridBagConstraints(1,0,1,1).init2());
         jPanel.add(jButton3,new MyGridBagConstraints(2,0,1,1).init2());
-        jPanel.add(jComboBox,new MyGridBagConstraints(3,0,1,1).init2());
+        jPanel.add(jButton4,new MyGridBagConstraints(3,0,1,1).init2());
+        jPanel.add(jComboBox,new MyGridBagConstraints(4,0,1,1).init2());
 
         add(jLabel,new MyGridBagConstraints(0,0,1,1).init1());
 
