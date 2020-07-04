@@ -48,8 +48,7 @@ public class CreatServer implements Runnable{
                 protocolLocal = new Protocol();
                 protocolLocal.setServiceIp(protocolServer.getServiceIp());
                 protocolLocal.setClientIp(IPUtil.getLocalIP());
-                protocolLocal.setTransmissionType(protocolServer.getTransmissionType());
-                protocolLocal.setMessage(null);
+                protocolLocal.setConnectType(protocolServer.getConnectType());
                 protocolLocal.setDataPort(serverSocket.getLocalPort());
                 protocolLocal.setCommandPort(null);
                 SendCommand.sendCommend(protocolLocal,socketServer);

@@ -7,8 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import util.CommonUtil;
-import util.FileUtil;
 
 import java.io.*;
 import java.net.Socket;
@@ -48,31 +46,18 @@ public class ServerCommandHandler implements Runnable {
             } else {
                 mode = new InitiativeMode();
             }
-<<<<<<< HEAD
-            try (InputStream socketInputStream = commandSocket.getInputStream();
-                 DataInputStream dataInputStream = new DataInputStream(socketInputStream);
-                 OutputStream socketOutputStream = commandSocket.getOutputStream();
-                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-                 ObjectInputStream objectInputStream = new ObjectInputStream(socketInputStream);) {
-=======
             while (true) {
->>>>>>> 0f13a44d317179e5d9c2e20b85465ad36683a756
                 // 读入协议信息
                 protocolFromSocket = (Protocol) objectInputStream.readObject();
                 switch (protocolFromSocket.getOperateType()) {
-                    case PAUSE: {
+                    case PAUSE:
+                    case DOWNLOAD:
+                    case FILE_PATH: {
 
                         break;
                     }
                     case CONNECT: {
                         mode.initialization(objectOutputStream,protocolFromSocket);
-                        break;
-                    }
-                    case DOWNLOAD: {
-                        break;
-                    }
-                    case FILE_PATH: {
                         break;
                     }
                     case UPLOAD: {

@@ -15,9 +15,6 @@ public enum OperateType {
     // 暂停
     PAUSE,
     // 查看文件
-<<<<<<< HEAD:src/main/java/entity/TransmissionType.java
     INITIALIZATION,
-=======
     FILE_PATH
->>>>>>> 0f13a44d317179e5d9c2e20b85465ad36683a756:src/main/java/entity/OperateType.java
 }

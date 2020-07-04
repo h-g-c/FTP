@@ -1,6 +1,6 @@
 package client.thread.transmission;
 
-import client.thread.socket.SendCommand;
+import client.command.SendCommand;
 import client.util.IPUtil;
 import entity.Protocol;
 import lombok.*;

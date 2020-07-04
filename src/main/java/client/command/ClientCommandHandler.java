@@ -4,7 +4,6 @@ import client.gui.ClientFrame;
 import client.gui.panel.ServerFilePanel;
 import client.socket.CreatServer;
 import entity.Protocol;
-import entity.TransmissionType;
 import lombok.*;
 
 import javax.swing.table.DefaultTableModel;
@@ -53,7 +52,7 @@ public class ClientCommandHandler implements Runnable{
                     Protocol protocolFromSocket = (Protocol) objectInputStream.readObject();
 
                     //如果是主动模式
-                    if(TransmissionType.INITIATIVE.equals(protocolFromSocket.getTransmissionType())){
+                    if(true){
 
                         //接下来判断命令的具体动作
                         new Thread(new CreatServer(protocolFromSocket,socket)).start();

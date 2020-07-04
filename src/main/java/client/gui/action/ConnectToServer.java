@@ -2,15 +2,10 @@ package client.gui.action;
 
 import client.gui.ClientFrame;
 import client.gui.panel.DefaultInfoPanel;
-<<<<<<< HEAD:src/main/java/client/gui/action/ConnectToServer.java
 import client.socket.ConnectServer;
-=======
-import client.socket.initiative.ConnectServer;
 import client.util.IPUtil;
 import entity.ConnectType;
->>>>>>> 0f13a44d317179e5d9c2e20b85465ad36683a756:src/main/java/client/action/ConnectToServer.java
 import entity.Protocol;
-import entity.OperateType;
 import lombok.*;
 
 import javax.swing.*;
@@ -40,26 +35,17 @@ public class ConnectToServer implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(jComboBox.getSelectedItem().equals("主动模式")){
-<<<<<<< HEAD:src/main/java/client/gui/action/ConnectToServer.java
-            type = TransmissionType.INITIALIZATION;
-=======
             type = ConnectType.INITIATIVE;
->>>>>>> 0f13a44d317179e5d9c2e20b85465ad36683a756:src/main/java/client/action/ConnectToServer.java
         }else{
             type = ConnectType.PASSIVE;
         }
         Protocol protocol = new Protocol();
         protocol.setServiceIp(defaultInfoPanel.getJt1().getText());
-<<<<<<< HEAD:src/main/java/client/gui/action/ConnectToServer.java
-        protocol.setTransmissionType(type);
         protocol.setCommandPort(Integer.valueOf(defaultInfoPanel.getJt3().getText()));
-=======
         protocol.setClientIp(IPUtil.getLocalIP());
         protocol.setConnectType(type);
         protocol.setData(null);
         protocol.setDataPort(Integer.valueOf(defaultInfoPanel.getJt3().getText()));
-        protocol.setCommandPort(null);
->>>>>>> 0f13a44d317179e5d9c2e20b85465ad36683a756:src/main/java/client/action/ConnectToServer.java
 
         if(jComboBox.getSelectedItem().equals("主动模式")){
             new ConnectServer(protocol,clientFrame);
