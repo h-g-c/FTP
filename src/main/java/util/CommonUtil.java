@@ -52,10 +52,8 @@ public class CommonUtil {
     }
 
     public static Integer generateRandomPort(){
+        // fixme: 重复端口处理
         return new Random().nextInt(8976)+1024;
     }
 
-    public static Protocol readProtocolFromSocket(ObjectInputStream objectInputStream) throws IOException,ClassNotFoundException {
-        return (Protocol)objectInputStream.readObject();
-    }
 }
