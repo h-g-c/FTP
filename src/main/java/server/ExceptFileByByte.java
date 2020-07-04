@@ -15,7 +15,7 @@ public class ExceptFileByByte {
 
     public static void breakPoint(DataInputStream dis, DataOutputStream dos,String fileName) throws IOException {
         long fileLength = dis.readLong();
-        File file = new File(fileName + ".temp");
+        File file = new File("/home/heguicai/下载/"+fileName + ".temp");
         RandomAccessFile rad = new RandomAccessFile("/home/heguicai/下载/" + fileName + ".temp", "rw");
         long size = 0;
         if (file.exists() && file.isFile()) {
