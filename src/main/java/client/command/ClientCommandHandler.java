@@ -3,7 +3,9 @@ package client.command;
 import client.gui.ClientFrame;
 import client.gui.panel.ServerFilePanel;
 import client.socket.CreatServer;
+import entity.ConnectType;
 import entity.FileModel;
+import entity.OperateType;
 import entity.Protocol;
 import lombok.*;
 
@@ -32,20 +34,20 @@ public class ClientCommandHandler implements Runnable{
     private ServerFilePanel serverFilePanel;
     private DefaultTableModel model;
 
+    @SneakyThrows
     @Override
     public void run() {
         Socket socket = clientFrame.socket;
         while (true){
             if(socket.isConnected()){
                 serverFilePanel = clientFrame.getJPanel3().getJPanel2();
-                model = serverFilePanel.getModel();
-                try(InputStream socketInputStream = socket.getInputStream();
+                    model = serverFilePanel.getModel();
+                    InputStream socketInputStream = socket.getInputStream();
                     DataInputStream dataInputStream = new DataInputStream(socketInputStream);
                     OutputStream socketOutputStream = socket.getOutputStream();
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-                    ObjectInputStream objectInputStream = new ObjectInputStream(socketInputStream)){
-
+                    ObjectInputStream objectInputStream = new ObjectInputStream(socketInputStream);
                     //读入服务端命令的协议
                     Protocol protocolFromSocket = (Protocol) objectInputStream.readObject();
 
@@ -53,25 +55,23 @@ public class ClientCommandHandler implements Runnable{
                     if(protocolFromSocket.getData() != null){
                         int i = 0;
                         ArrayList<FileModel> fileList=(ArrayList<FileModel>) protocolFromSocket.getData();
-                        String[][] data = null;
+                        String[][] data =new String[fileList.size()][3];
                         for(FileModel f:fileList){
-                            data[i++][0]=f.getFileName();
-                            data[i++][1]=f.getFileSize();
+                            data[i][0]=f.getFileName();
+                            data[i][1]=f.getFileSize();
                             data[i++][2]=f.getChangeTime();
                         }
                         i=0;
                         //接下来判断命令的具体动作
-                        new Thread(new CreatServer(protocolFromSocket,socket)).start();
+//                        new Thread(new CreatServer(protocolFromSocket,socket)).start();
                         //TODO something
                         model.setRowCount(0);
                         model = new DefaultTableModel(data,tableInfo);
                         serverFilePanel.getJTable().setModel(model);
                         serverFilePanel.getJTextField().setText("asdsa");
                     }
-                } catch (IOException | ClassNotFoundException e) {
-                    e.printStackTrace();
                 }
             }
         }
     }
-}
+

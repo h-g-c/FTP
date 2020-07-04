@@ -2,12 +2,17 @@ package client.socket;
 
 import client.command.SendCommand;
 import client.util.IPUtil;
+import configuration_and_constant.Constant;
 import entity.ConnectType;
+import entity.FileModel;
 import entity.OperateType;
 import entity.Protocol;
 import lombok.*;
 
+import java.io.DataInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -41,6 +46,7 @@ public class CreatServer implements Runnable{
      */
     private Socket socketServer;
 
+    private final String defPath = "D:\\下载";
     @Override
     public void run() {
         ServerSocket serverSocket = null;
@@ -54,7 +60,38 @@ public class CreatServer implements Runnable{
                 SendCommand.sendCommend(protocolLocal,socketServer);
                 socketLocal = serverSocket.accept();
 
-                //TODO accept files
+                FileModel fileModel=(FileModel) protocolLocal.getData();
+                DataInputStream dis=new DataInputStream(socketLocal.getInputStream());
+                long fileLength = dis.readLong();
+                File file = new File(defPath+fileModel.getFileName()+ ".temp");
+                RandomAccessFile rad = new RandomAccessFile(defPath + fileModel.getFileName() + ".temp", "rw");
+                long size = 0;
+                if (file.exists() && file.isFile()) {
+                    size = file.length();
+                }
+                //从之前的断点的地方进行传输；
+                rad.seek(size);
+                byte[] value = new byte[1024 * 8];
+                while (true) {
+                    int length = dis.read(value);
+                    if (length == -1) {
+                        break;
+                    }
+                    rad.write(value);
+                    size += length;
+                    if (size == fileLength) {
+                        break;
+                    }
+                }
+                dis.close();
+                rad.close();
+                //文件重命名
+                if (size >= fileLength) {
+                    file.renameTo(new File(Constant.DEFAULT_FILE_PATH + "/" + fileModel.getFileName()));
+                }
+                dis.close();
+                rad.close();
+
 
                 socketLocal.close();
             } catch (IOException e) {

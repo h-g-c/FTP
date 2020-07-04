@@ -5,6 +5,7 @@ import client.gui.panel.DefaultInfoPanel;
 import client.socket.ConnectServer;
 import client.util.IPUtil;
 import entity.ConnectType;
+import entity.OperateType;
 import entity.Protocol;
 import lombok.*;
 
@@ -43,6 +44,7 @@ public class ConnectToServer implements ActionListener {
         protocol.setServiceIp(defaultInfoPanel.getJt1().getText());
         protocol.setCommandPort(Integer.valueOf(defaultInfoPanel.getJt3().getText()));
         protocol.setClientIp(IPUtil.getLocalIP());
+        protocol.setOperateType(OperateType.CONNECT);
         protocol.setConnectType(type);
         protocol.setData(null);
         protocol.setDataPort(Integer.valueOf(defaultInfoPanel.getJt3().getText()));

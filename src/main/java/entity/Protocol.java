@@ -31,4 +31,5 @@ public class Protocol implements Serializable {
     Integer dataPort;
     //数据
     Object data;
+
 }

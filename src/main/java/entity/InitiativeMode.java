@@ -21,7 +21,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class InitiativeMode extends Mode {
     @Override
     public void initialization(ObjectOutputStream objectOutputStream, Protocol protocolFromSocket) throws IOException {
-        Port.getDataPort(protocolFromSocket.getClientIp(), protocolFromSocket.getDataPort());
         ArrayList<FileModel> fileList = FileUtil.getFileList(Constant.DEFAULT_FILE_PATH);
         Protocol sendProtocal = new Protocol();
         sendProtocal.setData(fileList);

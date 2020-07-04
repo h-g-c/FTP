@@ -1,12 +1,14 @@
 package entity;
 
+import java.io.Serializable;
+
 /**
  * 类型
  *
  * @author yinchao
  * @date 2020/7/2 10:41
  */
-public enum OperateType {
+public enum OperateType implements Serializable {
     CONNECT,
     // 上传
     UPLOAD,

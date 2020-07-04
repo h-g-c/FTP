@@ -7,10 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 
 /**
@@ -36,8 +33,9 @@ public class ServerCommandHandler implements Runnable {
             log.error("socket未建立");
             return;
         }
-        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(commandSocket.getOutputStream()); ObjectInputStream objectInputStream = new ObjectInputStream(commandSocket.getInputStream())) {
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(commandSocket.getOutputStream()); ObjectInputStream objectInputStream = new ObjectInputStream(new BufferedInputStream(commandSocket.getInputStream()))) {
             // 读入协议信息
+
             Protocol protocolFromSocket = (Protocol) objectInputStream.readObject();
             // 如果是被动模式
             if (ConnectType.PASSIVE.equals(protocolFromSocket.getConnectType())) {
@@ -47,6 +45,7 @@ public class ServerCommandHandler implements Runnable {
                 mode = new InitiativeMode();
             }
             while (true) {
+                log.info(protocolFromSocket.toString());
                 switch (protocolFromSocket.getOperateType()) {
                     case PAUSE: {
                         mode.pause();
