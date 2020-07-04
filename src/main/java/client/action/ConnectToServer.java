@@ -4,7 +4,7 @@ import client.gui.frame.ClientFrame;
 import client.gui.panel.DefaultInfoPanel;
 import client.socket.initiative.ConnectServer;
 import client.util.IPUtil;
-import lombok.SneakyThrows;
+import lombok.*;
 import util.Protocol;
 import util.TransmissionType;
 
@@ -14,23 +14,22 @@ import java.awt.event.ActionListener;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 对连接按钮的事件监听 区分主动模式和被动模式
  * @date 2020-07-03 11:16
  */
+@Data
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Builder
 public class ConnectToServer implements ActionListener {
     private TransmissionType type;
-    private DefaultInfoPanel defaultInfoPanel;
-    private JButton jButton;
-    private JLabel jLabel;
-    private ClientFrame clientFrame;
+
+    @NonNull
     private JComboBox jComboBox;
-    public ConnectToServer(JComboBox jComboBox,DefaultInfoPanel defaultInfoPanel,ClientFrame clientFrame){
-        this.defaultInfoPanel = defaultInfoPanel;
-        this.jButton = defaultInfoPanel.getJButton();
-        this.jLabel = defaultInfoPanel.getJLabel();
-        this.clientFrame = clientFrame;
-        this.jComboBox = jComboBox;
-    }
+    @NonNull
+    private DefaultInfoPanel defaultInfoPanel;
+    @NonNull
+    private ClientFrame clientFrame;
 
     @SneakyThrows
     @Override
@@ -44,7 +43,7 @@ public class ConnectToServer implements ActionListener {
         protocol.setTargetIp(defaultInfoPanel.getJt1().getText());
         protocol.setSourceIp(IPUtil.getLocalIP());
         protocol.setTransmissionType(type);
-        protocol.setMessage("adssadasd");
+        protocol.setMessage(null);
         protocol.setDataPort(Integer.valueOf(defaultInfoPanel.getJt3().getText()));
         protocol.setCommandPort(null);
 
@@ -55,9 +54,9 @@ public class ConnectToServer implements ActionListener {
                 defaultInfoPanel.getJt1().setEditable(false);
                 defaultInfoPanel.getJt2().setEditable(false);
                 defaultInfoPanel.getJt3().setEditable(false);
-                defaultInfoPanel.getjPasswordField().setEditable(false);
-                defaultInfoPanel.remove(jButton);
-                defaultInfoPanel.add(jLabel);
+                defaultInfoPanel.getJPasswordField().setEditable(false);
+                defaultInfoPanel.remove(defaultInfoPanel.getJButton());
+                defaultInfoPanel.add(defaultInfoPanel.getJLabel());
                 defaultInfoPanel.updateUI();
             }
         }else{

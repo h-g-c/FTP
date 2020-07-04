@@ -7,4 +7,5 @@ package client.thread.transmission;
  * @date 2020-07-04 0:18
  */
 public class FileTask {
+    //TODO Something
 }

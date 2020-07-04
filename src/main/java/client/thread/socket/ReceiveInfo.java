@@ -24,7 +24,8 @@ public class ReceiveInfo implements Runnable{
         try{
             sr = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String line;
-            while ((line=sr.readLine())!=null) {
+            while (true) {
+                line = sr.readLine();
                 System.out.println(line);
             }
         } catch (IOException e) {

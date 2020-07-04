@@ -2,9 +2,10 @@ package client.gui.panel;
 
 import client.action.Flush;
 import client.action.LocalFileChange;
-import client.action.MouseClickedTiwceListener;
+import client.action.MouseClickedTwiceListener;
 import client.gui.table.LocalFileTable;
 import client.util.GetFiles;
+import lombok.Data;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -16,7 +17,18 @@ import java.io.File;
  * @Description : 本地文件遍历的实现
  * @date 2020-07-03 2:01
  */
+@Data
 public class LocalFilePanel extends JPanel {
+
+    private JLabel jLabel = new JLabel("本地文件",JLabel.CENTER);
+    private JButton jButton1 = new JButton(" 上传 ");
+    private JButton jButton2 = new JButton("   刷新  ");
+    private JTextField jTextField = new JTextField(" ",10);
+    private JComboBox jComboBox;
+    private JTable jTable;
+    private final String[] tableInfo = {"文件名","大小","日期"};
+    private String[][] data = null;
+
     public LocalFilePanel(){
         init();
     }
@@ -24,24 +36,20 @@ public class LocalFilePanel extends JPanel {
     private void init(){
         setLayout(new GridBagLayout());
 
-        JLabel jLabel = new JLabel("本地文件",JLabel.CENTER);
-        JButton jButton1 = new JButton(" 上传 ");
-        JButton jButton2 = new JButton("   刷新  ");
-        JTextField jTextField = new JTextField("C:\\",10);
         jTextField.setEditable(false);
-        JComboBox jComboBox = new JComboBox();
+        jComboBox = new JComboBox();
         File[] roots = File.listRoots();
         for(int i = 0;i < roots.length;i++){
             jComboBox.addItem(roots[i]);
         }
-        String[][] datas = GetFiles.getFiles(jComboBox);
-        String[] tableInfo = {"文件名","大小","日期"};
-        DefaultTableModel model=new DefaultTableModel(datas, tableInfo);
-        JTable jTable = new LocalFileTable(model);
-        jTable.addMouseListener(new MouseClickedTiwceListener(jTable,jTextField,model));
+        jTextField.setText(String.valueOf(jComboBox.getSelectedItem()));
+        data = GetFiles.getFiles(jComboBox);
+        DefaultTableModel model=new DefaultTableModel(data, tableInfo);
+        jTable = new LocalFileTable(model);
+        jTable.addMouseListener(new MouseClickedTwiceListener(this,model));
         JScrollPane jScrollPane = new JScrollPane(jTable);
-        jComboBox.addItemListener(new LocalFileChange(jComboBox,model,jTable,jTextField));
-        jButton2.addActionListener(new Flush(jTable,jTextField,model,jComboBox));
+        jComboBox.addItemListener(new LocalFileChange(this,model));
+        jButton2.addActionListener(new Flush(this,model));
 
         JPanel jPanel1 = new JPanel();
         jPanel1.setLayout(new GridBagLayout());

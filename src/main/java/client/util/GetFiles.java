@@ -29,18 +29,9 @@ public class GetFiles {
     private static long getTotalSizeOfFilesInDir(final File file) {
         if (file.isFile()) {
             return file.length();
+        }else {
+            return -1;
         }
-        final File[] children = file.listFiles();
-        long total = 0;
-        if (children != null) {
-            for (final File child : children) {
-                total += getTotalSizeOfFilesInDir(child);
-                if(total>1073741824*3){
-                    return -1;
-                }
-            }
-        }
-        return total;
     }
 
     /**
@@ -83,7 +74,7 @@ public class GetFiles {
     }
     private static String fileSize(long fileS) {// 转换文件大小
         if(fileS < 0){
-            return ">3G";
+            return "<DIR>";
         }else{
             DecimalFormat df = new DecimalFormat("#.000");
             String fileSizeString = "";

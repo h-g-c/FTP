@@ -12,15 +12,15 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TaskPanel extends JTabbedPane {
     private String[]  tableInfo = {"文件名","文件大小","传输状态"};
+    private String[][] data = null;
     public TaskPanel(){
         init();
     }
 
     private void init(){
-        String[][] datas = null;//表放的信息
-        DefaultTableModel model1=new DefaultTableModel(datas, tableInfo);
+        DefaultTableModel model1=new DefaultTableModel(data, tableInfo);
         JTable jTable1 = new LocalFileTable(model1);
-        DefaultTableModel model2=new DefaultTableModel(datas, tableInfo);
+        DefaultTableModel model2=new DefaultTableModel(data, tableInfo);
         JTable jTable2 = new LocalFileTable(model2);
         add("上传队列",new JScrollPane(jTable1));
         add("下载队列",new JScrollPane(jTable2));

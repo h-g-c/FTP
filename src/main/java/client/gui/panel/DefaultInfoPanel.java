@@ -2,30 +2,23 @@ package client.gui.panel;
 
 import client.action.ConnectToServer;
 import client.gui.frame.ClientFrame;
+import lombok.Data;
 
 import javax.swing.*;
 import java.awt.*;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 客户端初始的默认连接信息
  * @date 2020-07-03 1:54
  */
+@Data
 public class DefaultInfoPanel extends JPanel {
 
     private final String ip = "127.0.0.1";
     private final String name = "root";
     private final String password = "123456";
-
-    public JPasswordField getjPasswordField() {
-        return jPasswordField;
-    }
-
-    public JTextField getJt2() {
-        return jt2;
-    }
-
-    private final String port = "20";
+    private final String port = "21";
 
     private JTextField jt1 = new JTextField(ip, 16);
     private JTextField jt2 = new JTextField(name, 15);
@@ -35,25 +28,6 @@ public class DefaultInfoPanel extends JPanel {
     private JComboBox jComboBox = new JComboBox();
     private JPasswordField jPasswordField = new JPasswordField(password,10);
 
-    public JButton getJButton(){
-        return jButton;
-    }
-    public JLabel getJLabel(){
-        return jLabel;
-    }
-    public JComboBox getJComboBox(){
-        return jComboBox;
-    }
-    public JTextField getJt1(){
-        return jt1;
-    }
-    public JTextField getJt3(){
-        return jt3;
-    }
-
-    public DefaultInfoPanel getThis(){
-        return this;
-    }
 
     public DefaultInfoPanel(ClientFrame clientFrame){
         init(clientFrame);

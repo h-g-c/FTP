@@ -6,7 +6,6 @@ import client.gui.frame.ClientFrame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.net.Socket;
 
 /**
  * @author LvHao

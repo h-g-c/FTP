@@ -24,7 +24,7 @@ public class Server {
     public void initServer() {
         try {
             // 创建监听的端口号
-            ServerSocket s = new ServerSocket(20);
+            ServerSocket s = new ServerSocket(21);
             System.out.println("启动服务器.....");
             System.out.println("等待客户机进入.......");
             // 让server进入阻塞状态（等待客户机的进入），有客户机连接上此端口的server客户端就会返回一个socket对象，服务器进行接受
@@ -59,9 +59,12 @@ public class Server {
             // TODO Auto-generated constructor stub
             this.ss = ss;
 
-            PrintWriter printer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(ss.getOutputStream(), "utf-8")), true);
-            printer.println("as");
-
+            while (true){
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+                String s = bufferedReader.readLine();
+                PrintWriter printer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(ss.getOutputStream())), true);
+                printer.println(s);
+            }
             // socket的输出流（该流为字节流）
 //            OutputStream out;
 //            try {
@@ -75,8 +78,8 @@ public class Server {
 //                // TODO Auto-generated catch block
 //                e.printStackTrace();
 //            }
-            AcceptTest acceptTest = new AcceptTest(ss);
-            new Thread(acceptTest).start();
+//            AcceptTest acceptTest = new AcceptTest(ss);
+//            new Thread(acceptTest).start();
         }
     }
 }

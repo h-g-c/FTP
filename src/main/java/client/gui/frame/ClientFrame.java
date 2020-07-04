@@ -11,7 +11,7 @@ import java.net.Socket;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 客户端窗口
  * @date 2020-07-03 1:48
  */
 public class ClientFrame extends JFrame {

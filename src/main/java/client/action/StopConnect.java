@@ -2,6 +2,9 @@ package client.action;
 
 import client.gui.frame.ClientFrame;
 import client.gui.panel.DefaultInfoPanel;
+import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 
 import javax.swing.*;
@@ -14,21 +17,16 @@ import java.awt.event.ActionListener;
  * @Description : 关闭连接按钮的相关动作
  * @date 2020-07-03 12:11
  */
+@Data
+@RequiredArgsConstructor
 public class StopConnect implements ActionListener {
     private final int X = 300;
     private final int Y = 200;
-    private DefaultInfoPanel defaultInfoPanel;
-    private JButton jButton;
-    private JLabel jLabel;
+
+    @NonNull
     private ClientFrame clientFrame;
-    private JComboBox jComboBox;
-    public StopConnect(ClientFrame clientFrame, DefaultInfoPanel defaultInfoPanel){
-        this.defaultInfoPanel = defaultInfoPanel;
-        this.jButton = defaultInfoPanel.getJButton();
-        this.jLabel = defaultInfoPanel.getJLabel();
-        this.clientFrame = clientFrame;
-        this.jComboBox = defaultInfoPanel.getJComboBox();
-    }
+    @NonNull
+    private DefaultInfoPanel defaultInfoPanel;
 
 
     @SneakyThrows
@@ -36,13 +34,13 @@ public class StopConnect implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if((clientFrame.getSocket() != null && !clientFrame.getSocket().isClosed())){
             clientFrame.getSocket().close();
-            jComboBox.setEnabled(true);
+            defaultInfoPanel.getJComboBox().setEnabled(true);
             defaultInfoPanel.getJt1().setEditable(true);
             defaultInfoPanel.getJt2().setEditable(true);
             defaultInfoPanel.getJt3().setEditable(true);
-            defaultInfoPanel.getjPasswordField().setEditable(true);
-            defaultInfoPanel.remove(jLabel);
-            defaultInfoPanel.add(jButton);
+            defaultInfoPanel.getJPasswordField().setEditable(true);
+            defaultInfoPanel.remove(defaultInfoPanel.getJLabel());
+            defaultInfoPanel.add(defaultInfoPanel.getJButton());
             defaultInfoPanel.updateUI();
         }else {
             JDialog jDialog = new JDialog();
