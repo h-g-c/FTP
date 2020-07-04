@@ -9,6 +9,7 @@ import java.io.Serializable;
 
 /**
  * 客户端和服务端通信协议
+ *
  * @author yinchao
  * @date 2020/7/2 10:37
  */
@@ -29,4 +30,7 @@ public class Protocol implements Serializable {
     Integer commandPort;
     // 数据传输端口号
     Integer dataPort;
+
+    // 版本号
+//    Long SerializableId = -9093234891L;
 }

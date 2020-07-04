@@ -1,7 +1,15 @@
 package util;
 
+import entity.Protocol;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.util.Random;
+
 /**
  * 通用的工具类
+ *
  * @author yinchao
  * @date 2020/7/3 09:59
  */
@@ -20,6 +28,7 @@ public class CommonUtil {
 
     /**
      * byte 数组转化成 int
+     *
      * @param offset byte 数组开始下标
      */
     public static int byte4ToInt(byte[] bytes, int offset) {
@@ -30,15 +39,23 @@ public class CommonUtil {
         return (b0 << 24) | (b1 << 16) | (b2 << 8) | b3;
     }
 
-    public static byte[] ensureLength(byte[] data, int length){
-        if(data.length==length){
+    public static byte[] ensureLength(byte[] data, int length) {
+        if (data.length == length) {
             return data;
         }
         byte[] bytes = new byte[length];
-        int offset = length-1;
-        for(int i=data.length-1;i>=0;i--){
+        int offset = length - 1;
+        for (int i = data.length - 1; i >= 0; i--) {
             bytes[offset--] = data[i];
         }
         return bytes;
+    }
+
+    public static Integer generateRandomPort(){
+        return new Random().nextInt(8976)+1024;
+    }
+
+    public static Protocol readProtocolFromSocket(ObjectInputStream objectInputStream) throws IOException,ClassNotFoundException {
+        return (Protocol)objectInputStream.readObject();
     }
 }

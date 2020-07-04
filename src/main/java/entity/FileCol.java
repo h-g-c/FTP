@@ -16,6 +16,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class FileCol {
-int operationType;
-String filePath;
+    int operationType;
+    String filePath;
 }

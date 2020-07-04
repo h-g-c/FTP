@@ -1,8 +1,9 @@
 package util;
 
+import entity.FileEnum;
 import entity.FileModel;
 
-import java.io.File;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -16,26 +17,20 @@ import java.util.Calendar;
  **/
 public class FileUtil {
 
-
-    public static ArrayList<FileModel> getFileList(String filePath)
-    {
-        ArrayList<FileModel> list= new ArrayList<FileModel>();
-        File fatherFile=new File(filePath);
+    public static ArrayList<FileModel> getFileList(String filePath) {
+        ArrayList<FileModel> list = new ArrayList<FileModel>();
+        File fatherFile = new File(filePath);
         System.out.println(fatherFile.getAbsolutePath());
-        File[] fileList=fatherFile.listFiles();
-        for(File kidFile:fileList)
-        {
+        File[] fileList = fatherFile.listFiles();
+        for (File kidFile : fileList) {
             FileModel fileCol = FileModel.builder().fileName(kidFile.getName())
-                .filePath(kidFile.getAbsolutePath())
-                .changeTime(getChangeTime(kidFile))
-                .build();
-            if(kidFile.isFile())
-            {
+                    .filePath(kidFile.getAbsolutePath())
+                    .changeTime(getChangeTime(kidFile))
+                    .build();
+            if (kidFile.isFile()) {
                 fileCol.setFileType("0");
                 fileCol.setFileSize(String.valueOf(kidFile.length()));
-
-            }
-            else {
+            } else {
                 fileCol.setFileType("1");
                 fileCol.setFileSize(String.valueOf(kidFile.length()));
             }
@@ -44,8 +39,7 @@ public class FileUtil {
         return list;
     }
 
-    public static String getChangeTime(File file)
-    {
+    public static String getChangeTime(File file) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(file.lastModified());
@@ -61,5 +55,36 @@ public class FileUtil {
 //        }
 //    }
 
-}
 
+    /**
+     * 用来判断文件类型
+     */
+    public static FileEnum judgeFileType(String filePath) {
+        try {
+            String command = "file -i " + filePath;
+            Process process = Runtime.getRuntime().exec(command);
+            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String result = br.readLine();
+            final String[] s = result.split(" ");
+            result = s[1];
+            int status = process.waitFor();
+            if (status != 0) {
+                System.err.println("Failed to call shell's command and the return status's is: " + status);
+            }
+            System.out.println(result);
+            if(result==null){
+                return null;
+            }
+            if(result.startsWith("text")) {
+                return FileEnum.TEXT;
+            }else if(result.startsWith("inode")){
+                throw new IllegalAccessException("文件夹");
+            }else{
+                return FileEnum.BINARY;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+}

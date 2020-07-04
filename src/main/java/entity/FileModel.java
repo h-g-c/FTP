@@ -26,5 +26,4 @@ public class FileModel {
     String changeTime;
     //文件类型
     String fileType;
-
 }
