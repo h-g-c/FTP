@@ -1,11 +1,8 @@
 package client.gui.panel;
 
-import client.gui.ClientFrame;
 import client.gui.MyGridBagConstraints;
 import client.gui.table.LocalFileTable;
 import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -27,6 +24,8 @@ public class ServerFilePanel extends JPanel {
     private JScrollPane jScrollPane;
     private String[] tableInfo = {"文件名","大小","日期"};
     private String[][] data;
+    private JTable jTable;
+    private DefaultTableModel model;
 
     public ServerFilePanel(){
         init();
@@ -41,8 +40,8 @@ public class ServerFilePanel extends JPanel {
         jButton3 = new JButton("获取远程文件目录");
         jTextField = new JTextField("远程文件目录",10);
         jTextField.setEditable(false);
-        DefaultTableModel model=new DefaultTableModel(data, tableInfo);
-        JTable jTable = new LocalFileTable(model);
+        model=new DefaultTableModel(data, tableInfo);
+        jTable= new LocalFileTable(model);
         jScrollPane = new JScrollPane(jTable);
 
         JPanel jPanel = new JPanel();

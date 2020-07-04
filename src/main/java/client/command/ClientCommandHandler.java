@@ -5,11 +5,9 @@ import client.gui.panel.ServerFilePanel;
 import client.socket.CreatServer;
 import entity.Protocol;
 import entity.TransmissionType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import javax.swing.table.DefaultTableModel;
 import java.io.*;
 import java.net.Socket;
 
@@ -20,18 +18,30 @@ import java.net.Socket;
  */
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Data
 @Builder
 public class ClientCommandHandler implements Runnable{
 
+    @NonNull
     private ClientFrame clientFrame;
+
+
+    private final String[] tableInfo = {"文件名","大小","日期"};
+    private ServerFilePanel serverFilePanel;
+    private DefaultTableModel model;
 
     @Override
     public void run() {
         Socket socket = clientFrame.socket;
-        ServerFilePanel serverFilePanel = clientFrame.getJPanel3().getJPanel2();
         while (true){
+            String[][] def = {
+                    {"Asdasd","Adsadas","Asdas"},
+                    {"asdasd","asdasd","asdsad"}
+            };
             if(socket.isConnected()){
+                serverFilePanel = clientFrame.getJPanel3().getJPanel2();
+                model = serverFilePanel.getModel();
                 try(InputStream socketInputStream = socket.getInputStream();
                     DataInputStream dataInputStream = new DataInputStream(socketInputStream);
                     OutputStream socketOutputStream = socket.getOutputStream();
@@ -48,9 +58,10 @@ public class ClientCommandHandler implements Runnable{
                         //接下来判断命令的具体动作
                         new Thread(new CreatServer(protocolFromSocket,socket)).start();
                         //TODO something
-                        serverFilePanel.setData(null);
-                        serverFilePanel.setData(null);
-                        serverFilePanel.updateUI();
+                        model.setRowCount(0);
+                        model = new DefaultTableModel(def,tableInfo);
+                        serverFilePanel.getJTable().setModel(model);
+                        serverFilePanel.getJTextField().setText("asdsa");
                     }
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();

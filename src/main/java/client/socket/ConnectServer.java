@@ -16,6 +16,6 @@ public class ConnectServer extends SocketUtil {
         super(protocol);
         clientFrame.setSocket(this.createSocket());
         SendCommand.sendCommend(protocol,clientFrame.getSocket());
-        new Thread(new ClientCommandHandler(clientFrame.getSocket())).start();
+        new Thread(new ClientCommandHandler(clientFrame)).start();
     }
 }

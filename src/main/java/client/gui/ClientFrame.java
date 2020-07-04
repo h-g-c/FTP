@@ -69,7 +69,7 @@ public class ClientFrame extends JFrame {
         /**
          * 设置本地和远程文件面板
          */
-        JPanel jPanel3 = new CenterPanel();
+        jPanel3 = new CenterPanel();
         add(jPanel3,new MyGridBagConstraints(0,2,1.7,1.7).init2());
 
         /**
