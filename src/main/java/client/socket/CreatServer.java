@@ -17,9 +17,16 @@ import java.net.Socket;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@RequiredArgsConstructor
 @Builder
 public class CreatServer implements Runnable{
     private Protocol protocolLocal;
+
+    /**
+     * 服务端相关数据
+     */
+    @NonNull
+    private Protocol protocolServer;
 
     /**
      * 当前命令端口的socket信息
@@ -30,15 +37,7 @@ public class CreatServer implements Runnable{
     /**
      * 新建数据传输端口的socket信息
      */
-    @NonNull
     private Socket socketServer;
-
-    /**
-     * 服务端相关数据
-     */
-    @NonNull
-    private Protocol protocolServer;
-
 
     @Override
     public void run() {
@@ -46,6 +45,7 @@ public class CreatServer implements Runnable{
         while(true){
             try {
                 serverSocket = new ServerSocket(0);
+                protocolLocal = new Protocol();
                 protocolLocal.setServiceIp(protocolServer.getServiceIp());
                 protocolLocal.setClientIp(IPUtil.getLocalIP());
                 protocolLocal.setTransmissionType(protocolServer.getTransmissionType());
