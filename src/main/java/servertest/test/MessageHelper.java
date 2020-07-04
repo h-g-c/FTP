@@ -1,4 +1,4 @@
-package server.test;
+package servertest.test;
 
 /**
  * @author LvHao
