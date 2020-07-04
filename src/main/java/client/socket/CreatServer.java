@@ -2,6 +2,8 @@ package client.socket;
 
 import client.command.SendCommand;
 import client.util.IPUtil;
+import entity.ConnectType;
+import entity.OperateType;
 import entity.Protocol;
 import lombok.*;
 
@@ -45,12 +47,10 @@ public class CreatServer implements Runnable{
         while(true){
             try {
                 serverSocket = new ServerSocket(0);
-                protocolLocal = new Protocol();
-                protocolLocal.setServiceIp(protocolServer.getServiceIp());
+                protocolLocal.setOperateType(OperateType.DOWNLOAD);
+                protocolLocal.setConnectType(ConnectType.INITIATIVE);
                 protocolLocal.setClientIp(IPUtil.getLocalIP());
-                protocolLocal.setConnectType(protocolServer.getConnectType());
                 protocolLocal.setDataPort(serverSocket.getLocalPort());
-                protocolLocal.setCommandPort(null);
                 SendCommand.sendCommend(protocolLocal,socketServer);
                 socketLocal = serverSocket.accept();
 

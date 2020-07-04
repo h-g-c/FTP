@@ -51,16 +51,14 @@ public class ServerCommandHandler implements Runnable {
                 protocolFromSocket = (Protocol) objectInputStream.readObject();
                 switch (protocolFromSocket.getOperateType()) {
                     case PAUSE:
+                    case FILE_PATH:
                     case DOWNLOAD:
-                    case FILE_PATH: {
+                    case UPLOAD: {
 
                         break;
                     }
                     case CONNECT: {
                         mode.initialization(objectOutputStream,protocolFromSocket);
-                        break;
-                    }
-                    case UPLOAD: {
                         break;
                     }
                 }

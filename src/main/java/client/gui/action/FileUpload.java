@@ -1,7 +1,7 @@
 package client.gui.action;
 
 import client.gui.panel.LocalFilePanel;
-import client.util.GetUploadFiles;
+import client.util.GetTaskFilePath;
 import lombok.*;
 
 import javax.swing.*;
@@ -29,6 +29,6 @@ public class FileUpload implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         jTable = localFilePanel.getJTable();
         filePath = localFilePanel.getJTextField().getText();
-        String[] fileNames = GetUploadFiles.getName(jTable,filePath);
+        String[] fileNames = GetTaskFilePath.getUploadName(jTable,filePath);
     }
 }

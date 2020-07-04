@@ -4,6 +4,7 @@ import client.gui.panel.CenterPanel;
 import client.gui.panel.DefaultInfoPanel;
 import client.gui.panel.TaskPanel;
 import client.gui.panel.TopPanel;
+import entity.Protocol;
 import lombok.Data;
 
 import javax.swing.*;
@@ -18,6 +19,7 @@ import java.net.Socket;
 @Data
 public class ClientFrame extends JFrame {
     public Socket socket = null;
+    private Protocol protocol = null;
     private CenterPanel jPanel3;
     private final int WEIGHT = 1000;
     private final int HEIGHT = 720;
@@ -69,7 +71,7 @@ public class ClientFrame extends JFrame {
         /**
          * 设置本地和远程文件面板
          */
-        jPanel3 = new CenterPanel();
+        jPanel3 = new CenterPanel(this);
         add(jPanel3,new MyGridBagConstraints(0,2,1.7,1.7).init2());
 
         /**

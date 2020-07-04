@@ -16,26 +16,22 @@ import java.awt.*;
  * @date 2020-07-03 1:59
  */
 @Data
-@RequiredArgsConstructor
 public class CenterPanel extends JPanel {
 
     private ServerFilePanel jPanel2;
 
-    @NonNull
-    private ClientFrame clientFrame;
-
-    public CenterPanel(){
-        init();
+    public CenterPanel(ClientFrame clientFrame){
+        init(clientFrame);
     }
 
-    private void init(){
+    private void init(ClientFrame clientFrame){
 
         //设置布局方式
         setLayout(new GridBagLayout());
 
         JPanel jPanel1 = new LocalFilePanel();
         add(jPanel1,new MyGridBagConstraints(0,0,1,1).init2());
-        jPanel2 = new ServerFilePanel();
+        jPanel2 = new ServerFilePanel(clientFrame);
         add(jPanel2,new MyGridBagConstraints(1,0,1,1).init2());
     }
 }

@@ -52,7 +52,7 @@ public class ClientCommandHandler implements Runnable{
                     Protocol protocolFromSocket = (Protocol) objectInputStream.readObject();
 
                     //如果是主动模式
-                    if(true){
+                    if(protocolFromSocket.getData() != null){
 
                         //接下来判断命令的具体动作
                         new Thread(new CreatServer(protocolFromSocket,socket)).start();

@@ -1,5 +1,6 @@
 package client.gui.panel;
 
+import client.gui.ClientFrame;
 import client.gui.MyGridBagConstraints;
 import client.gui.table.LocalFileTable;
 import lombok.Data;
@@ -27,11 +28,11 @@ public class ServerFilePanel extends JPanel {
     private JTable jTable;
     private DefaultTableModel model;
 
-    public ServerFilePanel(){
-        init();
+    public ServerFilePanel(ClientFrame clientFrame){
+        init(clientFrame);
     }
 
-    private void init(){
+    private void init(ClientFrame clientFrame){
         setLayout(new GridBagLayout());
 
         jLabel = new JLabel("远程文件",JLabel.CENTER);
