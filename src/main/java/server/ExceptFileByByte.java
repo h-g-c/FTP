@@ -1,5 +1,7 @@
 package server;
 
+import configuration_and_constant.Constant;
+
 import java.io.*;
 
 /**
@@ -13,10 +15,10 @@ public class ExceptFileByByte {
     String filePath;
     long point;
 
-    public static void breakPoint(DataInputStream dis, DataOutputStream dos,String fileName) throws IOException {
+    public static void breakPoint(DataInputStream dis, DataOutputStream dos, String fileName) throws IOException {
         long fileLength = dis.readLong();
-        File file = new File("/home/heguicai/下载/"+fileName + ".temp");
-        RandomAccessFile rad = new RandomAccessFile("/home/heguicai/下载/" + fileName + ".temp", "rw");
+        File file = new File(Constant.DEFAULT_FILE_PATH + "/" + fileName + ".temp");
+        RandomAccessFile rad = new RandomAccessFile(Constant.DEFAULT_FILE_PATH + "/" + fileName + ".temp", "rw");
         long size = 0;
         if (file.exists() && file.isFile()) {
             size = file.length();
@@ -36,10 +38,10 @@ public class ExceptFileByByte {
         dis.close();
         rad.close();
         //文件重命名
-        if (size>=fileLength) {
-            file.renameTo(new File("/home/heguicai/下载/" + fileName));
+        if (size >= fileLength) {
+            file.renameTo(new File(Constant.DEFAULT_FILE_PATH + "/" + fileName));
         }
-       dos.writeLong(66);
+        dos.writeLong(66);
         dos.flush();
         dis.close();
         dos.close();

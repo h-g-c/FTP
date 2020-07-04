@@ -1,22 +1,12 @@
 package entity;
 
-import configuration_and_constant.ThreadPool;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import server.Port;
-import server.SendFileByByte;
-import server.SendFileByLine;
 import util.FileUtil;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author yinchao
@@ -27,17 +17,15 @@ public abstract class Mode {
     Socket dataSocket;
     Socket commandSocket;
 
-   public abstract void initialization(ObjectOutputStream objectOutputStream, Protocol protocolFromSocket) throws IOException;
+    public abstract void initialization(ObjectOutputStream objectOutputStream, Protocol protocolFromSocket) throws IOException;
 
-   public abstract Socket getDataSocket(String address, Integer port);
+    public abstract Socket getDataSocket(String address, Integer port);
 
-   public void upload() {
+    public void upload() {
     }
 
-   public   void download(Protocol protocolFromSocket, ObjectOutputStream objectOutputStream, DataOutputStream das) throws IOException
-   {
-
-   }
+    public void download(Protocol protocolFromSocket, ObjectOutputStream objectOutputStream, DataOutputStream das) throws IOException {
+    }
 
     public void pause() {
     }
