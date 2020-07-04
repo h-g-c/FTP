@@ -2,6 +2,7 @@ package client.gui.panel;
 
 import client.action.NewConnector;
 import client.action.StopConnect;
+import client.gui.MyGridBagConstraints;
 import client.gui.frame.ClientFrame;
 
 import javax.swing.*;
@@ -30,22 +31,9 @@ public class TopPanel extends JPanel {
         setLayout(new GridBagLayout());
 
         //新建连接button位置
-        GridBagConstraints g1 = new GridBagConstraints();
-        g1.gridx = 0;
-        g1.gridy = 0;
-        g1.weightx = 1;
-        g1.weighty = 1;
-        g1.fill = GridBagConstraints.BOTH;
+        add(jButton1,new MyGridBagConstraints(0,0,1,1).init2());
 
         //断开连接button位置
-        GridBagConstraints g2 = new GridBagConstraints();
-        g2.gridx = 1;
-        g2.gridy = 0;
-        g2.weightx = 1;
-        g2.weighty = 1;
-        g2.fill = GridBagConstraints.BOTH;
-
-        add(jButton1,g1);
-        add(jButton2,g2);
+        add(jButton2,new MyGridBagConstraints(1,0,1,1).init2());
     }
 }

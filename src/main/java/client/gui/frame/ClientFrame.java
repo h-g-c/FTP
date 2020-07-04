@@ -1,5 +1,6 @@
 package client.gui.frame;
 
+import client.gui.MyGridBagConstraints;
 import client.gui.panel.CenterPanel;
 import client.gui.panel.DefaultInfoPanel;
 import client.gui.panel.TaskPanel;
@@ -54,50 +55,26 @@ public class ClientFrame extends JFrame {
         /**
          * 设置顶部面板
          */
-        GridBagConstraints g1 = new GridBagConstraints();
-        g1.gridx = 0;
-        g1.gridy = 0;
-        g1.gridwidth = 1;
-        g1.gridheight = 1;
-        g1.fill = GridBagConstraints.BOTH;
         DefaultInfoPanel jPanel2 = new DefaultInfoPanel(this);
         JPanel jPanel1 = new TopPanel(this,jPanel2);
-        add(jPanel1,g1);
+        add(jPanel1,new MyGridBagConstraints(0,0,1,1).init1());
 
         /**
          * 设置默认信息面板
          */
-        GridBagConstraints g4 = new GridBagConstraints();
-        g4.gridx = 0;
-        g4.gridy = 1;
-        g1.gridwidth = 1;
-        g1.gridheight = 1;
-        g4.fill = GridBagConstraints.BOTH;
-        add(jPanel2,g4);
+        add(jPanel2,new MyGridBagConstraints(0,1,1,1).init1());
 
         /**
          * 设置本地和远程文件面板
          */
-        GridBagConstraints g2 = new GridBagConstraints();
-        g2.gridx = 0;
-        g2.gridy = 2;
-        g2.weighty = 1.7;
-        g2.weightx = 1.7;
-        g2.fill = GridBagConstraints.BOTH;
         JPanel jPanel3 = new CenterPanel();
-        add(jPanel3,g2);
+        add(jPanel3,new MyGridBagConstraints(0,2,1.7,1.7).init2());
 
         /**
          * 设置任务队列面板
          */
-        GridBagConstraints g3 = new GridBagConstraints();
-        g3.gridx = 0;
-        g3.gridy = 3;
-        g3.weighty = 0.5;
-        g3.weightx = 0.5;
-        g3.fill = GridBagConstraints.BOTH;
         JTabbedPane jPanel4 = new TaskPanel();
-        add(jPanel4,g3);
+        add(jPanel4,new MyGridBagConstraints(0,3,0.5,0.5).init2());
 
     }
 }

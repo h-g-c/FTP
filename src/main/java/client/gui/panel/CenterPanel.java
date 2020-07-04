@@ -1,11 +1,13 @@
 package client.gui.panel;
 
+import client.gui.MyGridBagConstraints;
+
 import javax.swing.*;
 import java.awt.*;
 
 /**
  * @author LvHao
- * @Description :文件面板额的分离  这里又分为了两块
+ * @Description :文件面板的分离  这里又分为了两块
  * @date 2020-07-03 1:59
  */
 public class CenterPanel extends JPanel {
@@ -18,23 +20,9 @@ public class CenterPanel extends JPanel {
         //设置布局方式
         setLayout(new GridBagLayout());
 
-        GridBagConstraints g1 = new GridBagConstraints();
-        g1.gridx = 0;
-        g1.gridy = 0;
-        g1.weightx = 1;
-        g1.weighty = 1;
-        g1.fill = GridBagConstraints.BOTH;
-
-        GridBagConstraints g2 = new GridBagConstraints();
-        g2.gridx = 1;
-        g1.gridy = 0;
-        g2.weightx = 1;
-        g2.weighty = 1;
-        g2.fill = GridBagConstraints.BOTH;
-
         JPanel jPanel1 = new LocalFilePanel();
-        add(jPanel1,g1);
+        add(jPanel1,new MyGridBagConstraints(0,0,1,1).init2());
         JPanel jPanel2 = new ServerFilePanel();
-        add(jPanel2,g2);
+        add(jPanel2,new MyGridBagConstraints(1,0,1,1).init2());
     }
 }

@@ -3,6 +3,7 @@ package client.gui.panel;
 import client.action.Flush;
 import client.action.LocalFileChange;
 import client.action.MouseClickedTwiceListener;
+import client.gui.MyGridBagConstraints;
 import client.gui.table.LocalFileTable;
 import client.util.GetFiles;
 import lombok.Data;
@@ -54,62 +55,17 @@ public class LocalFilePanel extends JPanel {
         JPanel jPanel1 = new JPanel();
         jPanel1.setLayout(new GridBagLayout());
 
-        GridBagConstraints gb1 = new GridBagConstraints();
-        gb1.gridx = 0;
-        gb1.gridy = 0;
-        gb1.weightx= 1;
-        gb1.weighty = 1;
-        gb1.fill = GridBagConstraints.BOTH;
+        jPanel1.add(jButton1,new MyGridBagConstraints(0,0,1,1).init2());
+        jPanel1.add(jButton2,new MyGridBagConstraints(1,0,1,1).init2());
+        jPanel1.add(jComboBox,new MyGridBagConstraints(2,0,1,1).init2());
 
-        GridBagConstraints gb2 = new GridBagConstraints();
-        gb2.gridx = 1;
-        gb2.gridy = 0;
-        gb2.weightx= 1;
-        gb2.weighty = 1;
-        gb2.fill = GridBagConstraints.BOTH;
+        add(jLabel,new MyGridBagConstraints(0,0,1,1).init1());
 
-        GridBagConstraints gc = new GridBagConstraints();
-        gc.gridx = 2;
-        gc.gridy = 0;
-        gc.weightx= 1;
-        gc.weighty = 1;
-        gc.fill = GridBagConstraints.BOTH;
+        add(jPanel1,new MyGridBagConstraints(0,1,1,1).init1());
 
-        jPanel1.add(jButton1,gb1);
-        jPanel1.add(jButton2,gb2);
-        jPanel1.add(jComboBox,gc);
+        add(jScrollPane,new MyGridBagConstraints(0,2,10,10).init2());
 
-        GridBagConstraints g1 = new GridBagConstraints();
-        g1.gridx = 0;
-        g1.gridy = 0;
-        g1.gridwidth = 1;
-        g1.gridheight = 1;
-        g1.fill = GridBagConstraints.BOTH;
-        add(jLabel,g1);
-
-        GridBagConstraints g2 = new GridBagConstraints();
-        g2.gridx = 0;
-        g2.gridy = 1;
-        g2.gridwidth = 1;
-        g2.gridheight = 1;
-        g2.fill = GridBagConstraints.BOTH;
-        add(jPanel1,g2);
-
-        GridBagConstraints g3 = new GridBagConstraints();
-        g3.gridx = 0;
-        g3.gridy = 2;
-        g3.weightx = 10;
-        g3.weighty = 10;
-        g3.fill = GridBagConstraints.BOTH;
-        add(jScrollPane,g3);
-
-        GridBagConstraints g4 = new GridBagConstraints();
-        g4.gridx = 0;
-        g4.gridy = 3;
-        g4.gridwidth = 1;
-        g4.gridheight = 1;
-        g4.fill = GridBagConstraints.BOTH;
-        add(jTextField,g4);
+        add(jTextField,new MyGridBagConstraints(0,3,1,1).init1());
     }
 }
 

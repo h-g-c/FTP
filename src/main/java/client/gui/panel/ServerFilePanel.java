@@ -1,5 +1,6 @@
 package client.gui.panel;
 
+import client.gui.MyGridBagConstraints;
 import client.gui.table.LocalFileTable;
 import client.util.GetFiles;
 
@@ -64,9 +65,9 @@ public class ServerFilePanel extends JPanel {
         gc.weighty = 1;
         gc.fill = GridBagConstraints.BOTH;
 
-        jPanel1.add(jButton1,gb1);
-        jPanel1.add(jButton2,gb2);
-        //jPanel1.add(jComboBox,gc);
+        jPanel1.add(jButton1,new MyGridBagConstraints(0,0,1,1).init2());
+        jPanel1.add(jButton2,new MyGridBagConstraints(1,0,1,1).init2());
+//        jPanel1.add(jComboBox,new MyGridBagConstraints(2,0,1,1).init2());
 
         GridBagConstraints g1 = new GridBagConstraints();
         g1.gridx = 0;
