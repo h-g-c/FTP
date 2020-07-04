@@ -61,9 +61,8 @@ public class ServerCommandHandler implements Runnable {
                     sendProtocal = Protocol.builder().data(FileUtil.getFileList("/")).transmissionType(TransmissionType.PASSIVE).build();
                     objectOutputStream.writeObject(sendProtocal);
                     objectOutputStream.flush();
-                    // 主动模式
-                } else if (TransmissionType.INITIATIVE.equals(protocolFromSocket.getTransmissionType())) {
-                    Port.getDataPort(protocolFromSocket.getClientIp(),protocolFromSocket.getDataPort());
+                    // 初始化
+                } else if (TransmissionType.INITIALIZATION.equals(protocolFromSocket.getTransmissionType())) {
                     ArrayList<FileModel> fileList= FileUtil.getFileList("/home/heguicai");
                     Protocol sendProtocal =new Protocol();
                     sendProtocal.setData(fileList);
@@ -72,17 +71,13 @@ public class ServerCommandHandler implements Runnable {
                     // 开始下载
                 }else if(TransmissionType.DOWNLOAD.equals(protocolFromSocket.getTransmissionType())){
                     if(FileUtil.judgeFileType(protocolFromSocket.getMessage()).equals(FileEnum.BINARY)) {
+                        FileModel fileModel=(FileModel)protocolFromSocket.getData();
+                        Socket socket=Port.getDataPort(protocolFromSocket.getClientIp(),protocolFromSocket.getDataPort());
+                        SendFileByByte.breakPoint(new DataOutputStream(socket.getOutputStream()),fileModel.getFilePath(),Long.valueOf(fileModel.getFileSize()));
                         SendFileByByte sendFileByByte = new SendFileByByte();
-                        // todo
                     }else {
                         threadPool.submit(new SendFileByLine(protocolFromSocket.getMessage()));
                     }
-                    Port.getDataPort(protocolFromSocket.getClientIp(),protocolFromSocket.getDataPort());
-                    ArrayList<FileModel> fileList= FileUtil.getFileList("/home/heguicai");
-                    Protocol sendProtocal =new Protocol();
-                    sendProtocal.setData(fileList);
-                    objectOutputStream.writeObject(sendProtocal);
-                    objectOutputStream.flush();
                 }
             } catch (IOException e) {
                 log.error(e.getMessage());

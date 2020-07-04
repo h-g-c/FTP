@@ -18,4 +18,7 @@ public enum TransmissionType {
     // 暂停
     PAUSE,
     // 查看文件
+   INITIALIZATION,
+
+
 }
