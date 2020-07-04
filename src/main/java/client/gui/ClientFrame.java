@@ -20,6 +20,7 @@ import java.net.Socket;
 public class ClientFrame extends JFrame {
     public Socket socket = null;
     private Protocol protocol = null;
+    private DefaultInfoPanel jPanel2;
     private CenterPanel jPanel3;
     private final int WEIGHT = 1000;
     private final int HEIGHT = 720;
@@ -59,7 +60,7 @@ public class ClientFrame extends JFrame {
         /**
          * 设置顶部面板
          */
-        DefaultInfoPanel jPanel2 = new DefaultInfoPanel(this);
+        jPanel2 = new DefaultInfoPanel(this);
         JPanel jPanel1 = new TopPanel(this,jPanel2);
         add(jPanel1,new MyGridBagConstraints(0,0,1,1).init1());
 

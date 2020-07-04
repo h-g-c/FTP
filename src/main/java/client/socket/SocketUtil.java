@@ -33,8 +33,8 @@ public class SocketUtil {
         try{
             socket = new java.net.Socket();
             SocketAddress socketAddress = new InetSocketAddress(protocol.getServiceIp(),protocol.getCommandPort());
-            socket.connect(socketAddress,100000);
-            socket.setSoTimeout(100000);
+            socket.connect(socketAddress,1000000000);
+            socket.setSoTimeout(1000000000);
         } catch (IOException e) {
             socket = null;
             JDialog jDialog = new JDialog();

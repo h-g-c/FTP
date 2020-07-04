@@ -2,6 +2,7 @@ package client.gui.panel;
 
 import client.gui.ClientFrame;
 import client.gui.MyGridBagConstraints;
+import client.gui.action.FindServerDir;
 import client.gui.table.LocalFileTable;
 import lombok.Data;
 
@@ -43,6 +44,7 @@ public class ServerFilePanel extends JPanel {
         jTextField.setEditable(false);
         model=new DefaultTableModel(data, tableInfo);
         jTable= new LocalFileTable(model);
+        jTable.addMouseListener(new FindServerDir(this,clientFrame));
         jScrollPane = new JScrollPane(jTable);
 
         JPanel jPanel = new JPanel();

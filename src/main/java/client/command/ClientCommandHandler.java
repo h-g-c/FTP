@@ -22,56 +22,50 @@ import java.util.ArrayList;
 @RequiredArgsConstructor
 @Data
 @Builder
-public class ClientCommandHandler implements Runnable{
+public class ClientCommandHandler implements Runnable {
 
     @NonNull
     private ClientFrame clientFrame;
 
 
-    private final String[] tableInfo = {"文件名","大小","日期"};
+    private final String[] tableInfo = {"文件名", "大小", "日期"};
     private ServerFilePanel serverFilePanel;
     private DefaultTableModel model;
 
     @Override
     public void run() {
-        Socket socket = clientFrame.socket;
-        while (true){
-            if(socket.isConnected()){
+        Socket socket = clientFrame.getSocket();
+        try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream()); ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream())) {
+            while (true) {
+
                 serverFilePanel = clientFrame.getJPanel3().getJPanel2();
-                model = serverFilePanel.getModel();
-                try(InputStream socketInputStream = socket.getInputStream();
-                    DataInputStream dataInputStream = new DataInputStream(socketInputStream);
-                    OutputStream socketOutputStream = socket.getOutputStream();
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-                    ObjectInputStream objectInputStream = new ObjectInputStream(socketInputStream)){
+                model = clientFrame.getJPanel3().getJPanel2().getModel();
+                //读入服务端命令的协议
+                Protocol protocolFromSocket = (Protocol) objectInputStream.readObject();
 
-                    //读入服务端命令的协议
-                    Protocol protocolFromSocket = (Protocol) objectInputStream.readObject();
-
-                    //如果是主动模式
-                    if(protocolFromSocket.getData() != null){
-                        int i = 0;
-                        ArrayList<FileModel> fileList=(ArrayList<FileModel>) protocolFromSocket.getData();
-                        String[][] data = null;
-                        for(FileModel f:fileList){
-                            data[i++][0]=f.getFileName();
-                            data[i++][1]=f.getFileSize();
-                            data[i++][2]=f.getChangeTime();
-                        }
-                        i=0;
-                        //接下来判断命令的具体动作
-                        new Thread(new CreatServer(protocolFromSocket,socket)).start();
-                        //TODO something
-                        model.setRowCount(0);
-                        model = new DefaultTableModel(data,tableInfo);
-                        serverFilePanel.getJTable().setModel(model);
-                        serverFilePanel.getJTextField().setText("asdsa");
+                //如果是主动模式
+                if (protocolFromSocket.getData() != null) {
+                    int i = 0;
+                    ArrayList<FileModel> fileList = (ArrayList<FileModel>) protocolFromSocket.getData();
+                    String[][] data = new String[fileList.size()][3];
+                    for (FileModel f : fileList) {
+                        data[i][0] = f.getFileName();
+                        data[i][1] = f.getFileSize();
+                        data[i][2] = f.getChangeTime();
+                        i++;
                     }
-                } catch (IOException | ClassNotFoundException e) {
-                    e.printStackTrace();
+                    i = 0;
+                    //接下来判断命令的具体动作
+                    //new Thread(new CreatServer(protocolFromSocket, socket)).start();
+                    //TODO something
+                    model.setRowCount(0);
+                    model = new DefaultTableModel(data, tableInfo);
+                    serverFilePanel.getJTable().setModel(model);
+                    serverFilePanel.getJTextField().setText(fileList.get(0).getFileName()+File.separator);
                 }
             }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }
