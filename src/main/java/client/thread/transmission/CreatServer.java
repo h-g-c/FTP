@@ -46,8 +46,8 @@ public class CreatServer {
             socketLocal = serverSocket.accept();
             protocolLocal.setServiceIp(protocolServer.getServiceIp());
             protocolLocal.setClientIp(IPUtil.getLocalIP());
-            protocolLocal.setTransmissionType(protocolServer.getTransmissionType());
-            protocolLocal.setMessage(null);
+            protocolLocal.setOperateType(protocolServer.getOperateType());
+            protocolLocal.setData(null);
             protocolLocal.setDataPort(serverSocket.getLocalPort());
             protocolLocal.setCommandPort(null);
             SendCommand.sendCommend(protocolLocal,socketServer);

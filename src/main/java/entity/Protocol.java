@@ -21,10 +21,10 @@ public class Protocol implements Serializable {
     String serviceIp;
     // 发送方ip
     String clientIp;
-    // 传输类型
-    TransmissionType transmissionType;
-    // 传输信息
-    String message;
+    // 操作类型
+    OperateType operateType;
+    // 连接类型
+    ConnectType connectType;
     // 命令端口号
     Integer commandPort;
     // 数据传输端口号

@@ -4,8 +4,9 @@ import client.gui.frame.ClientFrame;
 import client.gui.panel.DefaultInfoPanel;
 import client.socket.initiative.ConnectServer;
 import client.util.IPUtil;
+import entity.ConnectType;
 import entity.Protocol;
-import entity.TransmissionType;
+import entity.OperateType;
 import lombok.*;
 
 import javax.swing.*;
@@ -22,7 +23,7 @@ import java.awt.event.ActionListener;
 @RequiredArgsConstructor
 @Builder
 public class ConnectToServer implements ActionListener {
-    private TransmissionType type;
+    private ConnectType type;
 
     @NonNull
     private JComboBox jComboBox;
@@ -35,15 +36,15 @@ public class ConnectToServer implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(jComboBox.getSelectedItem().equals("主动模式")){
-            type = TransmissionType.INITIATIVE;
+            type = ConnectType.INITIATIVE;
         }else{
-            type = TransmissionType.PASSIVE;
+            type = ConnectType.PASSIVE;
         }
         Protocol protocol = new Protocol();
         protocol.setServiceIp(defaultInfoPanel.getJt1().getText());
         protocol.setClientIp(IPUtil.getLocalIP());
-        protocol.setTransmissionType(type);
-        protocol.setMessage(null);
+        protocol.setConnectType(type);
+        protocol.setData(null);
         protocol.setDataPort(Integer.valueOf(defaultInfoPanel.getJt3().getText()));
         protocol.setCommandPort(null);
 
