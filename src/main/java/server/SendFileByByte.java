@@ -1,18 +1,24 @@
 package server;
 
+import lombok.*;
+
 import java.io.*;
 
 /**
  * @类名 SendFileByByte
- * @描述 用字节数组的形式进行数据的传输
+ * @描述 用字节数组的形式发送数据
  * @作者 heguicai
  * @创建日期 2020/7/3 下午10:44
  **/
-public class SendFileByByte {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class SendFileByByte implements Runnable{
+    DataOutputStream das;
+    String filePath;
+    long point;
 
-    public static boolean sendFile(DataOutputStream das,String filePath) throws IOException {
-         return  breakPoint(das,filePath,0);
-    }
 
     public static boolean breakPoint(DataOutputStream das,String filePath,long point) throws FileNotFoundException {
         File file=new File(filePath);
@@ -49,5 +55,11 @@ public class SendFileByByte {
                 return false;
             }
         }
+    }
+
+    @SneakyThrows
+    @Override
+    public void run() {
+        breakPoint( das, filePath, point);
     }
 }
