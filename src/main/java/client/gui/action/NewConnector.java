@@ -1,4 +1,4 @@
-package client.action;
+package client.gui.action;
 
 import client.gui.panel.NewClientPanel;
 

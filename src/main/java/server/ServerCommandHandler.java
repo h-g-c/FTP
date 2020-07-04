@@ -35,7 +35,12 @@ public class ServerCommandHandler implements Runnable {
                 log.error("socket未建立");
                 return;
             }
-            try (InputStream socketInputStream = commandSocket.getInputStream(); DataInputStream dataInputStream = new DataInputStream(socketInputStream); OutputStream socketOutputStream = commandSocket.getOutputStream(); ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(); ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream); ObjectInputStream objectInputStream = new ObjectInputStream(socketInputStream);) {
+            try (InputStream socketInputStream = commandSocket.getInputStream();
+                 DataInputStream dataInputStream = new DataInputStream(socketInputStream);
+                 OutputStream socketOutputStream = commandSocket.getOutputStream();
+                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+                 ObjectInputStream objectInputStream = new ObjectInputStream(socketInputStream);) {
                 // 读入协议信息
                 Protocol protocolFromSocket = CommonUtil.readProtocolFromSocket(objectInputStream);
                 // 如果是被动模式

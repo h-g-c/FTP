@@ -1,7 +1,7 @@
 package client.gui.panel;
 
-import client.action.ConnectToServer;
-import client.gui.frame.ClientFrame;
+import client.gui.action.ConnectToServer;
+import client.gui.ClientFrame;
 import lombok.Data;
 
 import javax.swing.*;

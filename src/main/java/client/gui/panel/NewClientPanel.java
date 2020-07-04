@@ -1,7 +1,7 @@
 package client.gui.panel;
 
 
-import client.gui.frame.ClientFrame;
+import client.gui.ClientFrame;
 
 import javax.swing.*;
 import java.awt.*;

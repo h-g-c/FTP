@@ -1,4 +1,4 @@
-package client.thread.socket;
+package client.command;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,14 +7,14 @@ import java.net.Socket;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 处理客户端命令接受的线程
  * @date 2020-07-03 21:55
  */
-public class ReceiveInfo implements Runnable{
+public class ReceiveCommand implements Runnable{
 
     private Socket socket;
 
-    public ReceiveInfo(Socket socket){
+    public ReceiveCommand(Socket socket){
         this.socket = socket;
     }
 

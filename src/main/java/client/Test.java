@@ -1,6 +1,6 @@
 package client;
 
-import client.gui.frame.ClientFrame;
+import client.gui.ClientFrame;
 
 import javax.swing.*;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;

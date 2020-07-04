@@ -1,8 +1,8 @@
 package client.gui.panel;
 
-import client.action.Flush;
-import client.action.LocalFileChange;
-import client.action.MouseClickedTwiceListener;
+import client.gui.action.Flush;
+import client.gui.action.LocalFileChange;
+import client.gui.action.MouseClickedTwiceListener;
 import client.gui.MyGridBagConstraints;
 import client.gui.table.LocalFileTable;
 import client.util.GetFiles;

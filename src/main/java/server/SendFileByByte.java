@@ -24,8 +24,9 @@ public class SendFileByByte {
             das.flush();
             raf.seek(point);
             value = new byte[(int) (fileLength - point)];
-            if (raf.read(value) != (fileLength - point))
+            if (raf.read(value) != (fileLength - point)) {
                 return false;
+            }
         } catch (IOException e) {
             e.printStackTrace();
             return false;

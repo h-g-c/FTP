@@ -1,4 +1,4 @@
-package client.thread.socket;
+package client.command;
 
 import entity.Protocol;
 

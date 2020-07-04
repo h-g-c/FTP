@@ -1,6 +1,6 @@
-package client.action;
+package client.gui.action;
 
-import client.gui.frame.ClientFrame;
+import client.gui.ClientFrame;
 import client.gui.panel.DefaultInfoPanel;
 import lombok.Data;
 import lombok.NonNull;
@@ -34,6 +34,7 @@ public class StopConnect implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if((clientFrame.getSocket() != null && !clientFrame.getSocket().isClosed())){
             clientFrame.getSocket().close();
+            System.out.println(clientFrame.getSocket().isClosed());
             defaultInfoPanel.getJComboBox().setEnabled(true);
             defaultInfoPanel.getJt1().setEditable(true);
             defaultInfoPanel.getJt2().setEditable(true);

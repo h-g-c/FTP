@@ -14,7 +14,7 @@ import java.net.SocketAddress;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description :  客户端连接到服务器的socket设置
  * @date 2020-07-03 10:23
  */
 @Data
@@ -32,7 +32,7 @@ public class SocketUtil {
         java.net.Socket socket = null;
         try{
             socket = new java.net.Socket();
-            SocketAddress socketAddress = new InetSocketAddress(protocol.getClientIp(),protocol.getDataPort());
+            SocketAddress socketAddress = new InetSocketAddress(protocol.getServiceIp(),protocol.getCommandPort());
             socket.connect(socketAddress,100000);
             socket.setSoTimeout(100000);
         } catch (IOException e) {

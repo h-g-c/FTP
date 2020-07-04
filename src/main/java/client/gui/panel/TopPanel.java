@@ -1,9 +1,9 @@
 package client.gui.panel;
 
-import client.action.NewConnector;
-import client.action.StopConnect;
+import client.gui.action.NewConnector;
+import client.gui.action.StopConnect;
 import client.gui.MyGridBagConstraints;
-import client.gui.frame.ClientFrame;
+import client.gui.ClientFrame;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,9 +1,8 @@
-package client.action;
+package client.gui.action;
 
-import client.gui.frame.ClientFrame;
+import client.gui.ClientFrame;
 import client.gui.panel.DefaultInfoPanel;
-import client.socket.initiative.ConnectServer;
-import client.util.IPUtil;
+import client.socket.ConnectServer;
 import entity.Protocol;
 import entity.TransmissionType;
 import lombok.*;
@@ -41,11 +40,8 @@ public class ConnectToServer implements ActionListener {
         }
         Protocol protocol = new Protocol();
         protocol.setServiceIp(defaultInfoPanel.getJt1().getText());
-        protocol.setClientIp(IPUtil.getLocalIP());
         protocol.setTransmissionType(type);
-        protocol.setMessage(null);
-        protocol.setDataPort(Integer.valueOf(defaultInfoPanel.getJt3().getText()));
-        protocol.setCommandPort(null);
+        protocol.setCommandPort(Integer.valueOf(defaultInfoPanel.getJt3().getText()));
 
         if(type.name().equals("INITIATIVE")){
             new ConnectServer(protocol,clientFrame);

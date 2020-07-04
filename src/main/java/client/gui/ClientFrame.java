@@ -1,6 +1,5 @@
-package client.gui.frame;
+package client.gui;
 
-import client.gui.MyGridBagConstraints;
 import client.gui.panel.CenterPanel;
 import client.gui.panel.DefaultInfoPanel;
 import client.gui.panel.TaskPanel;
