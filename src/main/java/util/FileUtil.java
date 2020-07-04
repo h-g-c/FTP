@@ -37,7 +37,7 @@ public class FileUtil {
             }
             else {
                 fileCol.setFileType("1");
-                fileCol.setFileSize(String.valueOf(kidFile.length()));
+                fileCol.setFileSize("0");
             }
             list.add(fileCol);
         }

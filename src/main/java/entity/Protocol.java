@@ -29,4 +29,6 @@ public class Protocol implements Serializable {
     Integer commandPort;
     // 数据传输端口号
     Integer dataPort;
+    //数据
+    Object data;
 }

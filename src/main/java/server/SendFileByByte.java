@@ -1,9 +1,6 @@
 package server;
 
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * @类名 SendFileByByte
@@ -17,25 +14,40 @@ public class SendFileByByte {
          return  breakPoint(das,filePath,0);
     }
 
-    public static boolean breakPoint(DataOutputStream das,String filePath,long point) throws IOException {
+    public static boolean breakPoint(DataOutputStream das,String filePath,long point) throws FileNotFoundException {
         File file=new File(filePath);
-        FileInputStream fileInputStream=new FileInputStream(file);
-        long fileLength=file.length();
-        das.writeLong(fileLength);
-        das.flush();
-        System.out.println("======== 开始传输文件 ========");
-        byte[] bytes = new byte[1];
-        int length = 0;
-        long sendTotal=point;
-        fileInputStream.skip(point);
-        while ((length = fileInputStream.read(bytes, 0, bytes.length)) != -1) {
-            das.write(bytes, 0, length);
+        RandomAccessFile raf = new RandomAccessFile(file, "r");
+        byte[] value;
+        long fileLength = file.length();
+        try {
+            das.writeLong(fileLength);
             das.flush();
-            sendTotal+=length;
+            raf.seek(point);
+            value = new byte[(int) (fileLength - point)];
+            if (raf.read(value) != (fileLength - point))
+                return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
         }
-        System.out.println("======== 文件传输成功 ========");
-        if (sendTotal==fileLength)
-            return true;
-        else return false;
+        //每次读取8k
+        int sendCont=8*1024;
+        int low=0;
+        while(true)
+        {
+            try {
+                if (low + sendCont >= fileLength - point) {
+                    das.write(value, low, (int) (fileLength - point));
+                    return true;
+                } else {
+                    das.write(value, low,low+sendCont);
+                    low+=sendCont;
+                }
+            }catch (IOException e)
+            {
+                e.printStackTrace();
+                return false;
+            }
+        }
     }
 }
