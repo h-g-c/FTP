@@ -1,9 +1,8 @@
 package server;
 
-import lombok.extern.slf4j.Slf4j;
 import configuration_and_constant.Constant;
-import util.ServerInputHandler;
 import configuration_and_constant.ThreadPool;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -15,8 +14,9 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @date 2020/7/2 11:49
  */
 @Slf4j(topic = "Server")
-public class Server implements Runnable{
+public class Server {
     ThreadPoolExecutor threadPoolExecutor;
+
     public static void main(String[] args) {
         Server server = new Server();
         server.start();
@@ -25,25 +25,18 @@ public class Server implements Runnable{
     /**
      * 执行 server 主要逻辑
      */
-    private void start(){
+    private void start() {
         // 初始化线程池
         threadPoolExecutor = ThreadPool.getThreadPool();
         try (ServerSocket serverSocket = new ServerSocket(Constant.COMMANDPORT)) {
             while (true) {
                 Socket socket = serverSocket.accept();
-                ServerInputHandler serverInputHandler = new ServerInputHandler(socket);
-                threadPoolExecutor.submit(serverInputHandler);
+                ServerCommandHandler serverCommandHandler = ServerCommandHandler.builder().commandSocket(socket).build();
+                threadPoolExecutor.submit(serverCommandHandler);
             }
         } catch (IOException e) {
-            log.error(e.getClass().getSimpleName(),e);
+            log.error(e.getClass().getSimpleName(), e);
         }
     }
-
-    private void process(){
-
-    }
-
-    @Override
-    public void run() {
-    }
 }
+

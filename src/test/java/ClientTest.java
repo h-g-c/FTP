@@ -1,8 +1,8 @@
+import configuration_and_constant.Constant;
+import entity.TransmissionType;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import util.CommonUtil;
-import configuration_and_constant.Constant;
-import entity.TransmissionType;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -32,7 +32,7 @@ public class ClientTest {
             socketOutputStream.flush();
             socketOutputStream.write(dataContent);
             socketOutputStream.flush();
-        }catch (IOException ioException){
+        } catch (IOException ioException) {
             log.error(ioException.getMessage());
         }
     }
