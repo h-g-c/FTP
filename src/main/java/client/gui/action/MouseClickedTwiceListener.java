@@ -73,7 +73,7 @@ public class MouseClickedTwiceListener extends MouseAdapter {
                 clickNum++;
                 num++;
             }
-        },new Date(), 500);
+        },new Date(), 200);
     }
     private void mouseClickedTwice(MouseEvent me) {
         // 双击事件
@@ -81,8 +81,8 @@ public class MouseClickedTwiceListener extends MouseAdapter {
         String fileName = localFilePanel.getJTextField().getText()+localFilePanel.getJTable().getValueAt(row,0).toString();
         if(!new File(fileName).isFile()){
             model.setRowCount(0);
-            String[][] datas = GetFiles.getFiles(fileName);
-            model = new DefaultTableModel(datas,tableInfo);
+            String[][] data = GetFiles.getFiles(fileName);
+            model = new DefaultTableModel(data,tableInfo);
             localFilePanel.getJTable().setModel(model);
             localFilePanel.getJTextField().setText(fileName+systemFlag);
         }

@@ -1,10 +1,7 @@
 package client.gui.panel;
 
-import client.gui.action.Flush;
-import client.gui.action.LocalFileChange;
-import client.gui.action.MouseClickedTwiceListener;
+import client.gui.action.*;
 import client.gui.MyGridBagConstraints;
-import client.gui.action.Return;
 import client.gui.table.LocalFileTable;
 import client.util.GetFiles;
 import client.util.OSinfo;
@@ -64,6 +61,7 @@ public class LocalFilePanel extends JPanel {
         jTable.addMouseListener(new MouseClickedTwiceListener(this,model));
         JScrollPane jScrollPane = new JScrollPane(jTable);
         jComboBox.addItemListener(new LocalFileChange(this,model));
+        jButton1.addActionListener(new FileUpload(this));
         jButton3.addActionListener(new Return(this,model));
         jButton4.addActionListener(new Flush(this,model));
 

@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import util.CommonUtil;
 
 import java.io.*;
 import java.net.Socket;
@@ -37,7 +36,7 @@ public class ClientCommandHandler implements Runnable{
                     ObjectInputStream objectInputStream = new ObjectInputStream(socketInputStream)){
 
                     //读入服务端命令的协议
-                    Protocol protocolFromSocket = CommonUtil.readProtocolFromSocket(objectInputStream);
+                    Protocol protocolFromSocket = (Protocol) objectInputStream.readObject();
 
                     //如果是主动模式
                     if(TransmissionType.INITIATIVE.equals(protocolFromSocket.getTransmissionType())){

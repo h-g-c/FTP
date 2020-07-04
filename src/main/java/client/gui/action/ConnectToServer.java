@@ -34,7 +34,7 @@ public class ConnectToServer implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(jComboBox.getSelectedItem().equals("主动模式")){
-            type = TransmissionType.INITIATIVE;
+            type = TransmissionType.INITIALIZATION;
         }else{
             type = TransmissionType.PASSIVE;
         }
@@ -43,7 +43,7 @@ public class ConnectToServer implements ActionListener {
         protocol.setTransmissionType(type);
         protocol.setCommandPort(Integer.valueOf(defaultInfoPanel.getJt3().getText()));
 
-        if(type.name().equals("INITIATIVE")){
+        if(jComboBox.getSelectedItem().equals("主动模式")){
             new ConnectServer(protocol,clientFrame);
             if(clientFrame.getSocket() != null && clientFrame.getSocket().isConnected()){
                 jComboBox.setEnabled(false);
