@@ -43,14 +43,14 @@ public class ServerCommandHandler implements Runnable {
             Protocol protocolFromSocket = (Protocol) objectInputStream.readObject();
             // 如果是被动模式
             if (ConnectType.PASSIVE.equals(protocolFromSocket.getConnectType())) {
-                mode passiveMode = new PassiveMode();
+                mode = new PassiveMode();
                 // 主动模式
             } else {
                 mode = new InitiativeMode();
             }
             while (true) {
                 // 读入协议信息
-                Protocol protocolFromSocket = (Protocol) objectInputStream.readObject();
+                protocolFromSocket = (Protocol) objectInputStream.readObject();
                 switch (protocolFromSocket.getOperateType()) {
                     case PAUSE: {
                         break;

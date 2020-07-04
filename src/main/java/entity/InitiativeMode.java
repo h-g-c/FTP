@@ -3,6 +3,7 @@ package entity;
 import server.Port;
 import util.FileUtil;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -13,9 +14,8 @@ import java.util.ArrayList;
  */
 public class InitiativeMode extends Mode {
     @Override
-    void initialization(ObjectOutputStream objectOutputStream, Protocol protocolFromSocket) {
-        super.initialization();
-        Port.getDataPort(protocolFromSocket.getClientIp(), protocolFromSocket.getDataPort());
+    void initialization(ObjectOutputStream objectOutputStream, Protocol protocolFromSocket) throws IOException {
+        Port.getDataPort(protocolFromSocket.getClientIp(),String.valueOf(protocolFromSocket.getDataPort()));
         ArrayList<FileModel> fileList = FileUtil.getFileList("/home/heguicai");
         Protocol sendProtocal = new Protocol();
         sendProtocal.setData(fileList);
@@ -25,6 +25,5 @@ public class InitiativeMode extends Mode {
 
     @Override
     void getDataPort() {
-        super.getDataPort();
     }
 }

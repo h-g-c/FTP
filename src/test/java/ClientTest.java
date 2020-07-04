@@ -1,4 +1,5 @@
 import configuration_and_constant.Constant;
+import entity.ConnectType;
 import entity.OperateType;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -24,7 +25,7 @@ public class ClientTest {
         }
         try (OutputStream socketOutputStream = socket.getOutputStream()) {
 
-            byte[] dataContent = OperateType.PASSIVE.toString().getBytes();
+            byte[] dataContent = ConnectType.PASSIVE.toString().getBytes();
             // 这里不能超出4个字节
             byte[] dataLength = CommonUtil.IntegerToBytes(dataContent.length);
             CommonUtil.ensureLength(dataLength, Constant.HEAD_BYTE_SIZE);

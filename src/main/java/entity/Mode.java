@@ -10,6 +10,7 @@ import server.SendFileByByte;
 import server.SendFileByLine;
 import util.FileUtil;
 
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -21,28 +22,26 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @date 2020/7/3 18:54
  */
 @Data
-@NoArgsConstructor
-@Builder
 public abstract class Mode {
     Socket dataSocket;
     Socket commandSocket;
 
-    abstract void initialization(ObjectOutputStream objectOutputStream, Protocol protocolFromSocket);
+    abstract void initialization(ObjectOutputStream objectOutputStream, Protocol protocolFromSocket) throws IOException;
 
     abstract void getDataPort();
 
     void upload() {
     }
 
-    void download(Protocol protocol,String filePath) {
+    void download(Protocol protocolFromSocket,String filePath,ObjectOutputStream objectOutputStream) throws IOException{
         final ThreadPoolExecutor threadPool = ThreadPool.getThreadPool();
-        if (FileUtil.judgeFileType(protocolFromSocket.getMessage()).equals(FileEnum.BINARY)) {
+        if (FileUtil.judgeFileType((String)protocolFromSocket.getData()).equals(FileEnum.BINARY)) {
             SendFileByByte sendFileByByte = new SendFileByByte();
             // todo
         } else {
-            threadPool.submit(new SendFileByLine(protocolFromSocket.getMessage()));
+            threadPool.submit(new SendFileByLine((String)protocolFromSocket.getData()));
         }
-        Port.getDataPort(protocolFromSocket.getClientIp(), protocolFromSocket.getDataPort());
+        Port.getDataPort(protocolFromSocket.getClientIp(), String.valueOf(protocolFromSocket.getDataPort()));
         ArrayList<FileModel> fileList = FileUtil.getFileList("/home/heguicai");
         Protocol sendProtocal = new Protocol();
         sendProtocal.setData(fileList);
@@ -54,6 +53,6 @@ public abstract class Mode {
     }
 
     public Object getFileList(String filePath) {
-        FileUtil.getFileList(filePath);
+        return FileUtil.getFileList(filePath);
     }
 }
