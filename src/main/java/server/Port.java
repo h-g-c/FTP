@@ -24,8 +24,8 @@ public class Port {
      * @throws IOException
      * 主动模式获取数据传输借口
      */
-    public static Socket getDataPort(String address, String port) throws IOException {
-        dataPort = new Socket(address, Integer.parseInt(port));
+    public static Socket getDataPort(String address, Integer port) throws IOException {
+        dataPort = new Socket(address, port);
         return dataPort;
     }
 

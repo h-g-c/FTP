@@ -13,7 +13,7 @@ public class Constant {
     /**
      * 命令端口号
      */
-    public static final Integer COMMANDPORT = 21;
+    public static final Integer COMMANDPORT = 8081;
 
     /**
      * 命令/数据最大大小: 2^32 G
