@@ -23,7 +23,8 @@ public class LocalFilePanel extends JPanel {
 
     private JLabel jLabel = new JLabel("本地文件",JLabel.CENTER);
     private JButton jButton1 = new JButton(" 上传 ");
-    private JButton jButton2 = new JButton("   刷新  ");
+    private JButton jButton2 = new JButton("删除");
+    private JButton jButton3 = new JButton("   刷新  ");
     private JTextField jTextField = new JTextField(" ",10);
     private JComboBox jComboBox;
     private JTable jTable;
@@ -50,18 +51,19 @@ public class LocalFilePanel extends JPanel {
         jTable.addMouseListener(new MouseClickedTwiceListener(this,model));
         JScrollPane jScrollPane = new JScrollPane(jTable);
         jComboBox.addItemListener(new LocalFileChange(this,model));
-        jButton2.addActionListener(new Flush(this,model));
+        jButton3.addActionListener(new Flush(this,model));
 
-        JPanel jPanel1 = new JPanel();
-        jPanel1.setLayout(new GridBagLayout());
+        JPanel jPanel = new JPanel();
+        jPanel.setLayout(new GridBagLayout());
 
-        jPanel1.add(jButton1,new MyGridBagConstraints(0,0,1,1).init2());
-        jPanel1.add(jButton2,new MyGridBagConstraints(1,0,1,1).init2());
-        jPanel1.add(jComboBox,new MyGridBagConstraints(2,0,1,1).init2());
+        jPanel.add(jButton1,new MyGridBagConstraints(0,0,1,1).init2());
+        jPanel.add(jButton2,new MyGridBagConstraints(1,0,1,1).init2());
+        jPanel.add(jButton3,new MyGridBagConstraints(2,0,1,1).init2());
+        jPanel.add(jComboBox,new MyGridBagConstraints(3,0,1,1).init2());
 
         add(jLabel,new MyGridBagConstraints(0,0,1,1).init1());
 
-        add(jPanel1,new MyGridBagConstraints(0,1,1,1).init1());
+        add(jPanel,new MyGridBagConstraints(0,1,1,1).init1());
 
         add(jScrollPane,new MyGridBagConstraints(0,2,10,10).init2());
 

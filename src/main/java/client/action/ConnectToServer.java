@@ -60,7 +60,7 @@ public class ConnectToServer implements ActionListener {
                 defaultInfoPanel.updateUI();
             }
         }else{
-            //TO DO something
+            //TODO something
 
         }
     }

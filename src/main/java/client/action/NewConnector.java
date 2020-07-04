@@ -24,7 +24,6 @@ public class NewConnector implements ActionListener {
         /**
          * 窗口阻塞
          */
-
         jDialog.setSize(X,Y);
         jDialog.setLocationRelativeTo(null);
         jDialog.setVisible(true);
