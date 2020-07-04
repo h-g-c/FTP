@@ -11,4 +11,11 @@ public enum TransmissionType {
     PASSIVE,
     // 主动
     INITIATIVE,
+    // 上传
+    UPLOAD,
+    // 下载
+    DOWNLOAD,
+    // 暂停
+    PAUSE,
+    // 查看文件
 }
