@@ -1,6 +1,7 @@
 package client.gui.action;
 
 import client.gui.ClientFrame;
+import client.gui.msg.MessageDialog;
 import client.gui.panel.DefaultInfoPanel;
 import lombok.Data;
 import lombok.NonNull;
@@ -37,6 +38,7 @@ public class StopConnect implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if((clientFrame.getSocket() != null && !clientFrame.getSocket().isClosed())){
             clientFrame.getSocket().close();
+            clientFrame.setSocket(null);
             clientFrame.getJPanel3().getJPanel2().getModel().setRowCount(0);
             DefaultTableModel model = new DefaultTableModel(data,tableInfo);
             clientFrame.getJPanel3().getJPanel2().getJTable().setModel(model);
@@ -50,16 +52,7 @@ public class StopConnect implements ActionListener {
             defaultInfoPanel.add(defaultInfoPanel.getJButton());
             defaultInfoPanel.updateUI();
         }else {
-            JDialog jDialog = new JDialog();
-            jDialog.setTitle("提示");
-            jDialog.add(new JLabel("请先连接服务器！"));
-            /**
-             * 窗口阻塞
-             */
-            jDialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-            jDialog.setSize(X,Y);
-            jDialog.setLocationRelativeTo(null);
-            jDialog.setVisible(true);
+            new MessageDialog("提示","请先连接服务器！").init();
         }
     }
 }

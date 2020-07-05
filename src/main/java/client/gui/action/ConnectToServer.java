@@ -50,6 +50,7 @@ public class ConnectToServer implements ActionListener {
         protocol.setData(null);
         protocol.setDataPort(Integer.valueOf(defaultInfoPanel.getJt3().getText()));
 
+        //主动模式的第一次连接
         if(jComboBox.getSelectedItem().equals("主动模式")){
             new ConnectServer(protocol,clientFrame);
             if(clientFrame.getSocket() != null && clientFrame.getSocket().isConnected()){
@@ -63,6 +64,7 @@ public class ConnectToServer implements ActionListener {
                 defaultInfoPanel.updateUI();
             }
         }else{
+            //主动模式的第一次连接
             //TODO something
 
         }

@@ -3,6 +3,7 @@ package client.gui.action;
 import client.command.ReceiveCommand;
 import client.command.SendCommand;
 import client.gui.ClientFrame;
+import client.gui.msg.MessageDialog;
 import client.gui.panel.ServerFilePanel;
 import client.util.IPUtil;
 import entity.ConnectType;
@@ -28,25 +29,29 @@ public class ReturnServerDir implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(clientFrame.getSocket() != null && clientFrame.getSocket().isConnected()){
+            FileModel fileModel = new FileModel();
 
-        FileModel fileModel = new FileModel();
+            String fileName = serverFilePanel.getJTextField().getText()+serverFilePanel.getJTable().getValueAt(0,0).toString();
 
-        String fileName = serverFilePanel.getJTextField().getText()+serverFilePanel.getJTable().getValueAt(0,0).toString();
+            fileModel.setFilePath(fileName);
 
-        fileModel.setFilePath(fileName);
+            System.out.println(fileName);
 
-        System.out.println(fileName);
+            Protocol protocol = new Protocol();
+            protocol.setServiceIp(clientFrame.getProtocol().getServiceIp());
+            protocol.setCommandPort(clientFrame.getProtocol().getCommandPort());
+            protocol.setClientIp(IPUtil.getLocalIP());
+            protocol.setConnectType(ConnectType.INITIATIVE);
+            protocol.setOperateType(OperateType.RETURN_FATHER_DIR);
+            protocol.setData(fileModel);
+            protocol.setDataPort(clientFrame.getProtocol().getDataPort());
 
-        Protocol protocol = new Protocol();
-        protocol.setServiceIp(clientFrame.getProtocol().getServiceIp());
-        protocol.setCommandPort(clientFrame.getProtocol().getCommandPort());
-        protocol.setClientIp(IPUtil.getLocalIP());
-        protocol.setConnectType(ConnectType.INITIATIVE);
-        protocol.setOperateType(OperateType.RETURN_FATHER_DIR);
-        protocol.setData(fileModel);
-        protocol.setDataPort(clientFrame.getProtocol().getDataPort());
 
-        SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
-        ReceiveCommand.receiveCommand(clientFrame,clientFrame.getSocketObjectInputStream());
+            SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
+            ReceiveCommand.receiveCommand(clientFrame,clientFrame.getSocketObjectInputStream());
+        }else{
+            new MessageDialog("提示","清闲连接客户端").init();
+        }
     }
 }

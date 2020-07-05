@@ -15,7 +15,7 @@ import java.net.Socket;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 客户端处理服务器命令
  * @date 2020-07-05 8:16
  */
 public class ReceiveCommand {
