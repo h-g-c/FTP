@@ -37,8 +37,8 @@ public class ServerFilePanel extends JPanel {
         setLayout(new GridBagLayout());
 
         jLabel = new JLabel("远程文件",JLabel.CENTER);
-        jButton1 = new JButton("下载");
-        jButton2 = new JButton("删除");
+        jButton1 = new JButton("  下载   ");
+        jButton2 = new JButton("   删除 ");
         jButton3 = new JButton("获取远程文件目录");
         jTextField = new JTextField("远程文件目录",10);
         jTextField.setEditable(false);

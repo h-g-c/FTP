@@ -17,8 +17,8 @@ public class SendCommand{
             if(socket != null && socket.isConnected()){
                 os = new ObjectOutputStream(socket.getOutputStream());
                 os.writeObject(protocol);
+                System.out.println(os.toString());
                 os.flush();
-                System.out.println(1);
             }
         } catch (IOException e) {
             e.printStackTrace();

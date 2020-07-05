@@ -48,9 +48,10 @@ public class CreatServer implements Runnable{
             try {
                 serverSocket = new ServerSocket(0);
                 protocolLocal.setOperateType(OperateType.DOWNLOAD);
-                protocolLocal.setConnectType(ConnectType.INITIATIVE);
                 protocolLocal.setClientIp(IPUtil.getLocalIP());
+                protocolLocal.setConnectType(protocolServer.getConnectType());
                 protocolLocal.setDataPort(serverSocket.getLocalPort());
+                protocolLocal.setCommandPort(null);
                 SendCommand.sendCommend(protocolLocal,socketServer);
                 socketLocal = serverSocket.accept();
 

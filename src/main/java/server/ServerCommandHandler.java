@@ -62,6 +62,7 @@ public class ServerCommandHandler implements Runnable {
                         break;
                     }
                     case FILE_PATH: {
+                        System.out.println((String) protocolFromSocket.getData());
                         mode.getFileList((String) protocolFromSocket.getData());
                         break;
                     }
