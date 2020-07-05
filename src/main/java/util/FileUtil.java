@@ -32,7 +32,7 @@ public class FileUtil {
                 fileCol.setFileSize(String.valueOf(kidFile.length()));
             } else {
                 fileCol.setFileType("1");
-                fileCol.setFileSize("0");
+                fileCol.setFileSize("dir");
             }
             list.add(fileCol);
         }

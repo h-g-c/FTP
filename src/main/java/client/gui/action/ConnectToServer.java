@@ -46,6 +46,7 @@ public class ConnectToServer implements ActionListener {
         protocol.setClientIp(IPUtil.getLocalIP());
         protocol.setOperateType(OperateType.CONNECT);
         protocol.setConnectType(type);
+        protocol.setOperateType(OperateType.CONNECT);
         protocol.setData(null);
         protocol.setDataPort(Integer.valueOf(defaultInfoPanel.getJt3().getText()));
 

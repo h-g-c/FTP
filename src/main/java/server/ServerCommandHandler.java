@@ -61,7 +61,11 @@ public class ServerCommandHandler implements Runnable {
                         break;
                     }
                     case FILE_PATH: {
-                        mode.getFileList((String) protocolFromSocket.getData());
+                        Protocol protocol=new Protocol();
+                        Object data=mode.getFileList((String) protocolFromSocket.getData());
+                        protocol.setData(data);
+                        objectOutputStream.writeObject(protocol);
+                        objectOutputStream.flush();
                         break;
                     }
                     case UPLOAD: {
