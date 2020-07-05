@@ -40,6 +40,7 @@ public class StopConnect implements ActionListener {
             clientFrame.getJPanel3().getJPanel2().getModel().setRowCount(0);
             DefaultTableModel model = new DefaultTableModel(data,tableInfo);
             clientFrame.getJPanel3().getJPanel2().getJTable().setModel(model);
+            clientFrame.getJPanel3().getJPanel2().getJTextField().setText("");
             defaultInfoPanel.getJComboBox().setEnabled(true);
             defaultInfoPanel.getJt1().setEditable(true);
             defaultInfoPanel.getJt2().setEditable(true);

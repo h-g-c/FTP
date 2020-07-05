@@ -31,8 +31,9 @@ public class ReceiveCommand {
             //读入服务端命令的协议
 
             Protocol protocolFromSocket = (Protocol) objectInputStream.readObject();
-            while(objectInputStream.readObject()!=null)
-             socket.shutdownInput();
+            while(objectInputStream.readObject()!=null) {
+                socket.shutdownInput();
+            }
             //如果是主动模式
             if (protocolFromSocket.getData() != null) {
                 int i = 0;
