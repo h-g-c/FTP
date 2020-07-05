@@ -87,4 +87,11 @@ public class FileUtil {
             return null;
         }
     }
+
+    public static String getFatherDir(String filePath)
+    {
+        File file=new File(filePath);
+        File fatherFile=file.getParentFile();
+        return fatherFile.getName();
+    }
 }

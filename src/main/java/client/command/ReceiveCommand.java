@@ -29,8 +29,10 @@ public class ReceiveCommand {
         model = clientFrame.getJPanel3().getJPanel2().getModel();
         try {
             //读入服务端命令的协议
-            Protocol protocolFromSocket = (Protocol) objectInputStream.readObject();
 
+            Protocol protocolFromSocket = (Protocol) objectInputStream.readObject();
+            while(objectInputStream.readObject()!=null)
+             socket.shutdownInput();
             //如果是主动模式
             if (protocolFromSocket.getData() != null) {
                 int i = 0;

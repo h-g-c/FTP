@@ -25,6 +25,7 @@ public class InitiativeMode extends Mode {
         Protocol sendProtocal = new Protocol();
         sendProtocal.setData(fileList);
         objectOutputStream.writeObject(sendProtocal);
+        objectOutputStream.writeObject(null);
         objectOutputStream.flush();
     }
 
