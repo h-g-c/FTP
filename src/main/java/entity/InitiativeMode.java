@@ -22,9 +22,8 @@ public class InitiativeMode extends Mode {
     @Override
     public void initialization(ObjectOutputStream objectOutputStream, Protocol protocolFromSocket) throws IOException {
         ArrayList<FileModel> fileList = FileUtil.getFileList(Constant.DEFAULT_FILE_PATH);
-        Protocol sendProtocal = new Protocol();
-        sendProtocal.setData(fileList);
-        objectOutputStream.writeObject(sendProtocal);
+        protocolFromSocket.setData(fileList);
+        objectOutputStream.writeObject(protocolFromSocket);
         objectOutputStream.writeObject(null);
         objectOutputStream.flush();
     }

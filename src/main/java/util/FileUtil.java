@@ -20,6 +20,8 @@ public class FileUtil {
     public static ArrayList<FileModel> getFileList(String filePath) {
         ArrayList<FileModel> list = new ArrayList<FileModel>();
         File fatherFile = new File(filePath);
+        if(fatherFile.isFile())
+            return list;
         System.out.println(fatherFile.getAbsolutePath());
         File[] fileList = fatherFile.listFiles();
         for (File kidFile : fileList) {

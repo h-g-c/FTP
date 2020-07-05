@@ -61,10 +61,9 @@ public class ServerCommandHandler implements Runnable {
                         break;
                     }
                     case FILE_PATH: {
-                        Protocol protocol=new Protocol();
                         Object data=mode.getFileList((String) protocolFromSocket.getData());
-                        protocol.setData(data);
-                        objectOutputStream.writeObject(protocol);
+                        protocolFromSocket.setData(data);
+                        objectOutputStream.writeObject(protocolFromSocket);
                         objectOutputStream.writeObject(null);
                         objectOutputStream.flush();
                         break;
@@ -73,14 +72,13 @@ public class ServerCommandHandler implements Runnable {
                         mode.upload();
                         break;
                     }
-                    case RETURN_FATHER_DIR:{
+                    case RETURN_FATHER_DIR: {
                         FileModel fileModel= (FileModel) protocolFromSocket.getData();
                         String fatherDir= FileUtil.getFatherDir(fileModel.getFilePath());
-                        Protocol protocol=new Protocol();
                         FileModel data=new FileModel();
                         data.setFilePath(fatherDir);
-                        protocol.setData(data);
-                        objectOutputStream.writeObject(protocol);
+                        protocolFromSocket.setData(data);
+                        objectOutputStream.writeObject(protocolFromSocket);
                         objectOutputStream.writeObject(null);
                         objectOutputStream.flush();
                     }
