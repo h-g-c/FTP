@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import util.FileUtil;
 
 import java.io.*;
 import java.net.Socket;
@@ -64,12 +65,24 @@ public class ServerCommandHandler implements Runnable {
                         Object data=mode.getFileList((String) protocolFromSocket.getData());
                         protocol.setData(data);
                         objectOutputStream.writeObject(protocol);
+                        objectOutputStream.writeObject(null);
                         objectOutputStream.flush();
                         break;
                     }
                     case UPLOAD: {
                         mode.upload();
                         break;
+                    }
+                    case RETURN_FATHER_DIR:{
+                        FileModel fileModel= (FileModel) protocolFromSocket.getData();
+                        String fatherDir= FileUtil.getFatherDir(fileModel.getFilePath());
+                        Protocol protocol=new Protocol();
+                        FileModel data=new FileModel();
+                        data.setFilePath(fatherDir);
+                        protocol.setData(data);
+                        objectOutputStream.writeObject(protocol);
+                        objectOutputStream.writeObject(null);
+                        objectOutputStream.flush();
                     }
                 }
                 // 读入协议信息

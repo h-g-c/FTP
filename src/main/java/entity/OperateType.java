@@ -18,5 +18,7 @@ public enum OperateType implements Serializable {
     PAUSE,
     // 查看文件
     INITIALIZATION,
-    FILE_PATH
+    FILE_PATH,
+    //返回上级目录
+    RETURN_FATHER_DIR
 }
