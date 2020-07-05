@@ -61,7 +61,7 @@ public class ClientCommandHandler implements Runnable {
                     model.setRowCount(0);
                     model = new DefaultTableModel(data, tableInfo);
                     serverFilePanel.getJTable().setModel(model);
-                    serverFilePanel.getJTextField().setText(fileList.get(0).getFileName()+File.separator);
+                    serverFilePanel.getJTextField().setText("Asda");
                 }
             }
         } catch (IOException | ClassNotFoundException e) {

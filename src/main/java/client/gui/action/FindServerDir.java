@@ -1,21 +1,16 @@
 package client.gui.action;
 
+import client.command.ReceiveCommand;
 import client.command.SendCommand;
 import client.gui.ClientFrame;
-import client.gui.panel.LocalFilePanel;
 import client.gui.panel.ServerFilePanel;
-import client.util.GetFiles;
 import client.util.IPUtil;
-import entity.FileModel;
+import entity.ConnectType;
 import entity.OperateType;
 import entity.Protocol;
 import lombok.*;
-import org.w3c.dom.events.MouseEvent;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.io.File;
 import java.util.Date;
@@ -93,11 +88,16 @@ public class FindServerDir extends MouseAdapter {
         int row = serverFilePanel.getJTable().rowAtPoint(me.getPoint());
         String fileName = serverFilePanel.getJTextField().getText()+serverFilePanel.getJTable().getValueAt(row,0).toString();
         Protocol protocol = new Protocol();
+        protocol.setServiceIp("127.0.0.1");
+        protocol.setCommandPort(8081);
+        protocol.setClientIp(IPUtil.getLocalIP());
+        protocol.setConnectType(ConnectType.INITIATIVE);
         protocol.setOperateType(OperateType.FILE_PATH);
         protocol.setData(fileName);
+        protocol.setDataPort(8081);
 
-        SendCommand.sendCommend(protocol,clientFrame.getSocket());
-
+        SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
+        ReceiveCommand.receiveCommand(clientFrame,clientFrame.getSocketObjectInputStream());
     }
 
 }

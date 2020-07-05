@@ -56,5 +56,4 @@ public class InitiativeMode extends Mode {
         objectOutputStream.writeObject(sendProtocal);
         objectOutputStream.flush();
     }
-
 }

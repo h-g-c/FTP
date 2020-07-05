@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,13 +29,17 @@ public class StopConnect implements ActionListener {
     @NonNull
     private DefaultInfoPanel defaultInfoPanel;
 
+    private String[][] data = null;
+    private final String[] tableInfo = {"文件名","大小","日期"};
 
     @SneakyThrows
     @Override
     public void actionPerformed(ActionEvent e) {
         if((clientFrame.getSocket() != null && !clientFrame.getSocket().isClosed())){
             clientFrame.getSocket().close();
-            System.out.println(clientFrame.getSocket().isClosed());
+            clientFrame.getJPanel3().getJPanel2().getModel().setRowCount(0);
+            DefaultTableModel model = new DefaultTableModel(data,tableInfo);
+            clientFrame.getJPanel3().getJPanel2().getJTable().setModel(model);
             defaultInfoPanel.getJComboBox().setEnabled(true);
             defaultInfoPanel.getJt1().setEditable(true);
             defaultInfoPanel.getJt2().setEditable(true);

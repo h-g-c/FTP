@@ -9,6 +9,8 @@ import lombok.Data;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 /**
@@ -19,6 +21,8 @@ import java.net.Socket;
 @Data
 public class ClientFrame extends JFrame {
     public Socket socket = null;
+    private ObjectInputStream socketObjectInputStream;
+    private ObjectOutputStream socketObjectOutputStream;
     private Protocol protocol = null;
     private DefaultInfoPanel jPanel2;
     private CenterPanel jPanel3;
