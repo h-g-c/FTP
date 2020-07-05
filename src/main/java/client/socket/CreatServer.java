@@ -52,7 +52,7 @@ public class CreatServer implements Runnable{
                 protocolLocal.setConnectType(protocolServer.getConnectType());
                 protocolLocal.setDataPort(serverSocket.getLocalPort());
                 protocolLocal.setCommandPort(null);
-                SendCommand.sendCommend(protocolLocal,socketServer);
+//                SendCommand.sendCommend(protocolLocal,socketServer);
                 socketLocal = serverSocket.accept();
 
                 //TODO accept files

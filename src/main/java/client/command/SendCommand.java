@@ -11,14 +11,11 @@ import java.net.Socket;
  * @date 2020-07-03 16:05
  */
 public class SendCommand{
-    public static void sendCommend(Protocol protocol, Socket socket){
-        ObjectOutputStream os = null;
+    public static void sendCommend(Protocol protocol,Socket socket,ObjectOutputStream objectOutputStream){
         try{
             if(socket != null && socket.isConnected()){
-                os = new ObjectOutputStream(socket.getOutputStream());
-                os.writeObject(protocol);
-                System.out.println(os.toString());
-                os.flush();
+                objectOutputStream.writeObject(protocol);
+                objectOutputStream.flush();
             }
         } catch (IOException e) {
             e.printStackTrace();

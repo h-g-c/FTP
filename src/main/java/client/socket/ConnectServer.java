@@ -6,6 +6,10 @@ import client.command.SendCommand;
 import client.gui.ClientFrame;
 import entity.Protocol;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 /**
  * @author LvHao
  * @Description : 初始化一个客户端到服务端的连接
@@ -17,8 +21,14 @@ public class ConnectServer extends SocketUtil {
         super(protocol);
         clientFrame.setSocket(this.createSocket());
         clientFrame.setProtocol(protocol);
-        SendCommand.sendCommend(protocol,clientFrame.getSocket());
-        ReceiveCommand.receiveCommand(clientFrame);
+        try {
+            clientFrame.setSocketObjectInputStream(new ObjectInputStream(clientFrame.getSocket().getInputStream()));
+            clientFrame.setSocketObjectOutputStream(new ObjectOutputStream(clientFrame.getSocket().getOutputStream()));
+            SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
+            ReceiveCommand.receiveCommand(clientFrame,clientFrame.getSocketObjectInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         new Thread(new IsConnect(clientFrame)).start();
     }
 }

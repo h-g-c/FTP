@@ -23,14 +23,12 @@ public class ReceiveCommand {
     private static DefaultTableModel model;
     private static Socket socket;
 
-    public static void receiveCommand(ClientFrame clientFrame){
+    public static void receiveCommand(ClientFrame clientFrame, ObjectInputStream objectInputStream){
         socket = clientFrame.getSocket();
         serverFilePanel = clientFrame.getJPanel3().getJPanel2();
         model = clientFrame.getJPanel3().getJPanel2().getModel();
         try {
             //读入服务端命令的协议
-            ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
-
             Protocol protocolFromSocket = (Protocol) objectInputStream.readObject();
 
             socket.shutdownInput();
@@ -53,7 +51,8 @@ public class ReceiveCommand {
                 model.setRowCount(0);
                 model = new DefaultTableModel(data, tableInfo);
                 serverFilePanel.getJTable().setModel(model);
-                serverFilePanel.getJTextField().setText("Asda");
+                String filepath = fileList.get(0).getFilePath().replace(fileList.get(0).getFileName(),"");
+                serverFilePanel.getJTextField().setText(filepath);
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
