@@ -1,5 +1,6 @@
 package server;
 
+import configuration_and_constant.Constant;
 import entity.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +11,7 @@ import util.FileUtil;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * 服务端处理命令输入的线程
@@ -61,9 +63,10 @@ public class ServerCommandHandler implements Runnable {
                         break;
                     }
                     case FILE_PATH: {
+                        Protocol protocol=new Protocol();
                         Object data=mode.getFileList((String) protocolFromSocket.getData());
-                        protocolFromSocket.setData(data);
-                        objectOutputStream.writeObject(protocolFromSocket);
+                        protocol.setData(data);
+                        objectOutputStream.writeObject(protocol);
                         objectOutputStream.writeObject(null);
                         objectOutputStream.flush();
                         break;
@@ -72,13 +75,15 @@ public class ServerCommandHandler implements Runnable {
                         mode.upload();
                         break;
                     }
-                    case RETURN_FATHER_DIR: {
+                    case RETURN_FATHER_DIR:{
                         FileModel fileModel= (FileModel) protocolFromSocket.getData();
+                        System.out.println(fileModel.getFilePath());
                         String fatherDir= FileUtil.getFatherDir(fileModel.getFilePath());
-                        FileModel data=new FileModel();
-                        data.setFilePath(fatherDir);
-                        protocolFromSocket.setData(data);
-                        objectOutputStream.writeObject(protocolFromSocket);
+                        System.out.println(fatherDir);
+                        Protocol protocol=new Protocol();
+                        ArrayList<FileModel> fileList = FileUtil.getFileList(fatherDir);
+                        protocol.setData(fileList);
+                        objectOutputStream.writeObject(protocol);
                         objectOutputStream.writeObject(null);
                         objectOutputStream.flush();
                     }

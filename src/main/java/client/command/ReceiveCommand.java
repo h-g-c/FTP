@@ -36,23 +36,31 @@ public class ReceiveCommand {
             }
             //如果是主动模式
             if (protocolFromSocket.getData() != null) {
+                System.out.println("receive1");
                 int i = 0;
                 ArrayList<FileModel> fileList = (ArrayList<FileModel>) protocolFromSocket.getData();
+                System.out.println(fileList.size());
                 String[][] data = new String[fileList.size()][3];
-                for (FileModel f : fileList) {
-                    data[i][0] = f.getFileName();
-                    data[i][1] = f.getFileSize();
-                    data[i][2] = f.getChangeTime();
-                    i++;
+                String filepath = null;
+                if(fileList.size() ==0){
+                    data = null;
+                    filepath = serverFilePanel.getJTextField().getText().substring(0,serverFilePanel.getJTextField().getText().length() - 1);
+                }else{
+                    for (FileModel f : fileList) {
+                        data[i][0] = f.getFileName();
+                        data[i][1] = f.getFileSize();
+                        data[i][2] = f.getChangeTime();
+                        i++;
+                    }
+                    i = 0;
+                    filepath = fileList.get(0).getFilePath().replace(fileList.get(0).getFileName(),"");
                 }
-                i = 0;
                 //接下来判断命令的具体动作
                 //new Thread(new CreatServer(protocolFromSocket, socket)).start();
                 //TODO something
                 model.setRowCount(0);
                 model = new DefaultTableModel(data, tableInfo);
                 serverFilePanel.getJTable().setModel(model);
-                String filepath = fileList.get(0).getFilePath().replace(fileList.get(0).getFileName(),"");
                 serverFilePanel.getJTextField().setText(filepath);
             }
         } catch (IOException | ClassNotFoundException e) {

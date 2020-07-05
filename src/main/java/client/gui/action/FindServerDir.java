@@ -87,17 +87,19 @@ public class FindServerDir extends MouseAdapter {
         // 双击事件
         int row = serverFilePanel.getJTable().rowAtPoint(me.getPoint());
         String fileName = serverFilePanel.getJTextField().getText()+serverFilePanel.getJTable().getValueAt(row,0).toString();
-        Protocol protocol = new Protocol();
-        protocol.setServiceIp("127.0.0.1");
-        protocol.setCommandPort(8081);
-        protocol.setClientIp(IPUtil.getLocalIP());
-        protocol.setConnectType(ConnectType.INITIATIVE);
-        protocol.setOperateType(OperateType.FILE_PATH);
-        protocol.setData(fileName);
-        protocol.setDataPort(8081);
+        if((serverFilePanel.getJTable().getValueAt(row,1).toString()).equals("<DIR>")){
+            Protocol protocol = new Protocol();
+            protocol.setServiceIp(clientFrame.getProtocol().getServiceIp());
+            protocol.setCommandPort(clientFrame.getProtocol().getCommandPort());
+            protocol.setClientIp(IPUtil.getLocalIP());
+            protocol.setConnectType(ConnectType.INITIATIVE);
+            protocol.setOperateType(OperateType.FILE_PATH);
+            protocol.setData(fileName);
+            protocol.setDataPort(clientFrame.getProtocol().getDataPort());
 
-        SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
-        ReceiveCommand.receiveCommand(clientFrame,clientFrame.getSocketObjectInputStream());
+            SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
+            ReceiveCommand.receiveCommand(clientFrame,clientFrame.getSocketObjectInputStream());
+        }
     }
 
 }

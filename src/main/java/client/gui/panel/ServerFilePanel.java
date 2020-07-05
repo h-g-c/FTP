@@ -3,6 +3,8 @@ package client.gui.panel;
 import client.gui.ClientFrame;
 import client.gui.MyGridBagConstraints;
 import client.gui.action.FindServerDir;
+import client.gui.action.GetServerDir;
+import client.gui.action.ReturnServerDir;
 import client.gui.table.LocalFileTable;
 import lombok.Data;
 
@@ -41,7 +43,9 @@ public class ServerFilePanel extends JPanel {
         jButton1 = new JButton("下载");
         jButton2 = new JButton("删除 ");
         jButton3 = new JButton("返回");
+        jButton3.addActionListener(new ReturnServerDir(clientFrame,this));
         jButton4 = new JButton("获取远程目录");
+        jButton4.addActionListener(new GetServerDir(clientFrame));
         jTextField = new JTextField("远程文件目录",10);
         jTextField.setEditable(false);
         model=new DefaultTableModel(data, tableInfo);

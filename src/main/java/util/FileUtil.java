@@ -1,5 +1,6 @@
 package util;
 
+import configuration_and_constant.Constant;
 import entity.FileEnum;
 import entity.FileModel;
 
@@ -93,7 +94,11 @@ public class FileUtil {
     public static String getFatherDir(String filePath)
     {
         File file=new File(filePath);
-        File fatherFile=file.getParentFile();
-        return fatherFile.getName();
+        System.out.println(file.getParent());
+        if(file.getParent().equals(Constant.DEFAULT_FILE_PATH)){
+            return Constant.DEFAULT_FILE_PATH;
+        }else{
+            return new File(file.getParent()).getParent();
+        }
     }
 }
