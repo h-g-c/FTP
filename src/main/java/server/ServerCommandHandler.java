@@ -66,6 +66,7 @@ public class ServerCommandHandler implements Runnable {
                         Protocol protocol=new Protocol();
                         Object data=mode.getFileList((String) protocolFromSocket.getData());
                         protocol.setData(data);
+                        protocol.setOperateType(protocolFromSocket.getOperateType());
                         objectOutputStream.writeObject(protocol);
                         objectOutputStream.writeObject(null);
                         objectOutputStream.flush();
@@ -83,6 +84,7 @@ public class ServerCommandHandler implements Runnable {
                         Protocol protocol=new Protocol();
                         ArrayList<FileModel> fileList = FileUtil.getFileList(fatherDir);
                         protocol.setData(fileList);
+                        protocol.setOperateType(protocolFromSocket.getOperateType());
                         objectOutputStream.writeObject(protocol);
                         objectOutputStream.writeObject(null);
                         objectOutputStream.flush();

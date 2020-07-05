@@ -15,6 +15,9 @@ import java.util.ArrayList;
 /**
  * @author LvHao
  * @Description :处理客户端命令接受的线程
+ * 目前客户端是用监听器来实现多线程逻辑
+ * 收发命令在一起
+ * 此方法留作后续备用
  * @date 2020-07-04 18:11
  */
 @AllArgsConstructor

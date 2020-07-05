@@ -2,14 +2,16 @@ package client.command;
 
 import client.gui.ClientFrame;
 import client.gui.panel.ServerFilePanel;
-import entity.FileModel;
+import client.mode.InitiativeMode;
+import client.mode.Mode;
+import client.mode.PassiveMode;
+import entity.ConnectType;
 import entity.Protocol;
 
 import javax.swing.table.DefaultTableModel;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
-import java.util.ArrayList;
 
 /**
  * @author LvHao
@@ -18,10 +20,10 @@ import java.util.ArrayList;
  */
 public class ReceiveCommand {
 
-    private final static String[] tableInfo = {"文件名", "大小", "日期"};
     private static ServerFilePanel serverFilePanel;
     private static DefaultTableModel model;
     private static Socket socket;
+    private static Mode mode;
 
     public static void receiveCommand(ClientFrame clientFrame, ObjectInputStream objectInputStream){
         socket = clientFrame.getSocket();
@@ -29,39 +31,34 @@ public class ReceiveCommand {
         model = clientFrame.getJPanel3().getJPanel2().getModel();
         try {
             //读入服务端命令的协议
-
             Protocol protocolFromSocket = (Protocol) objectInputStream.readObject();
             while(objectInputStream.readObject()!=null) {
                 socket.shutdownInput();
             }
             //如果是主动模式
-            if (protocolFromSocket.getData() != null) {
-                System.out.println("receive1");
-                int i = 0;
-                ArrayList<FileModel> fileList = (ArrayList<FileModel>) protocolFromSocket.getData();
-                System.out.println(fileList.size());
-                String[][] data = new String[fileList.size()][3];
-                String filepath = null;
-                if(fileList.size() ==0){
-                    data = null;
-                    filepath = serverFilePanel.getJTextField().getText().substring(0,serverFilePanel.getJTextField().getText().length() - 1);
-                }else{
-                    for (FileModel f : fileList) {
-                        data[i][0] = f.getFileName();
-                        data[i][1] = f.getFileSize();
-                        data[i][2] = f.getChangeTime();
-                        i++;
-                    }
-                    i = 0;
-                    filepath = fileList.get(0).getFilePath().replace(fileList.get(0).getFileName(),"");
+            if(ConnectType.INITIATIVE.equals(protocolFromSocket.getConnectType())){
+                mode = new InitiativeMode();
+            }else {
+                //被动模式
+                mode = new PassiveMode();
+            }
+            //下面是对各种操作的处理
+            switch (protocolFromSocket.getOperateType()){
+                case FILE_PATH:
+                case RETURN_FATHER_DIR:
+                case CONNECT:{
+                    mode.showServerDir(protocolFromSocket,serverFilePanel,model);
                 }
-                //接下来判断命令的具体动作
-                //new Thread(new CreatServer(protocolFromSocket, socket)).start();
-                //TODO something
-                model.setRowCount(0);
-                model = new DefaultTableModel(data, tableInfo);
-                serverFilePanel.getJTable().setModel(model);
-                serverFilePanel.getJTextField().setText(filepath);
+                case PAUSE:{
+                    mode.pause();
+                }
+                case DOWNLOAD:{
+                    mode.download();
+                }
+                case UPLOAD:{
+                    mode.upload();
+                }
+
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
