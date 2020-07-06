@@ -21,7 +21,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 public class InitiativeMode extends Mode {
     @Override
-    public void initialization(ObjectOutputStream objectOutputStream, Protocol protocolFromSocket) throws IOException {
+    public void initialize(ObjectOutputStream objectOutputStream, Protocol protocolFromSocket) throws IOException {
         ArrayList<FileModel> fileList = FileUtil.getFileList(Constant.DEFAULT_FILE_PATH);
         protocolFromSocket.setData(fileList);
         objectOutputStream.writeObject(protocolFromSocket);
@@ -38,8 +38,5 @@ public class InitiativeMode extends Mode {
         }
         return super.dataSocket;
     }
-
-
-
 
 }

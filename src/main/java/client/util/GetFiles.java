@@ -121,7 +121,7 @@ public class GetFiles {
         if(file.isDirectory()){
             return "<DIR>";
         }else if(file.isFile()){
-            if(FileUtil.judgeFileType(file.getAbsolutePath()) == FileEnum.BINARY){
+            if(new FileUtil().judgeFileType(file.getAbsolutePath()) == FileEnum.BINARY){
                 return "二进制文件";
             }else{
                 return "文本文件";

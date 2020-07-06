@@ -61,15 +61,20 @@ public class ClientCommandHandler implements Runnable {
                     case RETURN_FATHER_DIR:
                     case CONNECT:{
                         mode.showServerDir(protocolFromSocket,serverFilePanel,model);
+                        break;
                     }
                     case PAUSE:{
                         mode.pause();
+                        break;
                     }
                     case DOWNLOAD:{
+                        clientFrame.setDataSocket(clientFrame.serverSocket.accept());
                         mode.download(protocolFromSocket,clientFrame);
+                        break;
                     }
                     case UPLOAD:{
                         mode.upload();
+                        break;
                     }
 
                 }

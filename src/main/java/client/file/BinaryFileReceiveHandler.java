@@ -32,21 +32,21 @@ public class BinaryFileReceiveHandler {
             }
             //从之前的断点地方进行接收
             randomAccessFile.seek(size);
-            byte[] value = new byte[1024*8];
+            byte[] value = new byte[8];
+            int i=0;
             while(true){
                 int length = dataInputStream.read(value);
                 if(length == -1){
                     break;
                 }
-                randomAccessFile.write(value);
+                randomAccessFile.write(value,0,length);
                 size += length;
-                if(size == fileLength){
+                if(size >= fileLength){
                     break;
                 }
             }
             dataInputStream.close();
             randomAccessFile.close();
-
             //对文件重命名
             if(size >= fileLength){
                 tempFile.renameTo(new File(Constant.DEFAULT_PATH + fileModel.getFileName()));
