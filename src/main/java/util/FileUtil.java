@@ -24,7 +24,6 @@ public class FileUtil {
         if(fatherFile.isFile()) {
             return list;
         }
-        System.out.println(fatherFile.getAbsolutePath());
         File[] fileList = fatherFile.listFiles();
         for (File kidFile : fileList) {
             FileModel fileCol = FileModel.builder().fileName(kidFile.getName())
@@ -95,7 +94,13 @@ public class FileUtil {
     public static String getFatherDir(String filePath)
     {
         File file=new File(filePath);
-        System.out.println(file.getParent());
+        if(file.isDirectory())
+        {
+            System.out.println("k");
+            File[] files=file.listFiles();
+            if(files.length==0)
+                return filePath;
+        }
         if(file.getParent().equals(Constant.DEFAULT_FILE_PATH)){
             return Constant.DEFAULT_FILE_PATH;
         }else{

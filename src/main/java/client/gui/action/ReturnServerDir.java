@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * @author LvHao
@@ -31,13 +32,8 @@ public class ReturnServerDir implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(clientFrame.getSocket() != null && clientFrame.getSocket().isConnected()){
             FileModel fileModel = new FileModel();
-
-            String fileName = serverFilePanel.getJTextField().getText()+serverFilePanel.getJTable().getValueAt(0,0).toString();
-
+            String fileName = serverFilePanel.getJTextField().getText()+(serverFilePanel.getJTable().size().getHeight()==0? "":serverFilePanel.getJTable().getValueAt(0,0).toString());
             fileModel.setFilePath(fileName);
-
-            System.out.println(fileName);
-
             Protocol protocol = new Protocol();
             protocol.setServiceIp(clientFrame.getProtocol().getServiceIp());
             protocol.setCommandPort(clientFrame.getProtocol().getCommandPort());
