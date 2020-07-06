@@ -1,5 +1,8 @@
 package client.util;
 
+import entity.FileEnum;
+import util.FileUtil;
+
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
@@ -47,6 +50,7 @@ public class GetFiles {
             datas[i][0] = files[i].getName();
             datas[i][1] = fileSize(getTotalSizeOfFilesInDir(files[i]));
             datas[i][2] = getFileDate(files[i]);
+//            datas[i][3] = getFileType(files[i]);
         }
         return datas;
     }
@@ -60,11 +64,12 @@ public class GetFiles {
         try{
             File file = new File(fileName);
             File[] files = file.listFiles();
-            datas = new String[files.length][3];
+            datas = new String[files.length][4];
             for(int i = 0; i < files.length; i++){
                 datas[i][0] = files[i].getName();
                 datas[i][1] = fileSize(getTotalSizeOfFilesInDir(files[i]));
                 datas[i][2] = getFileDate(files[i]);
+//                datas[i][3] = getFileType(files[i]);
             }
             return datas;
         }catch (NullPointerException e){
@@ -106,5 +111,23 @@ public class GetFiles {
             e.printStackTrace();
         }
         return formatted;
+    }
+
+
+    /**
+     * 判断文件类型
+     */
+    private static String getFileType(File file){
+        if(file.isDirectory()){
+            return "<DIR>";
+        }else if(file.isFile()){
+            if(FileUtil.judgeFileType(file.getAbsolutePath()) == FileEnum.BINARY){
+                return "二进制文件";
+            }else{
+                return "文本文件";
+            }
+        }else{
+            return null;
+        }
     }
 }

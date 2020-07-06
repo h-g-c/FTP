@@ -1,5 +1,6 @@
 package client.mode;
 
+import client.gui.ClientFrame;
 import client.gui.panel.ServerFilePanel;
 import client.util.DefaultMsg;
 import entity.FileModel;
@@ -55,9 +56,8 @@ public abstract class Mode {
     public void upload() {
     }
 
-    public void download() throws IOException {
-
-        //TODO ...
+    public void download(Protocol protocolFromSocket, ClientFrame clientFrame){
+        //下载文件处理
     }
 
     public void pause() {
