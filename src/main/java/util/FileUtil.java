@@ -50,9 +50,9 @@ public class FileUtil {
         return time;
     }
 
-//    public static void main(String[] args) throws IOException {
-//        System.out.println(getFileLine("/home/heguicai/hgc.txt"));
-//    }
+    public static void main(String[] args) throws IOException {
+        System.out.println(judgeFileType("node-v10.9.0-linux-x64.tar.xz"));
+    }
 
 
     /**
@@ -70,7 +70,6 @@ public class FileUtil {
             if (status != 0) {
                 System.err.println("Failed to call shell's command and the return status's is: " + status);
             }
-            System.out.println(result);
             if(result==null){
                 return null;
             }

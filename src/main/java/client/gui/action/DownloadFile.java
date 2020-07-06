@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.jar.JarOutputStream;
 
 /**
  * @author LvHao
@@ -57,6 +58,7 @@ public class DownloadFile implements ActionListener {
 
             protocol = new Protocol();
             socketServer = new ServerSocket(0);
+            clientFrame.serverSocket=socketServer;
             log.info(socketServer.toString());
 
             String oneFile = fileName[0].substring(fileName[0].lastIndexOf(File.separator)+1,fileName[0].length());
@@ -67,7 +69,7 @@ public class DownloadFile implements ActionListener {
             }
 
             File file = new File(Constant.DEFAULT_PATH + oneFile + ".temp");
-            new RandomAccessFile(Constant.DEFAULT_PATH + oneFile + ".temp","rm");
+            new RandomAccessFile(Constant.DEFAULT_PATH + oneFile + ".temp","rw");
 
             long size = 0;
             if(file.exists() && file.isFile()){
@@ -76,7 +78,7 @@ public class DownloadFile implements ActionListener {
 
             FileModel fileModel = new FileModel();
             fileModel.setFileName(oneFile);
-            fileModel.setFilePath( Constant.DEFAULT_PATH + oneFile);
+            fileModel.setFilePath(fileName[0]);
             fileModel.setFileSize(String.valueOf(size));
 
             protocol.setData(fileModel);
@@ -84,11 +86,11 @@ public class DownloadFile implements ActionListener {
             protocol.setOperateType(OperateType.DOWNLOAD);
             protocol.setClientIp(IPUtil.getLocalIP());
             protocol.setConnectType(ConnectType.INITIATIVE);
-
             SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
-
-            clientFrame.setDataSocket(socketServer.accept());
-
+//            Socket haha=socketServer.accept();
+//            clientFrame.setDataSocket(haha);
+//            System.out.println(clientFrame.hashCode());
+//            System.out.println("链接呈贡"+haha.toString());
 
         }catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException){
             new MessageDialog("提示","请先选择文件！").init();

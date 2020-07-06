@@ -23,6 +23,8 @@ import java.net.Socket;
 public class ClientFrame extends JFrame {
     public Socket dataSocket = null;
     public Socket socket = null;
+    public ServerSocket serverSocket=null;
+    public int code=1;
     private ObjectInputStream socketObjectInputStream;
     private ObjectOutputStream socketObjectOutputStream;
     private Protocol protocol = null;

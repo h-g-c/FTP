@@ -58,7 +58,6 @@ public class ServerCommandHandler implements Runnable {
                         break;
                     }
                     case DOWNLOAD: {
-                        Socket dataSocket = mode.getDataSocket(protocolFromSocket.getClientIp(), protocolFromSocket.getDataPort());
                         mode.download(protocolFromSocket, objectOutputStream);
                         break;
                     }
@@ -95,6 +94,8 @@ public class ServerCommandHandler implements Runnable {
             log.error(e.getMessage());
         } catch (ClassNotFoundException e) {
             log.error("反序列化失败");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

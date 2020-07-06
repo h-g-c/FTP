@@ -21,10 +21,12 @@ public class SendFileByByte implements Runnable{
 
 
     public static boolean breakPoint(DataOutputStream das,String filePath,long point) throws FileNotFoundException {
+        System.out.println(filePath);
         File file=new File(filePath);
-        RandomAccessFile raf = new RandomAccessFile(file, "r");
+        RandomAccessFile raf = new RandomAccessFile(file, "rw");
         byte[] value;
         long fileLength = file.length();
+        System.out.println(fileLength);
         try {
             raf.seek(point);
             value = new byte[(int) (fileLength - point)];
@@ -40,14 +42,19 @@ public class SendFileByByte implements Runnable{
         int low=0;
         while(true)
         {
+            System.out.println(low);
             try {
-                if (low + sendCont >= fileLength - point) {
+                if (low + sendCont > fileLength - point) {
                     das.write(value, low, (int) (fileLength - point));
+                    das.flush();
                     return true;
                 } else {
                     das.write(value, low,low+sendCont);
+                    das.flush();
                     low+=sendCont;
                 }
+                if(low + sendCont == fileLength - point)
+                    return true;
             }catch (IOException e)
             {
                 e.printStackTrace();
