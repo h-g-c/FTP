@@ -58,7 +58,7 @@ public class ReturnServerDir implements ActionListener {
 
             SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
         }else{
-            new MessageDialog("提示","请先连接客户端").init();
+            new MessageDialog("提示","请先连接服务器！").init();
         }
     }
 }
