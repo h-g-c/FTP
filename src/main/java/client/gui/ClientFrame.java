@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
@@ -20,7 +21,10 @@ import java.net.Socket;
  */
 @Data
 public class ClientFrame extends JFrame {
+    public Socket dataSocket = null;
     public Socket socket = null;
+    public ServerSocket serverSocket=null;
+    public int code=1;
     private ObjectInputStream socketObjectInputStream;
     private ObjectOutputStream socketObjectOutputStream;
     private Protocol protocol = null;

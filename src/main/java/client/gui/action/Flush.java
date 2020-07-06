@@ -20,7 +20,7 @@ import java.awt.event.ActionListener;
 public class Flush implements ActionListener {
 
     private String[][] data = null;
-    private final String[] tableInfo = {"文件名","大小","日期"};
+    private final String[] tableInfo = {"文件名","大小","日期","文件类型"};
 
     @NonNull
     private LocalFilePanel localFilePanel;

@@ -36,10 +36,10 @@ public class FileUtil {
                     .changeTime(getChangeTime(kidFile))
                     .build();
             if (kidFile.isFile()) {
-                fileCol.setFileType("0");
+                fileCol.setFileType(judgeFileType(kidFile.getAbsolutePath()));
                 fileCol.setFileSize(String.valueOf(kidFile.length()));
             } else {
-                fileCol.setFileType("1");
+                fileCol.setFileType(FileEnum.DIR);
                 fileCol.setFileSize("<DIR>");
             }
             list.add(fileCol);
@@ -66,7 +66,7 @@ public class FileUtil {
     /**
      * Linux下判断文件类型
      */
-    public FileEnum judgeFileTypeInLinux(String filePath) {
+    public static FileEnum judgeFileTypeInLinux(String filePath) {
         try {
             String command = "file -i " + filePath;
             Process process = Runtime.getRuntime().exec(command);
@@ -145,7 +145,7 @@ public class FileUtil {
         binaryFileHead.put("424D", "bmp");
     }
 
-    public FileEnum judgeFileTypeGenerally(String filePath) {
+    public static FileEnum judgeFileTypeGenerally(String filePath) {
         log.info("invoke the mehtod judgeFileTypeGenerally, the parameter is {}", filePath);
         final String fileHead = getFileHead(filePath);
         log.info("file head is {}", fileHead);
@@ -169,7 +169,7 @@ public class FileUtil {
         }
     }
 
-    public String getFileHead(String filePath) {
+    public static String getFileHead(String filePath) {
         log.info("invoke getFileHead");
         try (FileInputStream fileInputStream = new FileInputStream(filePath);) {
             final byte[] bytes = new byte[4];
@@ -186,7 +186,7 @@ public class FileUtil {
         return null;
     }
 
-    public String bytesToHexStrig(byte[] bytes) {
+    public static String bytesToHexStrig(byte[] bytes) {
         log.info("change bytes to hex string");
         StringBuilder result = new StringBuilder();
         String string;
@@ -200,14 +200,22 @@ public class FileUtil {
         return result.toString();
     }
 
-    public FileEnum judgeFileType(String filePath) {
+    public static FileEnum judgeFileType(String filePath) {
         String osName = System.getProperty("os.name");
         System.out.println(osName);
         switch (osName) {
             case "Linux":
-                return this.judgeFileTypeInLinux(filePath);
+                return judgeFileTypeInLinux(filePath);
             default:
-                return this.judgeFileTypeGenerally(filePath);
+                return judgeFileTypeGenerally(filePath);
         }
+    }
+
+    public static int getFileLine(String filePath) throws IOException {
+        File file=new File(filePath);
+        FileReader fileReader=new FileReader(file);
+        LineNumberReader lineNumberReader=new LineNumberReader(fileReader);
+        lineNumberReader.skip(Long.MAX_VALUE);
+        return   lineNumberReader.getLineNumber();
     }
 }

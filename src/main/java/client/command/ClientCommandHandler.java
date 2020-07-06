@@ -61,21 +61,26 @@ public class ClientCommandHandler implements Runnable {
                     case RETURN_FATHER_DIR:
                     case CONNECT:{
                         mode.showServerDir(protocolFromSocket,serverFilePanel,model);
+                        break;
                     }
                     case PAUSE:{
                         mode.pause();
+                        break;
                     }
                     case DOWNLOAD:{
-                        mode.download();
+                        clientFrame.setDataSocket(clientFrame.serverSocket.accept());
+                        mode.download(protocolFromSocket,clientFrame);
+                        break;
                     }
                     case UPLOAD:{
                         mode.upload();
+                        break;
                     }
 
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
-            new MessageDialog("连接状态","连接已断开").init();
+            new MessageDialog("连接状态","连接已断开!").init();
         }
     }
 }

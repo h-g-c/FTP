@@ -10,10 +10,12 @@ import server.SendFileByLine;
 import util.FileUtil;
 
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -45,22 +47,32 @@ public abstract class Mode {
     public void upload() {
     }
 
-    public void download(Protocol protocolFromSocket, ObjectOutputStream objectOutputStream, DataOutputStream das) throws IOException {
-        final ThreadPoolExecutor threadPool = ThreadPool.getThreadPool();
+    public void download(Protocol protocolFromSocket, ObjectOutputStream objectOutputStream) throws IOException, InterruptedException {
         FileModel fileModel = (FileModel) protocolFromSocket.getData();
-        if (new FileUtil().judgeFileTypeInLinux(fileModel.getFilePath()).equals(FileEnum.BINARY)) {
-            SendFileByByte sendFileByByte = SendFileByByte.builder().das(das).filePath(fileModel.getFilePath()).point(Long.valueOf(fileModel.getFileSize())).build();
-            threadPool.submit(sendFileByByte);
+        String alreadySendLength = fileModel.getFileSize();
+        final FileUtil fileUtil = new FileUtil();
+        if (fileUtil.judgeFileType(fileModel.getFilePath()).equals(FileEnum.BINARY)) {
+            File file = new File(fileModel.getFilePath());
+            long fileLength=file.length();
+            fileModel.setFileSize(String.valueOf(fileLength));
         } else {
-            threadPool.submit(new SendFileByLine((String) protocolFromSocket.getData()));
+            fileModel.setFileSize(String.valueOf(FileUtil.getFileLine(fileModel.getFilePath())));
         }
-        Port.getDataPort(protocolFromSocket.getClientIp(), protocolFromSocket.getDataPort());
-        ArrayList<FileModel> fileList = FileUtil.getFileList(Constant.DEFAULT_FILE_PATH);
-        Protocol sendProtocal = new Protocol();
-        sendProtocal.setData(fileList);
-        objectOutputStream.writeObject(sendProtocal);
+        fileModel.setFileType(FileEnum.BINARY);
+        protocolFromSocket.setData(fileModel);
+        objectOutputStream.writeObject(protocolFromSocket);
         objectOutputStream.writeObject(null);
         objectOutputStream.flush();
+        //传输即将发送的文件的大小给客户端
+        final ThreadPoolExecutor threadPool = ThreadPool.getThreadPool();
+        if (fileUtil.judgeFileType(fileModel.getFilePath()).equals(FileEnum.BINARY)) {
+            SendFileByByte sendFileByByte = SendFileByByte.builder()
+                    .das(new DataOutputStream(getDataSocket(protocolFromSocket.getClientIp(),protocolFromSocket.getDataPort()).getOutputStream()))
+                    .filePath(fileModel.getFilePath()).point(Long.valueOf(alreadySendLength)).build();
+            threadPool.submit(sendFileByByte);
+        } else {
+//            threadPool.submit(new SendFileByLine((String) protocolFromSocket.getData()));
+        }
     }
 
     public void pause() {

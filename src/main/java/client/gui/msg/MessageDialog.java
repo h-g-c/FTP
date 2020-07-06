@@ -18,8 +18,10 @@ public class MessageDialog {
 
     private final int X = 300;
     private final int Y = 200;
+    private final ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("error.png"));
 
     private JDialog jDialog;
+    private JLabel jLabel;
 
     @NonNull
     private String title;
@@ -28,8 +30,13 @@ public class MessageDialog {
 
     public JDialog init(){
         jDialog = new JDialog();
+        jDialog.setIconImage(icon.getImage());
         jDialog.setTitle(title);
-        jDialog.add(new JLabel(msg));
+
+        jLabel = new JLabel(msg,JLabel.CENTER);
+        jLabel.setFont(new Font("宋体",Font.PLAIN,16));
+        jDialog.add(jLabel);
+
         jDialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
         jDialog.setSize(X,Y);
         jDialog.setLocationRelativeTo(null);

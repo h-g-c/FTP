@@ -8,6 +8,7 @@ import server.SendFileByLine;
 import util.FileUtil;
 
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -37,4 +38,5 @@ public class InitiativeMode extends Mode {
         }
         return super.dataSocket;
     }
+
 }

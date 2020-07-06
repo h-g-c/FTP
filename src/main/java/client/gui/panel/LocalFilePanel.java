@@ -28,7 +28,7 @@ public class LocalFilePanel extends JPanel {
     private JTextField jTextField = new JTextField(" ",10);
     private JComboBox jComboBox;
     private JTable jTable;
-    private final String[] tableInfo = {"文件名","大小","日期"};
+    private final String[] tableInfo = {"文件名","大小","日期","文件类型"};
     private String[][] data = null;
     private File[] roots = null;
 
