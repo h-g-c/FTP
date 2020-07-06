@@ -21,7 +21,7 @@ import java.util.ArrayList;
 @Slf4j(topic = "showServerDir")
 public abstract class Mode {
 
-    private final  String[] tableInfo = {"文件名", "大小", "日期"};
+    private final  String[] tableInfo = {"文件名", "大小", "日期","文件类型"};
 
     public void showServerDir(Protocol protocolFromSocket, ServerFilePanel serverFilePanel, DefaultTableModel model) {
         if (protocolFromSocket.getData() != null) {

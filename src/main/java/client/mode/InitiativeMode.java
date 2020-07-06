@@ -1,9 +1,8 @@
 package client.mode;
 
-import client.gui.panel.ServerFilePanel;
+import client.socket.CreatServer;
 import entity.Protocol;
 
-import javax.swing.table.DefaultTableModel;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -14,4 +13,5 @@ import java.net.Socket;
  * @date 2020-07-05 22:14
  */
 public class InitiativeMode extends Mode {
+
 }

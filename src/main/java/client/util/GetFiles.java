@@ -42,7 +42,7 @@ public class GetFiles {
     public static String[][] getFiles(JComboBox jComboBox) {
         File file = (File) jComboBox.getSelectedItem();
         files = file.listFiles();
-        datas = new String[files.length][3];
+        datas = new String[files.length][4];
         for(int i = 0; i < files.length; i++){
             datas[i][0] = files[i].getName();
             datas[i][1] = fileSize(getTotalSizeOfFilesInDir(files[i]));

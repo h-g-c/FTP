@@ -1,6 +1,7 @@
 package client.socket;
 
 import client.command.SendCommand;
+import client.gui.ClientFrame;
 import client.util.IPUtil;
 import configuration_and_constant.Constant;
 import entity.ConnectType;
@@ -41,6 +42,12 @@ public class CreatServer implements Runnable{
     @NonNull
     private Socket socketLocal;
 
+    @NonNull ClientFrame clientFrame;
+
+    @NonNull
+    private String filePath;
+    private String[] fileName;
+
     /**
      * 新建数据传输端口的socket信息
      */
@@ -50,15 +57,20 @@ public class CreatServer implements Runnable{
     @Override
     public void run() {
         ServerSocket serverSocket = null;
+        protocolLocal = new Protocol();
         while(true){
             try {
                 serverSocket = new ServerSocket(0);
+
+
+
                 protocolLocal.setOperateType(OperateType.DOWNLOAD);
                 protocolLocal.setClientIp(IPUtil.getLocalIP());
-                protocolLocal.setConnectType(protocolServer.getConnectType());
+                protocolLocal.setConnectType(ConnectType.INITIATIVE);
                 protocolLocal.setDataPort(serverSocket.getLocalPort());
-                protocolLocal.setCommandPort(null);
-//                SendCommand.sendCommend(protocolLocal,socketServer);
+                SendCommand.sendCommend(protocolLocal,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
+
+
                 socketLocal = serverSocket.accept();
 
                 FileModel fileModel=(FileModel) protocolLocal.getData();

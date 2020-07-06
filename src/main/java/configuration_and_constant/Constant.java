@@ -21,4 +21,6 @@ public class Constant {
     public static final Integer MAXIMUM_COMMAND_BUFFER_SIZE = (int) Math.pow(2, 64);
 
     public static final String DEFAULT_FILE_PATH = System.getProperty("user.home");
+
+    public static final String DEFAULT_PATH = "D:\\下载\\";
 }

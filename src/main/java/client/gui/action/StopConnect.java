@@ -33,7 +33,7 @@ public class StopConnect implements ActionListener {
     private DefaultInfoPanel defaultInfoPanel;
 
     private String[][] data = null;
-    private final String[] tableInfo = {"文件名","大小","日期"};
+    private final String[] tableInfo = {"文件名","大小","日期","文件类型"};
 
     @SneakyThrows
     @Override
