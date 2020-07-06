@@ -49,7 +49,6 @@ public class ReturnServerDir implements ActionListener {
 
 
             SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
-            ReceiveCommand.receiveCommand(clientFrame,clientFrame.getSocketObjectInputStream());
         }else{
             new MessageDialog("提示","清闲连接客户端").init();
         }

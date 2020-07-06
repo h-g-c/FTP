@@ -25,7 +25,7 @@ public class ConnectServer extends SocketUtil {
             clientFrame.setSocketObjectInputStream(new ObjectInputStream(clientFrame.getSocket().getInputStream()));
             clientFrame.setSocketObjectOutputStream(new ObjectOutputStream(clientFrame.getSocket().getOutputStream()));
             SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
-            ReceiveCommand.receiveCommand(clientFrame,clientFrame.getSocketObjectInputStream());
+            new Thread(new ClientCommandHandler(clientFrame,clientFrame.getSocketObjectInputStream())).start();
         } catch (IOException e) {
             e.printStackTrace();
         }

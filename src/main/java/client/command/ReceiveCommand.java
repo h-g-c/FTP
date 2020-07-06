@@ -15,7 +15,8 @@ import java.net.Socket;
 
 /**
  * @author LvHao
- * @Description : 客户端处理服务器命令
+ * @Description : 客户端单个处理处理服务器命令
+ * 测试功能时使用
  * @date 2020-07-05 8:16
  */
 public class ReceiveCommand {
