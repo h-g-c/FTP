@@ -16,5 +16,5 @@ public enum FileEnum {
     /**
      *
      */
-    Dir
+    DIR
 }
