@@ -35,13 +35,12 @@ public class GetServerDir implements ActionListener {
             protocol.setClientIp(IPUtil.getLocalIP());
             protocol.setOperateType(OperateType.CONNECT);
             protocol.setConnectType(clientFrame.getProtocol().getConnectType());
-            protocol.setOperateType(OperateType.CONNECT);
             protocol.setData(null);
             protocol.setDataPort(clientFrame.getProtocol().getDataPort());
 
             SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
         }else{
-            new MessageDialog("提示","清闲连接客户端").init();
+            new MessageDialog("提示","请先连接客户端").init();
         }
     }
 }

@@ -18,7 +18,7 @@ public class DefaultInfoPanel extends JPanel {
     private final String ip = "127.0.0.1";
     private final String name = "root";
     private final String password = "123456";
-    private final String port = "21";
+    private final String port = "8081";
 
     private JTextField jt1 = new JTextField(ip, 16);
     private JTextField jt2 = new JTextField(name, 15);

@@ -1,9 +1,9 @@
 package client.gui.action;
 
-import client.command.ReceiveCommand;
 import client.command.SendCommand;
 import client.gui.ClientFrame;
 import client.gui.panel.ServerFilePanel;
+import client.util.DefaultMsg;
 import client.util.IPUtil;
 import entity.ConnectType;
 import entity.OperateType;
@@ -35,6 +35,7 @@ public class FindServerDir extends MouseAdapter {
     private String systemFlag = File.separator;
     private JTable jTable;
     private String filePath;
+
 
     @NonNull
     private ServerFilePanel serverFilePanel;
@@ -87,6 +88,8 @@ public class FindServerDir extends MouseAdapter {
         // 双击事件
         int row = serverFilePanel.getJTable().rowAtPoint(me.getPoint());
         String fileName = serverFilePanel.getJTextField().getText()+serverFilePanel.getJTable().getValueAt(row,0).toString();
+        System.out.println(fileName);
+        DefaultMsg.setFilePath(fileName);
         if((serverFilePanel.getJTable().getValueAt(row,1).toString()).equals("<DIR>")){
             Protocol protocol = new Protocol();
             protocol.setServiceIp(clientFrame.getProtocol().getServiceIp());
