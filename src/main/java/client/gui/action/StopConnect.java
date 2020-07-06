@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -21,6 +22,7 @@ import java.awt.event.ActionListener;
  */
 @Data
 @RequiredArgsConstructor
+@Slf4j(topic = "Connect")
 public class StopConnect implements ActionListener {
     private final int X = 300;
     private final int Y = 200;
@@ -51,7 +53,9 @@ public class StopConnect implements ActionListener {
             defaultInfoPanel.remove(defaultInfoPanel.getJLabel());
             defaultInfoPanel.add(defaultInfoPanel.getJButton());
             defaultInfoPanel.updateUI();
+            log.info("连接状态：" + clientFrame.getSocket());
         }else {
+            log.info("连接状态：" + false);
             new MessageDialog("提示","请先连接服务器！").init();
         }
     }

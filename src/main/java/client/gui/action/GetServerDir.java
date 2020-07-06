@@ -22,10 +22,6 @@ public class GetServerDir implements ActionListener {
 
     private ClientFrame clientFrame;
 
-    private final int X = 300;
-    private final int Y = 200;
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if(clientFrame.getSocket() != null &&clientFrame.getSocket().isConnected()){

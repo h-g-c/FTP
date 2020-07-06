@@ -9,6 +9,7 @@ import entity.ConnectType;
 import entity.OperateType;
 import entity.Protocol;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -27,6 +28,7 @@ import java.util.TimerTask;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Builder
+@Slf4j(topic = "FindServerDir")
 public class FindServerDir extends MouseAdapter {
 
     private static  boolean flag = false;
@@ -88,7 +90,7 @@ public class FindServerDir extends MouseAdapter {
         // 双击事件
         int row = serverFilePanel.getJTable().rowAtPoint(me.getPoint());
         String fileName = serverFilePanel.getJTextField().getText()+serverFilePanel.getJTable().getValueAt(row,0).toString();
-        System.out.println(fileName);
+        log.info(fileName);
         DefaultMsg.setFilePath(fileName);
         if((serverFilePanel.getJTable().getValueAt(row,1).toString()).equals("<DIR>")){
             Protocol protocol = new Protocol();
