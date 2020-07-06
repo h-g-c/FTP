@@ -7,10 +7,7 @@ import client.gui.panel.ServerFilePanel;
 import client.util.GetTaskFilePath;
 import client.util.IPUtil;
 import configuration_and_constant.Constant;
-import entity.ConnectType;
-import entity.FileModel;
-import entity.OperateType;
-import entity.Protocol;
+import entity.*;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +39,7 @@ public class DownloadFile implements ActionListener {
 
     private JTable jTable;
     private String filePath;
+    private String fileType;
     private String[] fileName;
     private ServerSocket socketServer;
     private Protocol protocol;
@@ -52,6 +50,7 @@ public class DownloadFile implements ActionListener {
             jTable = serverFilePanel.getJTable();
             filePath = serverFilePanel.getJTextField().getText();
             fileName = GetTaskFilePath.getDownloadName(jTable,filePath);
+            fileType = GetTaskFilePath.getDownloadFileType(jTable);
 
             protocol = new Protocol();
             socketServer = new ServerSocket(0);
@@ -65,7 +64,7 @@ public class DownloadFile implements ActionListener {
             }
 
             File file = new File(Constant.DEFAULT_PATH + oneFile + ".temp");
-            new RandomAccessFile(Constant.DEFAULT_PATH + oneFile + ".temp","rw");
+            new RandomAccessFile(file,"rw");
 
             long size = 0;
             if(file.exists() && file.isFile()){
@@ -76,6 +75,14 @@ public class DownloadFile implements ActionListener {
             fileModel.setFileName(oneFile);
             fileModel.setFilePath(fileName[0]);
             fileModel.setFileSize(String.valueOf(size));
+//            if(fileType.equals("二进制文件")){
+//                fileModel.setFileType(FileEnum.BINARY);
+//            }else if(fileType.equals("文本文件")){
+//                fileModel.setFileType(FileEnum.TEXT);
+//            }else{
+//                fileModel.setFileType(FileEnum.DIR);
+//            }
+            fileModel.setFileType(FileEnum.BINARY);
 
             protocol.setData(fileModel);
             protocol.setDataPort(socketServer.getLocalPort());
@@ -91,7 +98,8 @@ public class DownloadFile implements ActionListener {
         }catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException){
             new MessageDialog("提示","请先选择文件！").init();
         } catch (IOException ioException) {
-            new MessageDialog("提示","无法打开数据端口").init();
+//            new MessageDialog("提示","无法打开数据端口").init();
+            ioException.printStackTrace();
         }
     }
 }

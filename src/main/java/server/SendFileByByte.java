@@ -22,6 +22,7 @@ public class SendFileByByte implements Runnable{
 
     public static boolean breakPoint(DataOutputStream das,String filePath,long point) throws FileNotFoundException {
         File file=new File(filePath);
+        System.out.println(file.getAbsolutePath());
         RandomAccessFile raf = new RandomAccessFile(file, "r");
         byte[] value;
         long fileLength = file.length();

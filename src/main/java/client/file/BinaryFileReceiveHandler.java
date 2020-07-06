@@ -21,19 +21,28 @@ public class BinaryFileReceiveHandler {
 
     public static void receiveBinaryFile(InputStream inputStream,FileModel fileModel){
         try{
+            System.out.println(5555);
+            System.out.println(inputStream);
             dataInputStream = new DataInputStream(inputStream);
             fileLength = Long.parseLong(fileModel.getFileSize());
             tempFile = new File(Constant.DEFAULT_PATH + fileModel.getFileName() + ".temp");
             randomAccessFile = new RandomAccessFile(Constant.DEFAULT_PATH + fileModel.getFileName() + ".temp","rw");
+            System.out.println(8888888);
             long size = 0;
             if(tempFile.exists() && tempFile.isFile()){
                 size = tempFile.length();
+                System.out.println(98);
             }
             //从之前的断点地方进行接收
             randomAccessFile.seek(size);
             byte[] value = new byte[1024*8];
+            System.out.println(66666);
             while(true){
+                System.out.println(77777);
+                System.out.println(dataInputStream.readUTF());
                 int length = dataInputStream.read(value);
+                System.out.println(value);
+                System.out.println(444444);
                 if(length == -1){
                     break;
                 }
@@ -46,6 +55,7 @@ public class BinaryFileReceiveHandler {
             dataInputStream.close();
             randomAccessFile.close();
 
+            System.out.println(6666666);
             //对文件重命名
             if(size >= fileLength){
                 tempFile.renameTo(new File(Constant.DEFAULT_PATH + fileModel.getFileName()));

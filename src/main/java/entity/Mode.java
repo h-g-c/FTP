@@ -37,7 +37,7 @@ public abstract class Mode {
         } else {
             fileModel.setFileSize(String.valueOf(FileUtil.getFileLine(fileModel.getFilePath())));
         }
-        protocolFromSocket.setData(protocolFromSocket);
+        protocolFromSocket.setData(fileModel);
         objectOutputStream.writeObject(protocolFromSocket);
         objectOutputStream.writeObject(null);
         objectOutputStream.flush();
@@ -47,7 +47,7 @@ public abstract class Mode {
         if (FileUtil.judgeFileType(fileModel.getFilePath()).equals(FileEnum.BINARY)) {
             SendFileByByte sendFileByByte = SendFileByByte.builder()
                     .das(new DataOutputStream(getDataSocket(protocolFromSocket.getClientIp(),protocolFromSocket.getDataPort()).getOutputStream()))
-                    .filePath(alreadySendLength).point(Long.valueOf(alreadySendLength)).build();
+                    .filePath(fileModel.getFilePath()).point(Long.valueOf(alreadySendLength)).build();
             threadPool.submit(sendFileByByte);
         } else {
 //            threadPool.submit(new SendFileByLine((String) protocolFromSocket.getData()));

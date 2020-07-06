@@ -17,6 +17,7 @@ import java.awt.*;
 @Data
 public class CenterPanel extends JPanel {
 
+    private LocalFilePanel jPanel1;
     private ServerFilePanel jPanel2;
 
     public CenterPanel(ClientFrame clientFrame){
@@ -28,7 +29,7 @@ public class CenterPanel extends JPanel {
         //设置布局方式
         setLayout(new GridBagLayout());
 
-        JPanel jPanel1 = new LocalFilePanel();
+        jPanel1 = new LocalFilePanel(clientFrame);
         add(jPanel1,new MyGridBagConstraints(0,0,1,1).init2());
         jPanel2 = new ServerFilePanel(clientFrame);
         add(jPanel2,new MyGridBagConstraints(1,0,1,1).init2());
