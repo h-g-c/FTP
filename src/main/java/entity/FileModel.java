@@ -27,5 +27,5 @@ public class FileModel implements Serializable {
     //修改时间
     String changeTime;
     //文件类型
-    String fileType;
+    FileEnum fileType;
 }

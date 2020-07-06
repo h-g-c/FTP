@@ -32,27 +32,15 @@ public class ReturnServerDir implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(clientFrame.getSocket() != null && clientFrame.getSocket().isConnected()){
             FileModel fileModel = new FileModel();
-
-            String fileName = null;
+            String fileName = serverFilePanel.getJTextField().getText()+(serverFilePanel.getJTable().size().getHeight()==0? "":serverFilePanel.getJTable().getValueAt(0,0).toString());
+            fileModel.setFilePath(fileName);
             Protocol protocol = new Protocol();
-
-            //判断目录下是否有文件
-            if(serverFilePanel.getJTable().getRowCount() != 0){
-                fileName = serverFilePanel.getJTextField().getText()+serverFilePanel.getJTable().getValueAt(0,0).toString();
-                protocol.setOperateType(OperateType.RETURN_FATHER_DIR);
-                fileModel.setFilePath(fileName);
-                protocol.setData(fileModel);
-            }else{
-                fileName = serverFilePanel.getJTextField().getText().substring(0,serverFilePanel.getJTextField().getText().length()-1);
-                fileName = fileName.substring(0,fileName.lastIndexOf(File.separator));
-                protocol.setOperateType(OperateType.FILE_PATH);
-                protocol.setData(fileName);
-            }
-
             protocol.setServiceIp(clientFrame.getProtocol().getServiceIp());
             protocol.setCommandPort(clientFrame.getProtocol().getCommandPort());
             protocol.setClientIp(IPUtil.getLocalIP());
             protocol.setConnectType(ConnectType.INITIATIVE);
+            protocol.setOperateType(OperateType.RETURN_FATHER_DIR);
+            protocol.setData(fileModel);
             protocol.setDataPort(clientFrame.getProtocol().getDataPort());
 
 

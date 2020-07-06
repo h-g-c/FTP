@@ -31,10 +31,10 @@ public class FileUtil {
                     .changeTime(getChangeTime(kidFile))
                     .build();
             if (kidFile.isFile()) {
-                fileCol.setFileType("0");
+                fileCol.setFileType(judgeFileType(kidFile.getAbsolutePath()));
                 fileCol.setFileSize(String.valueOf(kidFile.length()));
             } else {
-                fileCol.setFileType("1");
+                fileCol.setFileType(FileEnum.Dir);
                 fileCol.setFileSize("<DIR>");
             }
             list.add(fileCol);
@@ -50,12 +50,8 @@ public class FileUtil {
         return time;
     }
 
-//    public static void main(String[] args) {
-//        ArrayList<FileModel> list=FileUtil.getFileList("/home");
-//        for(FileModel fileModel:list)
-//        {
-//            System.out.println(fileModel.toString());
-//        }
+//    public static void main(String[] args) throws IOException {
+//        System.out.println(getFileLine("/home/heguicai/hgc.txt"));
 //    }
 
 
@@ -99,5 +95,13 @@ public class FileUtil {
         }else{
             return new File(file.getParent()).getParent();
         }
+    }
+
+    public static int getFileLine(String filePath) throws IOException {
+        File file=new File(filePath);
+        FileReader fileReader=new FileReader(file);
+        LineNumberReader lineNumberReader=new LineNumberReader(fileReader);
+        lineNumberReader.skip(Long.MAX_VALUE);
+        return   lineNumberReader.getLineNumber();
     }
 }

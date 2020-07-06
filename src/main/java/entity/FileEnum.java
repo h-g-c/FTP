@@ -12,5 +12,9 @@ public enum FileEnum {
     /**
      * 文本文件
      */
-    TEXT
+    TEXT,
+    /**
+     *
+     */
+    DIR
 }
