@@ -1,6 +1,7 @@
 package client.mode;
 
 import client.gui.panel.ServerFilePanel;
+import client.util.DefaultMsg;
 import entity.FileModel;
 import entity.Protocol;
 
@@ -30,7 +31,7 @@ public abstract class Mode {
             String filepath = null;
             if (fileList.size() == 0) {
                 data = null;
-                filepath = serverFilePanel.getJTextField().getText().substring(0, serverFilePanel.getJTextField().getText().length() - 1);
+                filepath = DefaultMsg.getFilePath();
             } else {
                 for (FileModel f : fileList) {
                     data[i][0] = f.getFileName();
@@ -44,6 +45,7 @@ public abstract class Mode {
             model.setRowCount(0);
             model = new DefaultTableModel(data, tableInfo);
             serverFilePanel.getJTable().setModel(model);
+            System.out.println(filepath);
             serverFilePanel.getJTextField().setText(filepath);
         }
     }

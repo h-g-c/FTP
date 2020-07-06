@@ -78,9 +78,7 @@ public class ServerCommandHandler implements Runnable {
                     }
                     case RETURN_FATHER_DIR:{
                         FileModel fileModel= (FileModel) protocolFromSocket.getData();
-                        System.out.println(fileModel.getFilePath());
                         String fatherDir= FileUtil.getFatherDir(fileModel.getFilePath());
-                        System.out.println(fatherDir);
                         Protocol protocol=new Protocol();
                         ArrayList<FileModel> fileList = FileUtil.getFileList(fatherDir);
                         protocol.setData(fileList);

@@ -94,13 +94,6 @@ public class FileUtil {
     public static String getFatherDir(String filePath)
     {
         File file=new File(filePath);
-        if(file.isDirectory())
-        {
-            System.out.println("k");
-            File[] files=file.listFiles();
-            if(files.length==0)
-                return filePath;
-        }
         if(file.getParent().equals(Constant.DEFAULT_FILE_PATH)){
             return Constant.DEFAULT_FILE_PATH;
         }else{
