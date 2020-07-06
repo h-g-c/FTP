@@ -25,46 +25,20 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 public class PassiveMode extends Mode{
     @Override
-    public void initialization(ObjectOutputStream objectOutputStream, Protocol protocolFromSocket) throws IOException {
+    public void initialize(ObjectOutputStream objectOutputStream, Protocol protocolFromSocket) throws IOException {
         Integer port = CommonUtil.generateRandomPort();
         // 构造协议信息(server 数据端口号)
-        Protocol sendProtocal = Protocol.builder().dataPort(port).operateType(OperateType.CONNECT).connectType(ConnectType.PASSIVE).build();
+        protocolFromSocket.setDataPort(port);
+        protocolFromSocket.setOperateType(OperateType.CONNECT);
         objectOutputStream.writeObject(protocolFromSocket);
+        objectOutputStream.writeObject(null);
         objectOutputStream.flush();
         // 等待客户端建立 data 端口
-        Socket dataTransportSocket = new GenerateDataSocket().generateInPassiveMode(port);
-        // 发送文件列表
-        sendProtocal = Protocol.builder().data(FileUtil.getFileList("/")).operateType(OperateType.CONNECT).build();
-        objectOutputStream.writeObject(sendProtocal);
-        objectOutputStream.flush();
+        dataSocket = new GenerateDataSocket().generateInPassiveMode(port);
     }
 
     @Override
     public Socket getDataSocket(String address, Integer port) {
         return this.dataSocket;
-    }
-
-
-    public  void download(Protocol protocolFromSocket, ObjectOutputStream objectOutputStream, DataOutputStream das) throws IOException {
-        final ThreadPoolExecutor threadPool = ThreadPool.getThreadPool();
-        FileModel fileModel= (FileModel) protocolFromSocket.getData();
-        if (FileUtil.judgeFileType(fileModel.getFilePath()).equals(FileEnum.BINARY)) {
-            SendFileByByte sendFileByByte = SendFileByByte.builder().das(das).filePath(fileModel.getFilePath()).point(Long.valueOf(fileModel.getFileSize())).build();
-            threadPool.submit(sendFileByByte);
-        } else {
-            threadPool.submit(new SendFileByLine((String)protocolFromSocket.getData()));
-        }
-        Port.getDataPort(protocolFromSocket.getClientIp(), protocolFromSocket.getDataPort());
-        ArrayList<FileModel> fileList = FileUtil.getFileList("/home/heguicai");
-        Protocol sendProtocal = new Protocol();
-        sendProtocal.setData(fileList);
-        objectOutputStream.writeObject(sendProtocal);
-        objectOutputStream.flush();
-    }
-
-
-    @Override
-    public Object getFileList(String filePath) {
-        return null;
     }
 }

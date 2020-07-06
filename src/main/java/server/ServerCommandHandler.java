@@ -1,6 +1,5 @@
 package server;
 
-import configuration_and_constant.Constant;
 import entity.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +25,6 @@ import java.util.ArrayList;
 @Builder
 public class ServerCommandHandler implements Runnable {
     Socket commandSocket;
-    Socket dataTransportSocket;
     Mode mode;
 
     @Override
@@ -49,12 +47,12 @@ public class ServerCommandHandler implements Runnable {
             while (true) {
                 log.info(protocolFromSocket.toString());
                 switch (protocolFromSocket.getOperateType()) {
-                    case PAUSE: {
-                        mode.pause();
-                        break;
-                    }
                     case CONNECT: {
-                        mode.initialization(objectOutputStream, protocolFromSocket);
+                        if (mode.authenticate(protocolFromSocket)) {
+                            mode.initialize(objectOutputStream, protocolFromSocket);
+                        } else {
+                            mode.sendAuthenticateFailMessage(objectOutputStream,protocolFromSocket);
+                        }
                         break;
                     }
                     case DOWNLOAD: {
@@ -62,9 +60,13 @@ public class ServerCommandHandler implements Runnable {
                         mode.download(protocolFromSocket, objectOutputStream, new DataOutputStream(dataSocket.getOutputStream()));
                         break;
                     }
+                    case PAUSE: {
+                        mode.pause();
+                        break;
+                    }
                     case FILE_PATH: {
-                        Protocol protocol=new Protocol();
-                        Object data=mode.getFileList((String) protocolFromSocket.getData());
+                        Protocol protocol = new Protocol();
+                        Object data = mode.getFileList((String) protocolFromSocket.getData());
                         protocol.setData(data);
                         protocol.setOperateType(protocolFromSocket.getOperateType());
                         objectOutputStream.writeObject(protocol);
@@ -76,10 +78,10 @@ public class ServerCommandHandler implements Runnable {
                         mode.upload();
                         break;
                     }
-                    case RETURN_FATHER_DIR:{
-                        FileModel fileModel= (FileModel) protocolFromSocket.getData();
-                        String fatherDir= FileUtil.getFatherDir(fileModel.getFilePath());
-                        Protocol protocol=new Protocol();
+                    case RETURN_FATHER_DIR: {
+                        FileModel fileModel = (FileModel) protocolFromSocket.getData();
+                        String fatherDir = FileUtil.getFatherDir(fileModel.getFilePath());
+                        Protocol protocol = new Protocol();
                         ArrayList<FileModel> fileList = FileUtil.getFileList(fatherDir);
                         protocol.setData(fileList);
                         protocol.setOperateType(protocolFromSocket.getOperateType());
