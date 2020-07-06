@@ -23,8 +23,8 @@ public class BinaryFileReceiveHandler {
         try{
             dataInputStream = new DataInputStream(inputStream);
             fileLength = Long.parseLong(fileModel.getFileSize());
-            tempFile = new File(fileModel.getFilePath() + ".temp");
-            randomAccessFile = new RandomAccessFile(fileModel.getFilePath() + ".temp","rw");
+            tempFile = new File(Constant.DEFAULT_PATH + fileModel.getFileName() + ".temp");
+            randomAccessFile = new RandomAccessFile(Constant.DEFAULT_PATH + fileModel.getFileName() + ".temp","rw");
             long size = 0;
             if(tempFile.exists() && tempFile.isFile()){
                 size = tempFile.length();

@@ -2,6 +2,7 @@ package client.gui.action;
 
 import client.gui.panel.LocalFilePanel;
 import client.util.GetTaskFilePath;
+import entity.Protocol;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,18 +24,26 @@ public class FileUpload implements ActionListener {
 
     private JTable jTable;
     private String filePath;
+    private String[] fileNames;
+    private Protocol protocol;
 
     @NonNull
     private LocalFilePanel localFilePanel;
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        jTable = localFilePanel.getJTable();
-        filePath = localFilePanel.getJTextField().getText();
-        String[] fileNames = GetTaskFilePath.getUploadName(jTable,filePath);
+        try{
+            jTable = localFilePanel.getJTable();
+            filePath = localFilePanel.getJTextField().getText();
+            fileNames = GetTaskFilePath.getUploadName(jTable,filePath);
 
-        for(int i = 0;i < fileNames.length;i++){
-            log.info("请求上传文件名：" + fileNames[i]);
+            Protocol protocol = new Protocol();
+
+            for(int i = 0;i < fileNames.length;i++){
+                log.info("请求上传文件名：" + fileNames[i]);
+            }
+        }catch (Exception e1){
+
         }
     }
 }

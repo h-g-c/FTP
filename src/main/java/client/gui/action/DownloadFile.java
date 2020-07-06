@@ -20,11 +20,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.net.ServerSocket;
-import java.net.Socket;
 
 /**
  * @author LvHao
@@ -67,7 +65,7 @@ public class DownloadFile implements ActionListener {
             }
 
             File file = new File(Constant.DEFAULT_PATH + oneFile + ".temp");
-            new RandomAccessFile(Constant.DEFAULT_PATH + oneFile + ".temp","rm");
+            new RandomAccessFile(Constant.DEFAULT_PATH + oneFile + ".temp","rw");
 
             long size = 0;
             if(file.exists() && file.isFile()){
@@ -76,7 +74,7 @@ public class DownloadFile implements ActionListener {
 
             FileModel fileModel = new FileModel();
             fileModel.setFileName(oneFile);
-            fileModel.setFilePath( Constant.DEFAULT_PATH + oneFile);
+            fileModel.setFilePath(fileName[0]);
             fileModel.setFileSize(String.valueOf(size));
 
             protocol.setData(fileModel);
@@ -87,7 +85,7 @@ public class DownloadFile implements ActionListener {
 
             SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
 
-            clientFrame.setDataSocket(socketServer.accept());
+            clientFrame.setDataSocket(socketServer);
 
 
         }catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException){

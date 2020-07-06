@@ -22,15 +22,18 @@ public class InitiativeMode extends Mode {
 
     private FileModel fileModel;
     private InputStream inputStream;
+    private Socket socket;
 
     @Override
     public void download(Protocol protocolFromSocket, ClientFrame clientFrame) {
         try{
-            if(clientFrame.getDataSocket() != null && clientFrame.getDataSocket().isConnected()){
-                inputStream = clientFrame.getDataSocket().getInputStream();
+            socket = clientFrame.getDataSocket().accept();
+            if(socket.isConnected()){
+                inputStream = socket.getInputStream();
                 fileModel = (FileModel)protocolFromSocket.getData();
                 if(fileModel.getFileType().equals(FileEnum.BINARY)){
                     BinaryFileReceiveHandler.receiveBinaryFile(inputStream,fileModel);
+                    clientFrame.getSocket().close();
                 }else{
                     //TODO something
                 }
