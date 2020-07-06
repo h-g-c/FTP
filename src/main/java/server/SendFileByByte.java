@@ -26,8 +26,6 @@ public class SendFileByByte implements Runnable{
         byte[] value;
         long fileLength = file.length();
         try {
-            das.writeLong(fileLength);
-            das.flush();
             raf.seek(point);
             value = new byte[(int) (fileLength - point)];
             if (raf.read(value) != (fileLength - point)) {
