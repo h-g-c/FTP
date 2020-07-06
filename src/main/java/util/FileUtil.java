@@ -34,7 +34,7 @@ public class FileUtil {
                 fileCol.setFileType(judgeFileType(kidFile.getAbsolutePath()));
                 fileCol.setFileSize(String.valueOf(kidFile.length()));
             } else {
-                fileCol.setFileType(FileEnum.Dir);
+                fileCol.setFileType(FileEnum.DIR);
                 fileCol.setFileSize("<DIR>");
             }
             list.add(fileCol);

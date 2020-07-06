@@ -33,6 +33,7 @@ public class PassiveMode extends Mode{
         objectOutputStream.flush();
         // 等待客户端建立 data 端口
         Socket dataTransportSocket = new GenerateDataSocket().generateInPassiveMode(port);
+        super.dataSocket=dataTransportSocket;
         // 发送文件列表
         sendProtocal = Protocol.builder().data(FileUtil.getFileList("/")).operateType(OperateType.CONNECT).build();
         objectOutputStream.writeObject(sendProtocal);
@@ -45,22 +46,7 @@ public class PassiveMode extends Mode{
     }
 
 
-    public  void download(Protocol protocolFromSocket, ObjectOutputStream objectOutputStream, DataOutputStream das) throws IOException {
-        final ThreadPoolExecutor threadPool = ThreadPool.getThreadPool();
-        FileModel fileModel= (FileModel) protocolFromSocket.getData();
-        if (FileUtil.judgeFileType(fileModel.getFilePath()).equals(FileEnum.BINARY)) {
-            SendFileByByte sendFileByByte = SendFileByByte.builder().das(das).filePath(fileModel.getFilePath()).point(Long.valueOf(fileModel.getFileSize())).build();
-            threadPool.submit(sendFileByByte);
-        } else {
-            threadPool.submit(new SendFileByLine((String)protocolFromSocket.getData()));
-        }
-        Port.getDataPort(protocolFromSocket.getClientIp(), protocolFromSocket.getDataPort());
-        ArrayList<FileModel> fileList = FileUtil.getFileList("/home/heguicai");
-        Protocol sendProtocal = new Protocol();
-        sendProtocal.setData(fileList);
-        objectOutputStream.writeObject(sendProtocal);
-        objectOutputStream.flush();
-    }
+
 
 
     @Override

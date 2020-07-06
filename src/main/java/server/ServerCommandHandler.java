@@ -59,7 +59,7 @@ public class ServerCommandHandler implements Runnable {
                     }
                     case DOWNLOAD: {
                         Socket dataSocket = mode.getDataSocket(protocolFromSocket.getClientIp(), protocolFromSocket.getDataPort());
-                        mode.download(protocolFromSocket, objectOutputStream, new DataOutputStream(dataSocket.getOutputStream()));
+                        mode.download(protocolFromSocket, objectOutputStream);
                         break;
                     }
                     case FILE_PATH: {
