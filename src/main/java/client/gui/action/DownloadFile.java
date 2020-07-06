@@ -98,8 +98,7 @@ public class DownloadFile implements ActionListener {
         }catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException){
             new MessageDialog("提示","请先选择文件！").init();
         } catch (IOException ioException) {
-//            new MessageDialog("提示","无法打开数据端口").init();
-            ioException.printStackTrace();
+            new MessageDialog("提示","无法打开数据端口").init();
         }
     }
 }

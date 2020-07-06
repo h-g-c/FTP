@@ -1,9 +1,14 @@
 package client.gui.panel;
 
 import client.gui.table.LocalFileTable;
+import client.gui.table.ProgressCellRender;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import java.awt.*;
 
 /**
  * @author LvHao
@@ -20,6 +25,8 @@ public class TaskPanel extends JTabbedPane {
     private void init(){
         DefaultTableModel model1=new DefaultTableModel(data, tableInfo);
         JTable jTable1 = new LocalFileTable(model1);
+        jTable1.setEnabled(false);
+
         DefaultTableModel model2=new DefaultTableModel(data, tableInfo);
         JTable jTable2 = new LocalFileTable(model2);
         add("上传队列",new JScrollPane(jTable1));
