@@ -2,6 +2,7 @@ package client.gui.panel;
 
 import client.gui.ClientFrame;
 import client.gui.MyGridBagConstraints;
+import client.gui.action.DownloadFile;
 import client.gui.action.FindServerDir;
 import client.gui.action.GetServerDir;
 import client.gui.action.ReturnServerDir;
@@ -27,7 +28,7 @@ public class ServerFilePanel extends JPanel {
     private JButton jButton4;
     private JTextField jTextField;
     private JScrollPane jScrollPane;
-    private String[] tableInfo = {"文件名","大小","日期"};
+    private String[] tableInfo = {"文件名","大小","日期","文件类型"};
     private String[][] data;
     private JTable jTable;
     private DefaultTableModel model;
@@ -41,6 +42,7 @@ public class ServerFilePanel extends JPanel {
 
         jLabel = new JLabel("远程文件",JLabel.CENTER);
         jButton1 = new JButton("下载");
+        jButton1.addActionListener(new DownloadFile(this,clientFrame));
         jButton2 = new JButton("删除 ");
         jButton3 = new JButton("返回");
         jButton3.addActionListener(new ReturnServerDir(clientFrame,this));

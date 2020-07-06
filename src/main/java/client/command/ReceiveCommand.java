@@ -54,7 +54,7 @@ public class ReceiveCommand {
                     mode.pause();
                 }
                 case DOWNLOAD:{
-                    mode.download();
+                    mode.download(protocolFromSocket,clientFrame);
                 }
                 case UPLOAD:{
                     mode.upload();

@@ -20,9 +20,13 @@ public class GetTaskFilePath {
         return fileNames;
     }
 
-    public static String getDownloadName(JTable jTable,String filePath){
-        int rows = jTable.getSelectedRow();
-        return filePath + jTable.getValueAt(rows,0);
+    public static String[] getDownloadName(JTable jTable,String filePath){
+        int[] rows = jTable.getSelectedRows();
+        fileNames = new String[rows.length];
+        for(int i = 0; i < rows.length;i ++){
+            fileNames[i] = filePath + (String) jTable.getValueAt(rows[i],0);
+        }
+        return fileNames;
     }
 
     public static String getDownloadFileName(JTable jTable){

@@ -5,7 +5,6 @@ import client.gui.MyGridBagConstraints;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import servertest.test.Client;
 
 import javax.swing.*;
 import java.awt.*;
