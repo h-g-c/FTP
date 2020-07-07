@@ -1,10 +1,13 @@
+import configuration_and_constant.ThreadPool;
 import entity.FileEnum;
-import entity.PassiveMode;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import server.DeleteFileThread;
 import util.FileUtil;
 
-import java.io.File;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author yinchao
@@ -43,7 +46,9 @@ public class FileTest {
     }
 
     @Test
-    public void deleteFile(){
-        new PassiveMode().delete(new File("/tmp/test1/123.txt"));
+    public void deleteFile() throws InterruptedException, ExecutionException {
+        final ThreadPoolExecutor threadPool = ThreadPool.getThreadPool();
+        final Future future = threadPool.submit(new DeleteFileThread("/tmp/test1"));
+        System.out.println(future.get());
     }
 }

@@ -4,15 +4,15 @@ import configuration_and_constant.ThreadPool;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import server.DatabaseService;
+import server.DeleteFileThread;
 import server.SendFileByByte;
 import util.FileUtil;
 
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -82,24 +82,11 @@ public abstract class Mode {
         return FileUtil.getFileList(filePath);
     }
 
-    public void delete(File file) {
-        if (!file.exists()) {
-            log.info("文件不存在");
-            return ;
-        }
-        if (file.isFile()) {
-            if (file.delete()) {
-                log.info("删除文件{}成功", file.getAbsolutePath());
-            } else {
-                log.error("删除失败");
-            }
-            // 如果是文件夹,递归删除
-        } else {
-            Arrays.stream(file.listFiles()).forEach(item -> {
-                delete(item);
-                item.delete();
-            });
-            file.delete();
-        }
+    public void delete(String fileName, ObjectOutputStream objectOutputStream, Protocol protocol) throws InterruptedException, IOException, ExecutionException {
+        final ThreadPoolExecutor threadPool = ThreadPool.getThreadPool();
+        final Future future = threadPool.submit(new DeleteFileThread(fileName));
+        protocol.setData(future.get());
+        objectOutputStream.writeObject(protocol);
+        objectOutputStream.writeObject(null);
     }
 }
