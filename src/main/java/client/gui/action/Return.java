@@ -2,6 +2,7 @@ package client.gui.action;
 
 import client.gui.panel.LocalFilePanel;
 import client.util.GetFiles;
+import client.util.OSinfo;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ import java.io.File;
 public class Return implements ActionListener {
 
     private String[][] data = null;
-    private final String[] tableInfo = {"文件名","大小","日期","文件类型"};
+    private final String[] tableInfo = {"文件名", "大小", "日期", "文件类型"};
     private String filePath;
 
     @NonNull
@@ -35,20 +36,23 @@ public class Return implements ActionListener {
         String firePath = localFilePanel.getJTextField().getText();
         firePath = new File(firePath).getAbsolutePath();
         firePath = new File(firePath).getParent();
-        if(firePath == null){
+        if (firePath == null) {
             data = GetFiles.getFiles(localFilePanel.getJComboBox());
-            model = new DefaultTableModel(data,tableInfo);
-            localFilePanel.getJTable().setModel(model);
-            localFilePanel.getJTextField().setText(String.valueOf(localFilePanel.getJComboBox().getSelectedItem()));
-        }else{
-            data = GetFiles.getFiles(firePath);
-            model = new DefaultTableModel(data,tableInfo);
+            model = new DefaultTableModel(data, tableInfo);
             localFilePanel.getJTable().setModel(model);
 
-            if(firePath.equals(String.valueOf(localFilePanel.getJComboBox().getSelectedItem()))){
-                localFilePanel.getJTextField().setText(firePath);
-            }else{
-                localFilePanel.getJTextField().setText(firePath+File.separator);
+        } else {
+            data = GetFiles.getFiles(firePath);
+            model = new DefaultTableModel(data, tableInfo);
+            localFilePanel.getJTable().setModel(model);
+            if (firePath.equals(String.valueOf(localFilePanel.getJComboBox().getSelectedItem()))) {
+                if (OSinfo.getOS() == OSinfo.OS.LINUX) {
+                    localFilePanel.getJTextField().setText(firePath + File.separator);
+                } else {
+                    localFilePanel.getJTextField().setText(firePath);
+                }
+            } else {
+                localFilePanel.getJTextField().setText(firePath + File.separator);
             }
         }
     }

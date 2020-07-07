@@ -79,6 +79,7 @@ public class MouseClickedTwiceListener extends MouseAdapter {
         // 双击事件
         int row = localFilePanel.getJTable().rowAtPoint(me.getPoint());
         String fileName = localFilePanel.getJTextField().getText()+localFilePanel.getJTable().getValueAt(row,0).toString();
+        System.out.println(localFilePanel.getJTextField().getText());
         if(!new File(fileName).isFile()){
             model.setRowCount(0);
             String[][] data = GetFiles.getFiles(fileName);
