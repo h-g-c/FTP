@@ -32,7 +32,7 @@ public class ExceptFileByByte implements Runnable{
                 point = file.length();
             }
             rad.seek(point);
-            byte[] value = new byte[8];
+            byte[] value = new byte[5*1024];
             while (true) {
                 int length = dis.read(value);
                 if (length == -1) {
