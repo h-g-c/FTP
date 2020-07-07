@@ -1,6 +1,8 @@
 package client.mode;
 
 import client.file.BinaryFileReceiveHandler;
+import client.file.BinaryFileSendHandler;
+import client.file.TxtFileReceiveHandler;
 import client.gui.ClientFrame;
 import entity.FileEnum;
 import entity.FileModel;
@@ -34,7 +36,7 @@ public class InitiativeMode extends Mode {
                 if(fileModel.getFileType().equals(FileEnum.BINARY)){
                     BinaryFileReceiveHandler.receiveBinaryFile(inputStream,fileModel,clientFrame);
                 }else{
-                    //TODO something
+                    TxtFileReceiveHandler.receiveTxtFile(inputStream,fileModel,clientFrame);
                 }
             }
         } catch (IOException e) {
@@ -50,7 +52,8 @@ public class InitiativeMode extends Mode {
                 outputStream = socket.getOutputStream();
                 fileModel = (FileModel)protocolFromSocket.getData();
                 if(fileModel.getFileType().equals(FileEnum.BINARY)){
-                }else{
+                    BinaryFileSendHandler.sendBinaryFile(outputStream,fileModel,clientFrame);
+                }else if(fileModel.getFileType().equals(FileEnum.TEXT)){
                     //TODO something
                 }
             }

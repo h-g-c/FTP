@@ -5,6 +5,7 @@ import client.util.ArrayListToStringList;
 import entity.FileModel;
 import lombok.Data;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
  * @date 2020-07-07 23:56
  */
 @Data
+@RequiredArgsConstructor
 public class BinaryFileSendThread implements Runnable{
 
     private DataOutputStream dataOutputStream;;
