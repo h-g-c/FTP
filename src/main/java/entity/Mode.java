@@ -54,7 +54,7 @@ public abstract class Mode {
         objectOutputStream.flush();
         fileModel.setFileSize(fileLength.toString());
         final ThreadPoolExecutor threadPool = ThreadPool.getThreadPool();
-        if(protocolFromSocket.getOperateType().equals(FileEnum.BINARY))
+        if(fileModel.getFileType().equals(FileEnum.BINARY))
         {
             ExceptFileByByte exceptFileByByte=ExceptFileByByte.builder().fileModel(fileModel)
                     .dis(new DataInputStream(getDataSocket(protocolFromSocket.clientIp,protocolFromSocket.dataPort).getInputStream()))

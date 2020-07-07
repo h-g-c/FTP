@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class BinaryFileSendHandler {
         JTable jTable = clientFrame.getJPanel4().getJTable2();
         clo = new String[3];
         clo[0] = fileModel.getFileName();
-        clo[1] = fileModel.getFileSize();
+        clo[1] = String.valueOf(new File(fileModel.getFilePath()).length());
         clo[2] = "";
         data.add(clo);
 
