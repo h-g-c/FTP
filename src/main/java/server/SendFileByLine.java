@@ -27,18 +27,31 @@ public class SendFileByLine implements Runnable {
     }
 
     public void sendFile(OutputStream sendOutputStream,int fileLength,String filePath) throws IOException {
-        int fileLine= FileUtil.getFileLine(filePath);
-        File file=new File(filePath);
-        FileReader fileReader=new FileReader(file);
-        LineNumberReader lineNumberReader=new LineNumberReader(fileReader);
-        lineNumberReader.skip(fileLength);
-        String str;
-        PrintWriter printWriter=new PrintWriter(sendOutputStream);
-        while(fileLength<=fileLine)
-        {
-            str=lineNumberReader.readLine();
-            printWriter.println(str);
-            fileLength++;
+        int fileLine= 0;
+        try {
+            fileLine = FileUtil.getFileLine(filePath);
+            File file=new File(filePath);
+            FileReader fileReader=new FileReader(file);
+            LineNumberReader lineNumberReader=new LineNumberReader(fileReader);
+            lineNumberReader.skip(fileLength);
+            String str;
+//            PrintWriter printWriter=new PrintWriter(sendOutputStream);
+            OutputStreamWriter outputStreamWriter=new OutputStreamWriter(sendOutputStream);
+            while(fileLength<=fileLine)
+            {
+                str=lineNumberReader.readLine();
+                outputStreamWriter.write(str+"\r\n");
+                outputStreamWriter.flush();
+//                printWriter.println(str);
+                fileLength++;
+            }
+            System.out.println(fileLength);
+            System.out.println(fileLine);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            sendOutputStream.close();
         }
+
     }
 }

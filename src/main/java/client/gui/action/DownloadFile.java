@@ -12,6 +12,7 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import util.FileUtil;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -78,6 +79,12 @@ public class DownloadFile implements ActionListener {
                 }
                 fileModel.setFileSize(String.valueOf(size));
             }else if(fileType.equals("TEXT")){
+                File file = new File(Constant.DEFAULT_PATH + oneFile + ".temp");
+                long size = 0;
+                if(file.exists() && file.isFile()){
+                    size = FileUtil.getFileLine(file.getName());
+                }
+                fileModel.setFileSize(String.valueOf(size));
                 fileModel.setFileType(FileEnum.TEXT);
             }else{
                 fileModel.setFileType(FileEnum.DIR);

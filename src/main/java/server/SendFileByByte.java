@@ -25,21 +25,18 @@ public class SendFileByByte implements Runnable{
         RandomAccessFile raf = new RandomAccessFile(file, "rw");
         byte[] value;
         long fileLength = file.length();
-        System.out.println(fileLength);
-        System.out.println(point);
         try {
             raf.seek(point);
             value = new byte[(int) (fileLength - point)];
             if (raf.read(value) != (fileLength - point)) {
                 return false;
             }
-            System.out.println(fileLength - point);
         } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
         //每次读取8k
-        int sendCont=1024*8;
+        int sendCont=8*1024;
         int low=0;
         while(true)
         {
@@ -48,6 +45,7 @@ public class SendFileByByte implements Runnable{
                     das.write(value, low, (int) (fileLength - point -low));
                     das.flush();
                     das.close();
+                    System.out.println("end");
                     return true;
                 } else {
                     das.write(value, low,sendCont);

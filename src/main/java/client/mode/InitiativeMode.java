@@ -1,7 +1,6 @@
 package client.mode;
 
 import client.file.BinaryFileReceiveHandler;
-import client.file.BinaryFileSendHandler;
 import client.gui.ClientFrame;
 import entity.FileEnum;
 import entity.FileModel;
@@ -51,7 +50,6 @@ public class InitiativeMode extends Mode {
                 outputStream = socket.getOutputStream();
                 fileModel = (FileModel)protocolFromSocket.getData();
                 if(fileModel.getFileType().equals(FileEnum.BINARY)){
-                    BinaryFileSendHandler.sendBinaryFile(outputStream,fileModel,clientFrame);
                 }else{
                     //TODO something
                 }
