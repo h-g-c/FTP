@@ -68,7 +68,7 @@ public class DownloadFile implements ActionListener {
             FileModel fileModel = new FileModel();
             fileModel.setFileName(oneFile);
             fileModel.setFilePath(fileName[0]);
-            if(fileType.equals("二进制文件")){
+            if(fileType.equals("BINARY")){
                 fileModel.setFileType(FileEnum.BINARY);
                 File file = new File(Constant.DEFAULT_PATH + oneFile + ".temp");
                 new RandomAccessFile(Constant.DEFAULT_PATH + oneFile + ".temp","rw");
@@ -77,7 +77,7 @@ public class DownloadFile implements ActionListener {
                     size = file.length();
                 }
                 fileModel.setFileSize(String.valueOf(size));
-            }else if(fileType.equals("文本文件")){
+            }else if(fileType.equals("TEXT")){
                 fileModel.setFileType(FileEnum.TEXT);
             }else{
                 fileModel.setFileType(FileEnum.DIR);
@@ -90,11 +90,9 @@ public class DownloadFile implements ActionListener {
             protocol.setOperateType(OperateType.DOWNLOAD);
             protocol.setClientIp(IPUtil.getLocalIP());
             protocol.setConnectType(ConnectType.INITIATIVE);
-            SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
-
             clientFrame.dataSocket = socketServer;
-            System.out.println(clientFrame.dataSocket);
-
+            SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
+            System.out.println(clientFrame.dataSocket.toString());
         }catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException){
             new MessageDialog("提示","请先选择文件！").init();
         } catch (IOException ioException) {

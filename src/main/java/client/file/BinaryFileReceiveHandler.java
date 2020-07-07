@@ -41,7 +41,6 @@ public class BinaryFileReceiveHandler {
                     break;
                 }
                 randomAccessFile.write(value,0,length);
-
                 size += length;
                 if(size >= fileLength){
                     break;
