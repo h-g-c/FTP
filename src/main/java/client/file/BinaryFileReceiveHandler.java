@@ -20,7 +20,7 @@ public class BinaryFileReceiveHandler {
     private static long fileLength;
     private static DataInputStream dataInputStream;
 
-    public static void receiveBinaryFile(InputStream inputStream, FileModel fileModel, ClientFrame clientFrame){
+    public static void receiveBinaryFile(InputStream inputStream, FileModel fileModel, ClientFrame clientFrame) throws IOException {
         try{
             System.out.println(inputStream);
             dataInputStream = new DataInputStream(inputStream);
@@ -48,8 +48,10 @@ public class BinaryFileReceiveHandler {
             dataInputStream.close();
             randomAccessFile.close();
             //对文件重命名
+            System.out.println(size + "以及"+ fileLength);
             if(size >= fileLength){
-                tempFile.renameTo(new File(Constant.DEFAULT_PATH + fileModel.getFileName()));
+                boolean pan=tempFile.renameTo(new File(Constant.DEFAULT_PATH + fileModel.getFileName()));
+                System.out.println("重命名"+pan);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
