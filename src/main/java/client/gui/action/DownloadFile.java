@@ -71,7 +71,6 @@ public class DownloadFile implements ActionListener {
             if(fileType.equals("BINARY")){
                 fileModel.setFileType(FileEnum.BINARY);
                 File file = new File(Constant.DEFAULT_PATH + oneFile + ".temp");
-                new RandomAccessFile(Constant.DEFAULT_PATH + oneFile + ".temp","rw");
                 long size = 0;
                 if(file.exists() && file.isFile()){
                     size = file.length();
