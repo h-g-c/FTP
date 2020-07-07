@@ -39,7 +39,7 @@ public class LocalFileChange implements ItemListener {
             if(OSinfo.getOS() == OSinfo.OS.LINUX) {
                 localFilePanel.getJTextField().setText(String.valueOf(localFilePanel.getJComboBox().getSelectedItem()) + File.separator);
             }else{
-                localFilePanel.getJTextField().setText(String.valueOf(localFilePanel.getJComboBox().getSelectedItem()) + File.separator);
+                localFilePanel.getJTextField().setText(String.valueOf(localFilePanel.getJComboBox().getSelectedItem()));
             }
         }
     }

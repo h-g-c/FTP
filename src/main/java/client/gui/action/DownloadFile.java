@@ -72,7 +72,6 @@ public class DownloadFile implements ActionListener {
             if(fileType.equals("BINARY")){
                 fileModel.setFileType(FileEnum.BINARY);
                 File file = new File(Constant.DEFAULT_PATH + oneFile + ".temp");
-//                new RandomAccessFile(Constant.DEFAULT_PATH + oneFile + ".temp","rw");
                 long size = 0;
                 if(file.exists() && file.isFile()){
                     size = file.length();
@@ -92,16 +91,12 @@ public class DownloadFile implements ActionListener {
             protocol.setClientIp(IPUtil.getLocalIP());
             protocol.setConnectType(ConnectType.INITIATIVE);
             clientFrame.dataSocket = socketServer;
-            SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
-//            Socket haha=socketServer.accept();
-//            clientFrame.setDataSocket(haha);
-//            System.out.println(clientFrame.hashCode());
-//            System.out.println("链接呈贡"+haha.toString());
 
+            SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
         }catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException){
-            new MessageDialog("提示","请先选择文件！").init();
+            new MessageDialog("提示","请先选择文件！",clientFrame).init();
         } catch (IOException ioException) {
-            new MessageDialog("提示","无法打开数据端口").init();
+            new MessageDialog("提示","无法打开数据端口",clientFrame).init();
         }
     }
 }

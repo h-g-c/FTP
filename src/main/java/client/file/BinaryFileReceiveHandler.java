@@ -52,6 +52,7 @@ public class BinaryFileReceiveHandler {
             //对文件重命名
             System.out.println(size + "以及"+ fileLength);
             if(size >= fileLength){
+                System.out.println(Constant.DEFAULT_PATH + fileModel.getFileName());
                 boolean pan=tempFile.renameTo(new File(Constant.DEFAULT_PATH + fileModel.getFileName()));
                 System.out.println("重命名"+pan);
             }
