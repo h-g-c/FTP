@@ -15,6 +15,7 @@ public class SendCommand{
         try{
             if(socket != null && socket.isConnected()){
                 objectOutputStream.writeObject(protocol);
+                objectOutputStream.writeObject(null);
                 objectOutputStream.flush();
             }
         } catch (IOException e) {

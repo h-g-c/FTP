@@ -29,8 +29,8 @@ public class GetTaskFilePath {
         return fileNames;
     }
 
-    public static String getDownloadFileName(JTable jTable){
+    public static String getDownloadFileType(JTable jTable){
         int rows = jTable.getSelectedRow();
-        return (String) jTable.getValueAt(rows,0);
+        return (String) jTable.getValueAt(rows,3);
     }
 }

@@ -1,5 +1,6 @@
 package client.gui.panel;
 
+import client.gui.ClientFrame;
 import client.gui.action.*;
 import client.gui.MyGridBagConstraints;
 import client.gui.table.LocalFileTable;
@@ -32,11 +33,11 @@ public class LocalFilePanel extends JPanel {
     private String[][] data = null;
     private File[] roots = null;
 
-    public LocalFilePanel(){
-        init();
+    public LocalFilePanel(ClientFrame clientFrame){
+        init(clientFrame);
     }
 
-    private void init(){
+    private void init(ClientFrame clientFrame){
         setLayout(new GridBagLayout());
 
         jTextField.setEditable(false);
@@ -61,7 +62,7 @@ public class LocalFilePanel extends JPanel {
         jTable.addMouseListener(new MouseClickedTwiceListener(this,model));
         JScrollPane jScrollPane = new JScrollPane(jTable);
         jComboBox.addItemListener(new LocalFileChange(this,model));
-        jButton1.addActionListener(new FileUpload(this));
+        jButton1.addActionListener(new FileUpload(this,clientFrame));
         jButton3.addActionListener(new Return(this,model));
         jButton4.addActionListener(new Flush(this,model));
 

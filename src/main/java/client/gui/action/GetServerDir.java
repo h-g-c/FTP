@@ -7,6 +7,7 @@ import client.gui.msg.MessageDialog;
 import client.util.IPUtil;
 import entity.OperateType;
 import entity.Protocol;
+import entity.User;
 import lombok.AllArgsConstructor;
 
 import java.awt.event.ActionEvent;
@@ -25,13 +26,18 @@ public class GetServerDir implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(clientFrame.getSocket() != null &&clientFrame.getSocket().isConnected()){
+
+            User user = new User();
+            user.setUserName(clientFrame.getJPanel2().getJt2().getText());
+            user.setPassword(clientFrame.getJPanel2().getJPasswordField().getText());
+
             Protocol protocol = new Protocol();
             protocol.setServiceIp(clientFrame.getProtocol().getServiceIp());
             protocol.setCommandPort(clientFrame.getProtocol().getCommandPort());
             protocol.setClientIp(IPUtil.getLocalIP());
             protocol.setOperateType(OperateType.CONNECT);
             protocol.setConnectType(clientFrame.getProtocol().getConnectType());
-            protocol.setData(null);
+            protocol.setData(user);
             protocol.setDataPort(clientFrame.getProtocol().getDataPort());
 
             SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());

@@ -7,10 +7,7 @@ import client.gui.panel.ServerFilePanel;
 import client.util.GetTaskFilePath;
 import client.util.IPUtil;
 import configuration_and_constant.Constant;
-import entity.ConnectType;
-import entity.FileModel;
-import entity.OperateType;
-import entity.Protocol;
+import entity.*;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +42,7 @@ public class DownloadFile implements ActionListener {
 
     private JTable jTable;
     private String filePath;
+    private String fileType;
     private String[] fileName;
     private ServerSocket socketServer;
     private Protocol protocol;
@@ -55,10 +53,10 @@ public class DownloadFile implements ActionListener {
             jTable = serverFilePanel.getJTable();
             filePath = serverFilePanel.getJTextField().getText();
             fileName = GetTaskFilePath.getDownloadName(jTable,filePath);
+            fileType = GetTaskFilePath.getDownloadFileType(jTable);
 
             protocol = new Protocol();
             socketServer = new ServerSocket(0);
-            clientFrame.serverSocket=socketServer;
             log.info(socketServer.toString());
 
             String oneFile = fileName[0].substring(fileName[0].lastIndexOf(File.separator)+1,fileName[0].length());
@@ -68,25 +66,37 @@ public class DownloadFile implements ActionListener {
                 log.info("请求下载文件路径：" + fileName[i]);
             }
 
-            File file = new File(Constant.DEFAULT_PATH + oneFile + ".temp");
-            new RandomAccessFile(Constant.DEFAULT_PATH + oneFile + ".temp","rw");
-
-            long size = 0;
-            if(file.exists() && file.isFile()){
-                size = file.length();
-            }
-
             FileModel fileModel = new FileModel();
             fileModel.setFileName(oneFile);
             fileModel.setFilePath(fileName[0]);
-            fileModel.setFileSize(String.valueOf(size));
+            if(fileType.equals("BINARY")){
+                fileModel.setFileType(FileEnum.BINARY);
+                File file = new File(Constant.DEFAULT_PATH + oneFile + ".temp");
+                new RandomAccessFile(Constant.DEFAULT_PATH + oneFile + ".temp","rw");
+                long size = 0;
+                if(file.exists() && file.isFile()){
+                    size = file.length();
+                }
+                fileModel.setFileSize(String.valueOf(size));
+            }else if(fileType.equals("TEXT")){
+                fileModel.setFileType(FileEnum.TEXT);
+            }else{
+                fileModel.setFileType(FileEnum.DIR);
+            }
 
             protocol.setData(fileModel);
+            protocol.setServiceIp(clientFrame.getJPanel2().getJt1().getText());
+            protocol.setCommandPort(Integer.valueOf(clientFrame.getJPanel2().getJt3().getText()));
             protocol.setDataPort(socketServer.getLocalPort());
             protocol.setOperateType(OperateType.DOWNLOAD);
             protocol.setClientIp(IPUtil.getLocalIP());
             protocol.setConnectType(ConnectType.INITIATIVE);
+            clientFrame.dataSocket = socketServer;
             SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
+//            Socket haha=socketServer.accept();
+//            clientFrame.setDataSocket(haha);
+//            System.out.println(clientFrame.hashCode());
+//            System.out.println("链接呈贡"+haha.toString());
 
         }catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException){
             new MessageDialog("提示","请先选择文件！").init();
