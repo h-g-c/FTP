@@ -81,7 +81,7 @@ public class FileUpload implements ActionListener {
             protocol.setServiceIp(clientFrame.getJPanel2().getJt1().getText());
             protocol.setCommandPort(Integer.valueOf(clientFrame.getJPanel2().getJt3().getText()));
             protocol.setDataPort(socketServer.getLocalPort());
-            protocol.setOperateType(OperateType.DOWNLOAD);
+            protocol.setOperateType(OperateType.UPLOAD);
             protocol.setClientIp(IPUtil.getLocalIP());
             protocol.setConnectType(ConnectType.INITIATIVE);
             clientFrame.dataSocket = socketServer;

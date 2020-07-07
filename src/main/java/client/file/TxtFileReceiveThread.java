@@ -57,7 +57,7 @@ public class TxtFileReceiveThread implements Runnable{
                 while ((value=bufferedReader.readLine()) != null){
                     fileWriter.write(value + "\r\n");
                     tempLength++;
-                    jTable.setValueAt(value.length(),num,2);
+                    jTable.setValueAt(tempLength,num,2);
                 }
                 fileWriter.close();
                 bufferedReader.close();
