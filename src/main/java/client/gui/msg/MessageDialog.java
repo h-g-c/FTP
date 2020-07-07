@@ -38,35 +38,51 @@ public class MessageDialog {
 
     @SneakyThrows
     public JDialog init(){
-        if(clientFrame.getSocket() != null){
-            clientFrame.getSocket().close();
-            clientFrame.setSocket(null);
+        try{
+            if(clientFrame.getSocket() != null){
+                clientFrame.getSocket().close();
+                clientFrame.setSocket(null);
+            }
+            clientFrame.getJPanel3().getJPanel2().getModel().setRowCount(0);
+            DefaultTableModel model = new DefaultTableModel(data,tableInfo);
+            clientFrame.getJPanel3().getJPanel2().getJTable().setModel(model);
+            clientFrame.getJPanel3().getJPanel2().getJTextField().setText("");
+            clientFrame.getJPanel2().getJComboBox().setEnabled(true);
+            clientFrame.getJPanel2().getJt1().setEditable(true);
+            clientFrame.getJPanel2().getJt2().setEditable(true);
+            clientFrame.getJPanel2().getJt3().setEditable(true);
+            clientFrame.getJPanel2().getJPasswordField().setEditable(true);
+            clientFrame.getJPanel2().remove(clientFrame.getJPanel2().getJLabel());
+            clientFrame.getJPanel2().add(clientFrame.getJPanel2().getJButton());
+            clientFrame.getJPanel2().updateUI();
+            jDialog = new JDialog();
+            jDialog.setIconImage(icon.getImage());
+            jDialog.setTitle(title);
+
+            jLabel = new JLabel(msg,JLabel.CENTER);
+            jLabel.setFont(new Font("宋体",Font.PLAIN,16));
+            jDialog.add(jLabel);
+
+            jDialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+            jDialog.setSize(X,Y);
+            jDialog.setLocationRelativeTo(null);
+            jDialog.setVisible(true);
+            return jDialog;
+        }catch (NullPointerException e){
+            jDialog = new JDialog();
+            jDialog.setIconImage(icon.getImage());
+            jDialog.setTitle(title);
+
+            jLabel = new JLabel(msg,JLabel.CENTER);
+            jLabel.setFont(new Font("宋体",Font.PLAIN,16));
+            jDialog.add(jLabel);
+
+            jDialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+            jDialog.setSize(X,Y);
+            jDialog.setLocationRelativeTo(null);
+            jDialog.setVisible(true);
+            return jDialog;
         }
-        clientFrame.getJPanel3().getJPanel2().getModel().setRowCount(0);
-        DefaultTableModel model = new DefaultTableModel(data,tableInfo);
-        clientFrame.getJPanel3().getJPanel2().getJTable().setModel(model);
-        clientFrame.getJPanel3().getJPanel2().getJTextField().setText("");
-        clientFrame.getJPanel2().getJComboBox().setEnabled(true);
-        clientFrame.getJPanel2().getJt1().setEditable(true);
-        clientFrame.getJPanel2().getJt2().setEditable(true);
-        clientFrame.getJPanel2().getJt3().setEditable(true);
-        clientFrame.getJPanel2().getJPasswordField().setEditable(true);
-        clientFrame.getJPanel2().remove(clientFrame.getJPanel2().getJLabel());
-        clientFrame.getJPanel2().add(clientFrame.getJPanel2().getJButton());
-        clientFrame.getJPanel2().updateUI();
-        jDialog = new JDialog();
-        jDialog.setIconImage(icon.getImage());
-        jDialog.setTitle(title);
-
-        jLabel = new JLabel(msg,JLabel.CENTER);
-        jLabel.setFont(new Font("宋体",Font.PLAIN,16));
-        jDialog.add(jLabel);
-
-        jDialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-        jDialog.setSize(X,Y);
-        jDialog.setLocationRelativeTo(null);
-        jDialog.setVisible(true);
-        return jDialog;
     }
 
 }

@@ -39,8 +39,10 @@ public class TaskPanel extends JTabbedPane {
 
         model2=new DefaultTableModel(data, tableInfo);
         jTable2 = new LocalFileTable(model2);
-        add("上传队列",new JScrollPane(jTable1));
-        add("下载队列",new JScrollPane(jTable2));
+        jTable2.setEnabled(false);
+
+        add("下载队列",new JScrollPane(jTable1));
+        add("上传队列",new JScrollPane(jTable2));
     }
 }
 

@@ -50,11 +50,15 @@ public abstract class Mode {
     public void download(Protocol protocolFromSocket, ObjectOutputStream objectOutputStream) throws IOException, InterruptedException {
         FileModel fileModel = (FileModel) protocolFromSocket.getData();
         String alreadySendLength = fileModel.getFileSize();
+        System.out.println(alreadySendLength);
         final FileUtil fileUtil = new FileUtil();
+        System.out.println("--------------");
         if (FileUtil.judgeFileType(fileModel.getFilePath()).equals(FileEnum.BINARY)) {
+            System.out.println("1111111111111111");
             fileModel.setFileType(FileEnum.BINARY);
             File file = new File(fileModel.getFilePath());
             long fileLength=file.length();
+            System.out.println(fileLength);
             fileModel.setFileSize(String.valueOf(fileLength));
         } else {
             fileModel.setFileType(FileEnum.TEXT);
