@@ -59,7 +59,7 @@ public abstract class Mode {
         //上传文件处理
     }
 
-    public void download(Protocol protocolFromSocket, ClientFrame clientFrame){
+    public void download(Protocol protocolFromSocket, ClientFrame clientFrame, ArrayList<String[]> data){
         //下载文件处理
     }
 
