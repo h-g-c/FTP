@@ -22,10 +22,9 @@ import java.io.File;
 public class LocalFilePanel extends JPanel {
 
     private JLabel jLabel = new JLabel("本地文件",JLabel.CENTER);
-    private JButton jButton1 = new JButton("上传");
-    private JButton jButton2 = new JButton("删除");
-    private JButton jButton3 = new JButton("返回");
-    private JButton jButton4 = new JButton("刷新");
+    private JButton jButton1 = new JButton("   上传    ");
+    private JButton jButton3 = new JButton("   返回   ");
+    private JButton jButton4 = new JButton("   刷新   ");
     private JTextField jTextField = new JTextField(" ",10);
     private JComboBox jComboBox;
     private JTable jTable;
@@ -73,10 +72,9 @@ public class LocalFilePanel extends JPanel {
         jPanel.setLayout(new GridBagLayout());
 
         jPanel.add(jButton1,new MyGridBagConstraints(0,0,1,1).init2());
-        jPanel.add(jButton2,new MyGridBagConstraints(1,0,1,1).init2());
-        jPanel.add(jButton3,new MyGridBagConstraints(2,0,1,1).init2());
-        jPanel.add(jButton4,new MyGridBagConstraints(3,0,1,1).init2());
-        jPanel.add(jComboBox,new MyGridBagConstraints(4,0,1,1).init2());
+        jPanel.add(jButton3,new MyGridBagConstraints(1,0,1,1).init2());
+        jPanel.add(jButton4,new MyGridBagConstraints(2,0,1,1).init2());
+        jPanel.add(jComboBox,new MyGridBagConstraints(3,0,1,1).init2());
 
         add(jLabel,new MyGridBagConstraints(0,0,1,1).init1());
 
