@@ -1,11 +1,10 @@
 package entity;
 
+import configuration_and_constant.Constant;
 import configuration_and_constant.ThreadPool;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import server.DatabaseService;
-import server.DeleteFileThread;
-import server.SendFileByByte;
+import server.*;
 import util.FileUtil;
 
 import java.io.*;
@@ -42,7 +41,34 @@ public abstract class Mode {
 
     public abstract Socket getDataSocket(String address, Integer port);
 
-    public void upload() {
+    public void upload(Protocol protocolFromSocket, ObjectOutputStream objectOutputStream) throws IOException {
+        FileModel fileModel=(FileModel) protocolFromSocket.getData();
+        Integer fileLength=Integer.valueOf(fileModel.getFileSize());
+        if(fileModel.getFileType().equals(FileEnum.BINARY))
+        {
+          File file=new File(Constant.UPLOAD_PATH + fileModel.getFileName() + ".temp");
+          fileModel.setFileSize(String.valueOf(file.length()));
+        }else {
+          fileModel.setFileSize(String.valueOf(FileUtil.getFileLine(Constant.UPLOAD_PATH + fileModel.getFileName() + ".temp")));
+        }
+        protocolFromSocket.setData(fileModel);
+        objectOutputStream.writeObject(protocolFromSocket);
+        objectOutputStream.writeObject(null);
+        objectOutputStream.flush();
+        fileModel.setFileSize(fileLength.toString());
+        final ThreadPoolExecutor threadPool = ThreadPool.getThreadPool();
+        if(protocolFromSocket.getOperateType().equals(FileEnum.BINARY))
+        {
+            ExceptFileByByte exceptFileByByte=ExceptFileByByte.builder().fileModel(fileModel)
+                    .dis(new DataInputStream(getDataSocket(protocolFromSocket.clientIp,protocolFromSocket.dataPort).getInputStream()))
+                    .build();
+            threadPool.submit(exceptFileByByte);
+        }
+        else {
+            ExceptFileByLine exceptFileByLine=ExceptFileByLine.builder().fileModel(fileModel)
+                    .inputStream(getDataSocket().getInputStream()).build();
+            threadPool.submit(exceptFileByLine);
+        }
     }
 
     public void download(Protocol protocolFromSocket, ObjectOutputStream objectOutputStream) throws IOException, InterruptedException {
@@ -71,7 +97,11 @@ public abstract class Mode {
                     .filePath(fileModel.getFilePath()).point(Long.valueOf(alreadySendLength)).build();
             threadPool.submit(sendFileByByte);
         } else {
-//            threadPool.submit(new SendFileByLine((String) protocolFromSocket.getData()));
+            SendFileByLine sendFileByLine=SendFileByLine.builder()
+                    .sendOutputStream(getDataSocket(protocolFromSocket.getClientIp(),protocolFromSocket.getDataPort()).getOutputStream())
+                            .fileLength(Integer.valueOf(alreadySendLength))
+                            .filePath(fileModel.filePath).build();
+            threadPool.submit(sendFileByLine);
         }
     }
 

@@ -72,13 +72,13 @@ public class ClientCommandHandler implements Runnable {
                         break;
                     }
                     case UPLOAD:{
-                        mode.upload();
+                        mode.upload(protocolFromSocket,clientFrame);
                         break;
                     }
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            new MessageDialog("提示","连接已断开！",clientFrame).init();
         }
     }
 }

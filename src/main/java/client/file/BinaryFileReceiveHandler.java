@@ -1,60 +1,45 @@
 package client.file;
 
 import client.gui.ClientFrame;
-import configuration_and_constant.Constant;
+import client.util.ArrayListToStringList;
 import entity.FileModel;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * @author LvHao
  * @Description :
  * @date 2020-07-06 17:00
  */
+@Slf4j(topic = "BinaryFileReceiveHandler")
 @RequiredArgsConstructor
 public class BinaryFileReceiveHandler {
 
-    private static File tempFile;
-    private static RandomAccessFile randomAccessFile;
-    private static long fileLength;
-    private static DataInputStream dataInputStream;
+    private static ArrayList<String[]> data = new ArrayList<String[]>();
+    private static String[] clo = null;
+    private static String[] tableInfo = {"文件名","文件大小","传输状态"};
+    private static DefaultTableModel model;
 
     public static void receiveBinaryFile(InputStream inputStream, FileModel fileModel, ClientFrame clientFrame){
-        try{
-            System.out.println(inputStream);
-            dataInputStream = new DataInputStream(inputStream);
-            fileLength = Long.parseLong(fileModel.getFileSize());
-            tempFile = new File(Constant.DEFAULT_PATH + fileModel.getFileName() + ".temp");
-            randomAccessFile = new RandomAccessFile(Constant.DEFAULT_PATH + fileModel.getFileName() + ".temp","rw");
-            long size = 0;
-            if(tempFile.exists() && tempFile.isFile()){
-                size = tempFile.length();
-            }
-            //从之前的断点地方进行接收
-            randomAccessFile.seek(size);
-            byte[] value = new byte[8];
-            while(true){
-                int length = dataInputStream.read(value);
-                if(length == -1){
-                    break;
-                }
-                randomAccessFile.write(value,0,length);
-                size += length;
-                if(size >= fileLength){
-                    break;
-                }
-            }
-            dataInputStream.close();
-            randomAccessFile.close();
-            //对文件重命名
-            if(size >= fileLength){
-                tempFile.renameTo(new File(Constant.DEFAULT_PATH + fileModel.getFileName()));
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        JTable downLoadTable = clientFrame.getJPanel4().getJTable1();
+        clo = new String[3];
+        clo[0] = fileModel.getFileName();
+        clo[1] = fileModel.getFileSize();
+        clo[2] = "";
+        data.add(clo);
+
+        if(data.size() > 1){
+            data = ArrayListToStringList.flushData(data,clo[0],clo[1]);
         }
+
+        model=new DefaultTableModel(ArrayListToStringList.getData(data), tableInfo);
+        downLoadTable.setModel(model);
+
+        new Thread(new BinaryFileReceiveThread(inputStream, fileModel,clientFrame,downLoadTable,data,0)).start();
     }
 }

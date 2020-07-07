@@ -76,7 +76,7 @@ public class ServerCommandHandler implements Runnable {
                         break;
                     }
                     case UPLOAD: {
-                        mode.upload();
+                        mode.upload(protocolFromSocket,objectOutputStream);
                         break;
                     }
                     case RETURN_FATHER_DIR: {

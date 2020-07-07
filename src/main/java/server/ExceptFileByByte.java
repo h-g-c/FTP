@@ -1,6 +1,9 @@
 package server;
 
 import configuration_and_constant.Constant;
+import entity.FileModel;
+import lombok.*;
+import util.FileUtil;
 
 import java.io.*;
 
@@ -10,40 +13,56 @@ import java.io.*;
  * @作者 heguicai
  * @创建日期 2020/7/4 下午5:02
  **/
-public class ExceptFileByByte {
-    DataInputStream das;
-    String filePath;
-    long point;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class ExceptFileByByte implements Runnable{
+    DataInputStream dis;
+    FileModel fileModel;
 
-    public static void breakPoint(DataInputStream dis, String fileName) throws IOException {
-        long fileLength = dis.readLong();
-        File file = new File(Constant.DEFAULT_FILE_PATH + "/" + fileName + ".temp");
-        RandomAccessFile rad = new RandomAccessFile(Constant.DEFAULT_FILE_PATH + "/" + fileName + ".temp", "rw");
-        long size = 0;
-        if (file.exists() && file.isFile()) {
-            size = file.length();
-        }
-        //从之前的断点的地方进行传输；
-        rad.seek(size);
-        byte[] value = new byte[1024 * 8];
-        while (true) {
-            int length = dis.read(value);
-            if (length == -1) {
-                break;
+    public  void breakPoint(DataInputStream dis, FileModel fileModel) throws IOException {
+        RandomAccessFile rad=null;
+        try {
+            File file = new File(Constant.UPLOAD_PATH  + fileModel.getFileName() + ".temp");
+             rad = new RandomAccessFile(Constant.UPLOAD_PATH +  fileModel.getFileName()  + ".temp", "rw");
+            long fileLength=Long.valueOf(fileModel.getFileSize());
+            long point = 0;
+            if (file.exists() && file.isFile()) {
+                point = file.length();
             }
-            rad.write(value);
-            size += length;
-            if (size == fileLength) {
-                break;
+            rad.seek(point);
+            byte[] value = new byte[1024 * 8];
+            while (true) {
+                int length = dis.read(value);
+                if (length == -1) {
+                    break;
+                }
+                rad.write(value);
+                point += length;
+                if (point == fileLength) {
+                    break;
+                }
             }
+            dis.close();
+            rad.close();
+            //文件重命名
+            if (point >= fileLength) {
+                file.renameTo(new File(Constant.UPLOAD_PATH + fileModel.getFileName()));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        dis.close();
-        rad.close();
-        //文件重命名
-        if (size >= fileLength) {
-            file.renameTo(new File(Constant.DEFAULT_FILE_PATH + "/" + fileName));
+        finally {
+            dis.close();
+            rad.close();
         }
-        dis.close();
-        rad.close();
+
+    }
+
+    @SneakyThrows
+    @Override
+    public void run() {
+        breakPoint(dis,fileModel);
     }
 }

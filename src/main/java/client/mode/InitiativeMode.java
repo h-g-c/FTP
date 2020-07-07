@@ -1,16 +1,15 @@
 package client.mode;
 
 import client.file.BinaryFileReceiveHandler;
+import client.file.TxtFileReceiveHandle;
 import client.gui.ClientFrame;
-import client.socket.CreatServer;
 import entity.FileEnum;
 import entity.FileModel;
 import entity.Protocol;
 
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 
 /**
@@ -22,6 +21,7 @@ public class InitiativeMode extends Mode {
 
     private FileModel fileModel;
     private InputStream inputStream;
+    private OutputStream outputStream;
     private Socket socket;
 
     @Override
@@ -34,6 +34,23 @@ public class InitiativeMode extends Mode {
                 fileModel = (FileModel)protocolFromSocket.getData();
                 if(fileModel.getFileType().equals(FileEnum.BINARY)){
                     BinaryFileReceiveHandler.receiveBinaryFile(inputStream,fileModel,clientFrame);
+                }else{
+                    TxtFileReceiveHandle.receiveBinaryFile(inputStream,fileModel,clientFrame);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void upload(Protocol protocolFromSocket, ClientFrame clientFrame){
+        try{
+            if(clientFrame.getDataSocket() != null){
+                socket = clientFrame.getDataSocket().accept();
+                outputStream = socket.getOutputStream();
+                fileModel = (FileModel)protocolFromSocket.getData();
+                if(fileModel.getFileType().equals(FileEnum.BINARY)){
                 }else{
                     //TODO something
                 }

@@ -18,7 +18,7 @@ import java.io.ObjectOutputStream;
  */
 public class ConnectServer extends SocketUtil {
     public ConnectServer(Protocol protocol, ClientFrame clientFrame) {
-        super(protocol);
+        super(protocol,clientFrame);
         clientFrame.setSocket(this.createSocket());
         clientFrame.setProtocol(protocol);
         try {

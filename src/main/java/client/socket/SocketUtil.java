@@ -1,11 +1,9 @@
 package client.socket;
 
+import client.gui.ClientFrame;
 import client.gui.msg.MessageDialog;
 import entity.Protocol;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,6 +24,8 @@ public class SocketUtil {
 
     Protocol protocol;
 
+    private ClientFrame clientFrame;
+
     public java.net.Socket createSocket(){
         java.net.Socket socket = null;
         try{
@@ -35,7 +35,7 @@ public class SocketUtil {
             socket.setSoTimeout(1000000000);
         } catch (IOException e) {
             socket = null;
-            new MessageDialog("连接状态","连接失败").init();
+            new MessageDialog("连接状态","连接失败",clientFrame).init();
         }
         return socket;
     }
