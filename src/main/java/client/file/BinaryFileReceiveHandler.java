@@ -33,7 +33,6 @@ public class BinaryFileReceiveHandler {
             //从之前的断点地方进行接收
             randomAccessFile.seek(size);
             byte[] value = new byte[8];
-            int i=0;
             while(true){
                 int length = dataInputStream.read(value);
                 if(length == -1){

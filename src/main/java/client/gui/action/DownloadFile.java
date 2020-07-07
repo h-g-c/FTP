@@ -87,10 +87,6 @@ public class DownloadFile implements ActionListener {
             protocol.setClientIp(IPUtil.getLocalIP());
             protocol.setConnectType(ConnectType.INITIATIVE);
             SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
-//            Socket haha=socketServer.accept();
-//            clientFrame.setDataSocket(haha);
-//            System.out.println(clientFrame.hashCode());
-//            System.out.println("链接呈贡"+haha.toString());
 
         }catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException){
             new MessageDialog("提示","请先选择文件！").init();
