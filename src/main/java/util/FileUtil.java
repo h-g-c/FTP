@@ -80,7 +80,7 @@ public class FileUtil {
             if (result.startsWith("text")) {
                 return FileEnum.TEXT;
             } else if (result.startsWith("inode")) {
-                throw new IllegalAccessException("文件夹");
+                return null;
             } else {
                 return FileEnum.BINARY;
             }
@@ -198,7 +198,6 @@ public class FileUtil {
 
     public static FileEnum judgeFileType(String filePath) {
         String osName = System.getProperty("os.name");
-        System.out.println(osName);
         switch (osName) {
             case "Linux":
                 return judgeFileTypeInLinux(filePath);
