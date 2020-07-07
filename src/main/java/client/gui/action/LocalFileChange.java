@@ -2,6 +2,7 @@ package client.gui.action;
 
 import client.gui.panel.LocalFilePanel;
 import client.util.GetFiles;
+import client.util.OSinfo;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
 
 /**
  * @author LvHao
@@ -34,7 +36,11 @@ public class LocalFileChange implements ItemListener {
             data = GetFiles.getFiles(localFilePanel.getJComboBox());
             model = new DefaultTableModel(data,tableInfo);
             localFilePanel.getJTable().setModel(model);
-            localFilePanel.getJTextField().setText(String.valueOf(localFilePanel.getJComboBox().getSelectedItem()));
+            if(OSinfo.getOS() == OSinfo.OS.LINUX) {
+                localFilePanel.getJTextField().setText(String.valueOf(localFilePanel.getJComboBox().getSelectedItem()) + File.separator);
+            }else{
+                localFilePanel.getJTextField().setText(String.valueOf(localFilePanel.getJComboBox().getSelectedItem()) + File.separator);
+            }
         }
     }
 }

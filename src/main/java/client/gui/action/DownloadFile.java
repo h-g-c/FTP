@@ -17,6 +17,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.net.ServerSocket;
@@ -71,11 +72,11 @@ public class DownloadFile implements ActionListener {
             if(fileType.equals("BINARY")){
                 fileModel.setFileType(FileEnum.BINARY);
                 File file = new File(Constant.DEFAULT_PATH + oneFile + ".temp");
+//                new RandomAccessFile(Constant.DEFAULT_PATH + oneFile + ".temp","rw");
                 long size = 0;
                 if(file.exists() && file.isFile()){
                     size = file.length();
                 }
-                System.out.println(size);
                 fileModel.setFileSize(String.valueOf(size));
             }else if(fileType.equals("TEXT")){
                 fileModel.setFileType(FileEnum.TEXT);
@@ -92,11 +93,15 @@ public class DownloadFile implements ActionListener {
             protocol.setConnectType(ConnectType.INITIATIVE);
             clientFrame.dataSocket = socketServer;
             SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
-            System.out.println(clientFrame.dataSocket.toString());
+//            Socket haha=socketServer.accept();
+//            clientFrame.setDataSocket(haha);
+//            System.out.println(clientFrame.hashCode());
+//            System.out.println("链接呈贡"+haha.toString());
+
         }catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException){
-            new MessageDialog("提示","请先选择文件！",clientFrame).init();
+            new MessageDialog("提示","请先选择文件！").init();
         } catch (IOException ioException) {
-            new MessageDialog("提示","无法打开数据端口",clientFrame).init();
+            new MessageDialog("提示","无法打开数据端口").init();
         }
     }
 }

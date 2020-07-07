@@ -54,8 +54,11 @@ public class LocalFilePanel extends JPanel {
         for(int i = 0;i < roots.length;i++){
             jComboBox.addItem(roots[i]);
         }
-
-        jTextField.setText(String.valueOf(jComboBox.getSelectedItem()));
+        if (OSinfo.getOS() == OSinfo.OS.LINUX) {
+            jTextField.setText(String.valueOf(jComboBox.getSelectedItem()+File.separator));
+        }else{
+            jTextField.setText(String.valueOf(jComboBox.getSelectedItem()));
+        }
         data = GetFiles.getFiles(jComboBox);
         DefaultTableModel model=new DefaultTableModel(data, tableInfo);
         jTable = new LocalFileTable(model);

@@ -34,7 +34,6 @@ public class InitiativeMode extends Mode {
                 fileModel = (FileModel)protocolFromSocket.getData();
                 if(fileModel.getFileType().equals(FileEnum.BINARY)){
                     BinaryFileReceiveHandler.receiveBinaryFile(inputStream,fileModel,clientFrame);
-                    clientFrame.getSocket().close();
                 }else{
                     //TODO something
                 }

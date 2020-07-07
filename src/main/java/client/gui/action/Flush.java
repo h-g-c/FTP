@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * @author LvHao
@@ -33,6 +34,6 @@ public class Flush implements ActionListener {
         data = GetFiles.getFiles(localFilePanel.getJComboBox());
         model = new DefaultTableModel(data,tableInfo);
         localFilePanel.getJTable().setModel(model);
-        localFilePanel.getJTextField().setText(String.valueOf(localFilePanel.getJComboBox().getSelectedItem()));
+        localFilePanel.getJTextField().setText(String.valueOf(localFilePanel.getJComboBox().getSelectedItem()+File.separator));
     }
 }
