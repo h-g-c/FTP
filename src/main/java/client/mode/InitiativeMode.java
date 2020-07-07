@@ -7,11 +7,13 @@ import client.gui.ClientFrame;
 import entity.FileEnum;
 import entity.FileModel;
 import entity.Protocol;
+import org.checkerframework.checker.units.qual.A;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * @author LvHao
@@ -25,6 +27,8 @@ public class InitiativeMode extends Mode {
     private OutputStream outputStream;
     private Socket socket;
 
+    private ArrayList<String[]> data = new ArrayList<>();
+
     @Override
     public void download(Protocol protocolFromSocket, ClientFrame clientFrame) {
         try{
@@ -34,9 +38,9 @@ public class InitiativeMode extends Mode {
                 inputStream = socket.getInputStream();
                 fileModel = (FileModel)protocolFromSocket.getData();
                 if(fileModel.getFileType().equals(FileEnum.BINARY)){
-                    BinaryFileReceiveHandler.receiveBinaryFile(inputStream,fileModel,clientFrame);
+                    BinaryFileReceiveHandler.receiveBinaryFile(inputStream,fileModel,clientFrame,data);
                 }else{
-                    TxtFileReceiveHandler.receiveTxtFile(inputStream,fileModel,clientFrame);
+                    TxtFileReceiveHandler.receiveTxtFile(inputStream,fileModel,clientFrame,data);
                 }
             }
         } catch (IOException e) {

@@ -44,57 +44,60 @@ public class BinaryFileSendThread implements Runnable{
     @Override
     public void run() {
         try{
-            dataOutputStream = new DataOutputStream(outputStream);
-            point = Long.parseLong(fileModel.getFileSize());
-            File file = new File(fileModel.getFilePath());
-            RandomAccessFile randomAccessFile = new RandomAccessFile(file,"rw");
-            byte[] value = null;
-            long fileLength = file.length();
-            try{
-                randomAccessFile.seek(point);
-                value = new byte[(int)(fileLength - point)];
-                if(randomAccessFile.read(value) != (fileLength - point)){
-                    return;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            //每次读取的数量大小
-            int sendCont = 8*1024;
-            int low = 0;
-            long size = 0;
-            jTable.setValueAt(low,num,2);
-            while(clientFrame.getDataSocket() != null) {
-                try {
-                    if (low + sendCont >= fileLength - point) {
-                        dataOutputStream.write(value, low, (int) (fileLength - point -low));
-                        jTable.setValueAt(value.length,num,2);
-                        size+=value.length;
-                        dataOutputStream.flush();
-                        dataOutputStream.close();
-                        randomAccessFile.close();
-                        outputStream.flush();
-                        break;
-                    } else {
-                        dataOutputStream.write(value, low,sendCont);
-                        jTable.setValueAt(value.length,num,2);
-                        dataOutputStream.flush();
-                        low+=sendCont;
-                        size+=low;
+            while (true){
+                dataOutputStream = new DataOutputStream(outputStream);
+                point = Long.parseLong(fileModel.getFileSize());
+                File file = new File(fileModel.getFilePath());
+                RandomAccessFile randomAccessFile = new RandomAccessFile(file,"rw");
+                byte[] value = null;
+                long fileLength = file.length();
+                try{
+                    randomAccessFile.seek(point);
+                    value = new byte[(int)(fileLength - point)];
+                    if(randomAccessFile.read(value) != (fileLength - point)){
+                        return;
                     }
-                }catch (IOException e)
-                {
+                } catch (IOException e) {
                     e.printStackTrace();
-                    break;
                 }
+
+                //每次读取的数量大小
+                int sendCont = 8*1024;
+                int low = 0;
+                long size = 0;
+                jTable.setValueAt(low,num,2);
+                while(clientFrame.getDataSocket() != null) {
+                    try {
+                        if (low + sendCont >= fileLength - point) {
+                            dataOutputStream.write(value, low, (int) (fileLength - point -low));
+                            jTable.setValueAt(value.length,num,2);
+                            size+=value.length;
+                            dataOutputStream.flush();
+                            dataOutputStream.close();
+                            randomAccessFile.close();
+                            outputStream.flush();
+                            break;
+                        } else {
+                            dataOutputStream.write(value, low,sendCont);
+                            jTable.setValueAt(value.length,num,2);
+                            dataOutputStream.flush();
+                            low+=sendCont;
+                            size+=low;
+                        }
+                    }catch (IOException e)
+                    {
+                        e.printStackTrace();
+                        break;
+                    }
+                }
+                if(clientFrame.getDataSocket() != null){
+                    clientFrame.getDataSocket().close();
+                    clientFrame.setDataSocket(null);
+                }
+                model = new DefaultTableModel(ArrayListToStringList.flushData(data,fileModel.getFileName(),fileModel.getFileSize(), (long) size),tableInfo);
+                jTable.setModel(model);
+                break;
             }
-            if(clientFrame.getDataSocket() != null){
-                clientFrame.getDataSocket().close();
-                clientFrame.setDataSocket(null);
-            }
-            model = new DefaultTableModel(ArrayListToStringList.flushData(data,fileModel.getFileName(),fileModel.getFileSize(), (long) size),tableInfo);
-            jTable.setModel(model);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

@@ -27,7 +27,7 @@ public class BinaryFileSendHandler {
     private static DefaultTableModel model;
 
     public static void sendBinaryFile(OutputStream outputStream, FileModel fileModel, ClientFrame clientFrame){
-        JTable jTable = clientFrame.getJPanel3().getJPanel1().getJTable();
+        JTable jTable = clientFrame.getJPanel4().getJTable2();
         clo = new String[3];
         clo[0] = fileModel.getFileName();
         clo[1] = fileModel.getFileSize();

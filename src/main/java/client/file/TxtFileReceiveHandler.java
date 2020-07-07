@@ -3,6 +3,8 @@ package client.file;
 import client.gui.ClientFrame;
 import client.util.ArrayListToStringList;
 import entity.FileModel;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -17,15 +19,15 @@ import java.util.ArrayList;
  * @Description :
  * @date 2020-07-08 1:53
  */
+@RequiredArgsConstructor
 public class TxtFileReceiveHandler {
 
-    private static ArrayList<String[]> data = new ArrayList<String[]>();
     private static String[] clo = null;
     private static String[] tableInfo = {"文件名","文件大小","传输状态"};
     private static DefaultTableModel model;
 
-    public static void receiveTxtFile(InputStream inputStream, FileModel fileModel, ClientFrame clientFrame){
-        JTable jTable= clientFrame.getJPanel4().getJTable2();
+    public static void receiveTxtFile(InputStream inputStream, FileModel fileModel, ClientFrame clientFrame,ArrayList<String[]> data){
+        JTable jTable= clientFrame.getJPanel4().getJTable1();
         clo = new String[3];
         clo[0] = fileModel.getFileName();
         clo[1] = fileModel.getFileSize();
