@@ -51,7 +51,7 @@ public abstract class Mode {
         FileModel fileModel = (FileModel) protocolFromSocket.getData();
         String alreadySendLength = fileModel.getFileSize();
         final FileUtil fileUtil = new FileUtil();
-        if (fileUtil.judgeFileType(fileModel.getFilePath()).equals(FileEnum.BINARY)) {
+        if (FileUtil.judgeFileType(fileModel.getFilePath()).equals(FileEnum.BINARY)) {
             File file = new File(fileModel.getFilePath());
             long fileLength=file.length();
             fileModel.setFileSize(String.valueOf(fileLength));
@@ -59,12 +59,13 @@ public abstract class Mode {
             fileModel.setFileSize(String.valueOf(FileUtil.getFileLine(fileModel.getFilePath())));
         }
         protocolFromSocket.setData(fileModel);
+        System.out.println(protocolFromSocket.toString());
         objectOutputStream.writeObject(protocolFromSocket);
         objectOutputStream.writeObject(null);
         objectOutputStream.flush();
         //传输即将发送的文件的大小给客户端
         final ThreadPoolExecutor threadPool = ThreadPool.getThreadPool();
-        if (fileUtil.judgeFileType(fileModel.getFilePath()).equals(FileEnum.BINARY)) {
+        if (FileUtil.judgeFileType(fileModel.getFilePath()).equals(FileEnum.BINARY)) {
             SendFileByByte sendFileByByte = SendFileByByte.builder()
                     .das(new DataOutputStream(getDataSocket(protocolFromSocket.getClientIp(),protocolFromSocket.getDataPort()).getOutputStream()))
                     .filePath(fileModel.getFilePath()).point(Long.valueOf(alreadySendLength)).build();

@@ -30,7 +30,7 @@ public abstract class Mode {
             int i = 0;
             ArrayList<FileModel> fileList = (ArrayList<FileModel>) protocolFromSocket.getData();
             log.info("客户端文件数量：" + fileList.size());
-            String[][] data = new String[fileList.size()][3];
+            String[][] data = new String[fileList.size()][4];
             String filepath = null;
             if (fileList.size() == 0) {
                 data = null;
@@ -40,6 +40,7 @@ public abstract class Mode {
                     data[i][0] = f.getFileName();
                     data[i][1] = f.getFileSize();
                     data[i][2] = f.getChangeTime();
+                    data[i][3] = String.valueOf(f.getFileType());
                     i++;
                 }
                 i = 0;

@@ -24,12 +24,12 @@ public class ClientFrame extends JFrame {
     public ServerSocket dataSocket = null;
     public Socket socket = null;
     public ServerSocket serverSocket=null;
-    public int code=1;
     private ObjectInputStream socketObjectInputStream;
     private ObjectOutputStream socketObjectOutputStream;
     private Protocol protocol = null;
     private DefaultInfoPanel jPanel2;
     private CenterPanel jPanel3;
+    private JTabbedPane jPanel4;
     private final int WEIGHT = 1000;
     private final int HEIGHT = 720;
     private final ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("FTP图标.jpg"));
@@ -86,7 +86,7 @@ public class ClientFrame extends JFrame {
         /**
          * 设置任务队列面板
          */
-        JTabbedPane jPanel4 = new TaskPanel();
+        jPanel4 = new TaskPanel();
         add(jPanel4,new MyGridBagConstraints(0,3,0.5,0.5).init2());
 
     }

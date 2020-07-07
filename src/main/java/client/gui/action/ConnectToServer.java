@@ -7,6 +7,7 @@ import client.util.IPUtil;
 import entity.ConnectType;
 import entity.OperateType;
 import entity.Protocol;
+import entity.User;
 import lombok.*;
 
 import javax.swing.*;
@@ -40,14 +41,18 @@ public class ConnectToServer implements ActionListener {
         }else{
             type = ConnectType.PASSIVE;
         }
+
+        User user = new User();
+        user.setUserName(defaultInfoPanel.getJt2().getText());
+        user.setPassword(defaultInfoPanel.getJPasswordField().getText());
+
         Protocol protocol = new Protocol();
         protocol.setServiceIp(defaultInfoPanel.getJt1().getText());
         protocol.setCommandPort(Integer.valueOf(defaultInfoPanel.getJt3().getText()));
         protocol.setClientIp(IPUtil.getLocalIP());
-        protocol.setOperateType(OperateType.CONNECT);
         protocol.setConnectType(type);
         protocol.setOperateType(OperateType.CONNECT);
-        protocol.setData(null);
+        protocol.setData(user);
         protocol.setDataPort(Integer.valueOf(defaultInfoPanel.getJt3().getText()));
 
         //主动模式的第一次连接

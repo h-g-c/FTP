@@ -56,7 +56,6 @@ public class DownloadFile implements ActionListener {
 
             protocol = new Protocol();
             socketServer = new ServerSocket(0);
-            clientFrame.serverSocket=socketServer;
             log.info(socketServer.toString());
 
             String oneFile = fileName[0].substring(fileName[0].lastIndexOf(File.separator)+1,fileName[0].length());
@@ -66,35 +65,35 @@ public class DownloadFile implements ActionListener {
                 log.info("请求下载文件路径：" + fileName[i]);
             }
 
-            File file = new File(Constant.DEFAULT_PATH + oneFile + ".temp");
-            new RandomAccessFile(Constant.DEFAULT_PATH + oneFile + ".temp","rw");
-
-            long size = 0;
-            if(file.exists() && file.isFile()){
-                size = file.length();
-            }
-
             FileModel fileModel = new FileModel();
             fileModel.setFileName(oneFile);
             fileModel.setFilePath(fileName[0]);
-            fileModel.setFileSize(String.valueOf(size));
-//            if(fileType.equals("二进制文件")){
-//                fileModel.setFileType(FileEnum.BINARY);
-//            }else if(fileType.equals("文本文件")){
-//                fileModel.setFileType(FileEnum.TEXT);
-//            }else{
-//                fileModel.setFileType(FileEnum.DIR);
-//            }
-            fileModel.setFileType(FileEnum.BINARY);
+            if(fileType.equals("二进制文件")){
+                fileModel.setFileType(FileEnum.BINARY);
+                File file = new File(Constant.DEFAULT_PATH + oneFile + ".temp");
+                new RandomAccessFile(Constant.DEFAULT_PATH + oneFile + ".temp","rw");
+                long size = 0;
+                if(file.exists() && file.isFile()){
+                    size = file.length();
+                }
+                fileModel.setFileSize(String.valueOf(size));
+            }else if(fileType.equals("文本文件")){
+                fileModel.setFileType(FileEnum.TEXT);
+            }else{
+                fileModel.setFileType(FileEnum.DIR);
+            }
 
             protocol.setData(fileModel);
+            protocol.setServiceIp(clientFrame.getJPanel2().getJt1().getText());
+            protocol.setCommandPort(Integer.valueOf(clientFrame.getJPanel2().getJt3().getText()));
             protocol.setDataPort(socketServer.getLocalPort());
             protocol.setOperateType(OperateType.DOWNLOAD);
             protocol.setClientIp(IPUtil.getLocalIP());
             protocol.setConnectType(ConnectType.INITIATIVE);
             SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
 
-            clientFrame.setDataSocket(socketServer);
+            clientFrame.dataSocket = socketServer;
+            System.out.println(clientFrame.dataSocket);
 
         }catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException){
             new MessageDialog("提示","请先选择文件！").init();

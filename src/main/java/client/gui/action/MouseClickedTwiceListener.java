@@ -26,7 +26,7 @@ public class MouseClickedTwiceListener extends MouseAdapter {
 
     private static  boolean flag = false;
     private static int clickNum = 1;
-    private String[] tableInfo = {"文件名","大小","日期"};
+    private String[] tableInfo = {"文件名","大小","日期","文件类型"};
     private String systemFlag = File.separator;
 
     @NonNull

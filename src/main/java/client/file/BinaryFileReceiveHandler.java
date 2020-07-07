@@ -1,5 +1,6 @@
 package client.file;
 
+import client.gui.ClientFrame;
 import configuration_and_constant.Constant;
 import entity.FileModel;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class BinaryFileReceiveHandler {
     private static long fileLength;
     private static DataInputStream dataInputStream;
 
-    public static void receiveBinaryFile(InputStream inputStream,FileModel fileModel){
+    public static void receiveBinaryFile(InputStream inputStream, FileModel fileModel, ClientFrame clientFrame){
         try{
             System.out.println(inputStream);
             dataInputStream = new DataInputStream(inputStream);
@@ -40,6 +41,7 @@ public class BinaryFileReceiveHandler {
                     break;
                 }
                 randomAccessFile.write(value,0,length);
+
                 size += length;
                 if(size >= fileLength){
                     break;

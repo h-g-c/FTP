@@ -29,12 +29,10 @@ public class InitiativeMode extends Mode {
         try{
             if(clientFrame.getDataSocket() != null){
                 socket = clientFrame.getDataSocket().accept();
-                System.out.println(socket.isConnected());
                 inputStream = socket.getInputStream();
                 fileModel = (FileModel)protocolFromSocket.getData();
                 if(fileModel.getFileType().equals(FileEnum.BINARY)){
-                    System.out.println(3333);
-                    BinaryFileReceiveHandler.receiveBinaryFile(inputStream,fileModel);
+                    BinaryFileReceiveHandler.receiveBinaryFile(inputStream,fileModel,clientFrame);
                     clientFrame.getSocket().close();
                 }else{
                     //TODO something

@@ -50,7 +50,7 @@ public class GetFiles {
             datas[i][0] = files[i].getName();
             datas[i][1] = fileSize(getTotalSizeOfFilesInDir(files[i]));
             datas[i][2] = getFileDate(files[i]);
-//            datas[i][3] = getFileType(files[i]);
+            datas[i][3] = String.valueOf(getFileType(files[i]));
         }
         return datas;
     }
@@ -69,7 +69,7 @@ public class GetFiles {
                 datas[i][0] = files[i].getName();
                 datas[i][1] = fileSize(getTotalSizeOfFilesInDir(files[i]));
                 datas[i][2] = getFileDate(files[i]);
-//                datas[i][3] = getFileType(files[i]);
+                datas[i][3] = String.valueOf(getFileType(files[i]));
             }
             return datas;
         }catch (NullPointerException e){
@@ -79,7 +79,7 @@ public class GetFiles {
     }
     private static String fileSize(long fileS) {// 转换文件大小
         if(fileS < 0){
-            return "<DIR>";
+            return String.valueOf(FileEnum.DIR);
         }else{
             DecimalFormat df = new DecimalFormat("#.000");
             String fileSizeString = "";
@@ -117,17 +117,20 @@ public class GetFiles {
     /**
      * 判断文件类型
      */
-    private static String getFileType(File file){
+    private static FileEnum getFileType(File file){
+
         if(file.isDirectory()){
-            return "<DIR>";
-        }else if(file.isFile()){
-            if(new FileUtil().judgeFileType(file.getAbsolutePath()) == FileEnum.BINARY){
-                return "二进制文件";
-            }else{
-                return "文本文件";
-            }
+            return FileEnum.DIR;
         }else{
-            return null;
+            FileEnum fileEnum = FileUtil.judgeFileType(file.getAbsolutePath());
+
+            if(fileEnum == FileEnum.BINARY){
+                return FileEnum.BINARY;
+            }else if(fileEnum == FileEnum.TEXT){
+                return FileEnum.TEXT;
+            }else{
+                return FileEnum.DIR;
+            }
         }
     }
 }
