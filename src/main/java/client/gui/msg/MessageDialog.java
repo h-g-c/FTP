@@ -26,7 +26,7 @@ public class MessageDialog {
     private final int Y = 200;
     private final ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("error.png"));
 
-    private JDialog jDialog;
+    private JDialog jDialog = new JDialog();
     private JLabel jLabel;
 
     @NonNull
@@ -55,7 +55,6 @@ public class MessageDialog {
             clientFrame.getJPanel2().remove(clientFrame.getJPanel2().getJLabel());
             clientFrame.getJPanel2().add(clientFrame.getJPanel2().getJButton());
             clientFrame.getJPanel2().updateUI();
-            jDialog = new JDialog();
             jDialog.setIconImage(icon.getImage());
             jDialog.setTitle(title);
 
@@ -69,7 +68,6 @@ public class MessageDialog {
             jDialog.setVisible(true);
             return jDialog;
         }catch (NullPointerException e){
-            jDialog = new JDialog();
             jDialog.setIconImage(icon.getImage());
             jDialog.setTitle(title);
 
@@ -83,6 +81,21 @@ public class MessageDialog {
             jDialog.setVisible(true);
             return jDialog;
         }
+    }
+
+    public JDialog del(){
+        jDialog = new JDialog();
+        jDialog.setTitle(title);
+
+        jLabel = new JLabel(msg,JLabel.CENTER);
+        jLabel.setFont(new Font("宋体",Font.PLAIN,16));
+        jDialog.add(jLabel);
+
+        jDialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+        jDialog.setSize(X,Y);
+        jDialog.setLocationRelativeTo(null);
+        jDialog.setVisible(true);
+        return jDialog;
     }
 
 }
