@@ -54,13 +54,9 @@ public class FileUtil {
         String time = sdf.format(cal.getTime());
         return time;
     }
-
+//
 //    public static void main(String[] args) {
-//        ArrayList<FileModel> list=FileUtil.getFileList("/home");
-//        for(FileModel fileModel:list)
-//        {
-//            System.out.println(fileModel.toString());
-//        }
+//        System.out.println(judgeFileType("/home/heguicai/node-v10.9.0-linux-x64.tar.xz"));
 //    }
 
     /**

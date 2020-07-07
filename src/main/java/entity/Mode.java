@@ -52,17 +52,19 @@ public abstract class Mode {
         String alreadySendLength = fileModel.getFileSize();
         final FileUtil fileUtil = new FileUtil();
         if (FileUtil.judgeFileType(fileModel.getFilePath()).equals(FileEnum.BINARY)) {
+            fileModel.setFileType(FileEnum.BINARY);
             File file = new File(fileModel.getFilePath());
             long fileLength=file.length();
             fileModel.setFileSize(String.valueOf(fileLength));
         } else {
+            fileModel.setFileType(FileEnum.TEXT);
             fileModel.setFileSize(String.valueOf(FileUtil.getFileLine(fileModel.getFilePath())));
         }
         protocolFromSocket.setData(fileModel);
-        System.out.println(protocolFromSocket.toString());
         objectOutputStream.writeObject(protocolFromSocket);
         objectOutputStream.writeObject(null);
         objectOutputStream.flush();
+        System.out.println(protocolFromSocket.toString());
         //传输即将发送的文件的大小给客户端
         final ThreadPoolExecutor threadPool = ThreadPool.getThreadPool();
         if (FileUtil.judgeFileType(fileModel.getFilePath()).equals(FileEnum.BINARY)) {

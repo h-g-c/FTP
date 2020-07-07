@@ -28,6 +28,7 @@ public class InitiativeMode extends Mode {
     public void download(Protocol protocolFromSocket, ClientFrame clientFrame) {
         try{
             if(clientFrame.getDataSocket() != null){
+                System.out.println("socket connect");
                 socket = clientFrame.getDataSocket().accept();
                 inputStream = socket.getInputStream();
                 fileModel = (FileModel)protocolFromSocket.getData();
