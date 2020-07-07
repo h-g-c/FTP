@@ -1,7 +1,10 @@
 import entity.FileEnum;
+import entity.PassiveMode;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import util.FileUtil;
+
+import java.io.File;
 
 /**
  * @author yinchao
@@ -37,5 +40,10 @@ public class FileTest {
         } catch (Exception e) {
             log.error(e.getMessage());
         }
+    }
+
+    @Test
+    public void deleteFile(){
+        new PassiveMode().delete(new File("/tmp/test1/123.txt"));
     }
 }

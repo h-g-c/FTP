@@ -89,6 +89,9 @@ public class ServerCommandHandler implements Runnable {
                         objectOutputStream.writeObject(null);
                         objectOutputStream.flush();
                     }
+                    case DELETE:{
+                        mode.delete(new File((String)protocolFromSocket.getData()));
+                    }
                 }
                 // 读入协议信息
                 protocolFromSocket = (Protocol) objectInputStream.readObject();

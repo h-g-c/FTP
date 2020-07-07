@@ -1,5 +1,7 @@
 package configuration_and_constant;
 
+import java.io.File;
+
 /**
  * @author yinchao
  * @date 2020/7/2 17:27
@@ -22,5 +24,5 @@ public class Constant {
 
     public static final String DEFAULT_FILE_PATH = System.getProperty("user.home");
 
-    public static final String DEFAULT_PATH = "/home/heguicai/下载/";
+    public static final String DEFAULT_PATH = System.getProperty("user.home")+ File.separator;
 }

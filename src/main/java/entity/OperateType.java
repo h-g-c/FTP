@@ -20,6 +20,8 @@ public enum OperateType implements Serializable {
     FILE_PATH,
     //返回上级目录
     RETURN_FATHER_DIR,
+    // 删除远程文件
+    DELETE,
     // 错误信息
     ERROR
 }

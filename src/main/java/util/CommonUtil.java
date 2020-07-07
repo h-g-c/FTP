@@ -1,10 +1,5 @@
 package util;
 
-import entity.Protocol;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
 import java.util.Random;
 
 /**
@@ -51,9 +46,9 @@ public class CommonUtil {
         return bytes;
     }
 
-    public static Integer generateRandomPort(){
+    public static Integer generateRandomPort() {
         // fixme: 重复端口处理
-        return new Random().nextInt(8976)+1024;
+        return new Random().nextInt(8976) + 1024;
     }
 
 }
