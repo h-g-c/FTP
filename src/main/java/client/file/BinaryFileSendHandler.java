@@ -39,6 +39,10 @@ public class BinaryFileSendHandler {
         }
 
         model=new DefaultTableModel(ArrayListToStringList.getData(data), tableInfo);
+        jTable.setModel(model);
+
+
+        new Thread(new BinaryFileSendThread(outputStream,fileModel,clientFrame,jTable,data,0)).start();
     }
 
 }

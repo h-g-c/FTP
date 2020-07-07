@@ -36,7 +36,7 @@ public class ArrayListToStringList {
                 if(!String.valueOf(length).equals(size)){
                     arrayList.get(i)[2] = String.valueOf(length);
                 }else{
-                    arrayList.get(i)[2] = "下载已完成！文件地址：" + Constant.DEFAULT_PATH + name;
+                    arrayList.get(i)[2] = "传输已完成！文件地址：" + Constant.DEFAULT_PATH + name;
                 }
             }
         }
