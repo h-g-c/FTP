@@ -25,7 +25,7 @@ public class TxtFileReceiveHandler {
     private static DefaultTableModel model;
 
     public static void receiveTxtFile(InputStream inputStream, FileModel fileModel, ClientFrame clientFrame){
-        JTable jTable= clientFrame.getJPanel4().getJTable2();
+        JTable jTable= clientFrame.getJPanel4().getJTable1();
         clo = new String[3];
         clo[0] = fileModel.getFileName();
         clo[1] = fileModel.getFileSize();
