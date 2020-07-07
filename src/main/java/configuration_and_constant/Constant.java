@@ -23,4 +23,6 @@ public class Constant {
     public static final String DEFAULT_FILE_PATH = System.getProperty("user.home");
 
     public static final String DEFAULT_PATH = "C:\\Download\\";
+
+    public static final String UPLOAD_PATH="C:\\UPLOAD\\";
 }

@@ -2,6 +2,7 @@ package client.gui.action;
 
 import client.gui.panel.LocalFilePanel;
 import client.util.GetFiles;
+import client.util.OSinfo;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,10 @@ public class Flush implements ActionListener {
         data = GetFiles.getFiles(localFilePanel.getJComboBox());
         model = new DefaultTableModel(data,tableInfo);
         localFilePanel.getJTable().setModel(model);
-        localFilePanel.getJTextField().setText(String.valueOf(localFilePanel.getJComboBox().getSelectedItem()+File.separator));
+        if(OSinfo.getOS() == OSinfo.OS.LINUX){
+            localFilePanel.getJTextField().setText(String.valueOf(localFilePanel.getJComboBox().getSelectedItem()+File.separator));
+        }else{
+            localFilePanel.getJTextField().setText(String.valueOf(localFilePanel.getJComboBox().getSelectedItem()));
+        }
     }
 }

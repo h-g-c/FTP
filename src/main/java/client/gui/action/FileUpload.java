@@ -5,6 +5,7 @@ import client.gui.ClientFrame;
 import client.gui.panel.LocalFilePanel;
 import client.util.GetTaskFilePath;
 import client.util.IPUtil;
+import configuration_and_constant.Constant;
 import entity.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -59,35 +60,33 @@ public class FileUpload implements ActionListener {
             for(int i = 0;i < fileNames.length;i++){
                 log.info("请求上传文件名：" + fileNames[i]);
             }
-
-            File file = new File(filePath);
-
-            long size = 0;
-            if(file.exists() && file.isFile()){
-                size = file.length();
-            }
-
             FileModel fileModel = new FileModel();
             fileModel.setFileName(oneFile);
             fileModel.setFilePath(fileNames[0]);
-            fileModel.setFileSize(String.valueOf(size));
-            if(fileType.equals("二进制文件")){
+            if(fileType.equals("BINARY")){
                 fileModel.setFileType(FileEnum.BINARY);
-            }else if(fileType.equals("文本文件")){
+                File file = new File(Constant.DEFAULT_PATH + oneFile);
+                long size = 0;
+                if(file.exists() && file.isFile()){
+                    size = file.length();
+                }
+                fileModel.setFileSize(String.valueOf(size));
+            }else if(fileType.equals("TEXT")){
                 fileModel.setFileType(FileEnum.TEXT);
             }else{
                 fileModel.setFileType(FileEnum.DIR);
             }
 
             protocol.setData(fileModel);
+            protocol.setServiceIp(clientFrame.getJPanel2().getJt1().getText());
+            protocol.setCommandPort(Integer.valueOf(clientFrame.getJPanel2().getJt3().getText()));
             protocol.setDataPort(socketServer.getLocalPort());
-            protocol.setOperateType(OperateType.UPLOAD);
+            protocol.setOperateType(OperateType.DOWNLOAD);
             protocol.setClientIp(IPUtil.getLocalIP());
             protocol.setConnectType(ConnectType.INITIATIVE);
+            clientFrame.dataSocket = socketServer;
 
             SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
-
-            clientFrame.setDataSocket(socketServer);
 
         }catch (Exception e1){
 

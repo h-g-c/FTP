@@ -41,8 +41,8 @@ public class SendFileByByte implements Runnable{
         while(true)
         {
             try {
-                if (low + sendCont >=fileLength-point) {
-                    das.write(value, low, (int) (fileLength -point- low));
+                if (low + sendCont >= fileLength - point) {
+                    das.write(value, low, (int) (fileLength - point -low));
                     das.flush();
                     das.close();
                     System.out.println("end");

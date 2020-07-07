@@ -41,7 +41,7 @@ public class ServerFilePanel extends JPanel {
         setLayout(new GridBagLayout());
 
         jLabel = new JLabel("远程文件",JLabel.CENTER);
-        jButton1 = new JButton("下载");
+        jButton1 = new JButton("下载 ");
         jButton1.addActionListener(new DownloadFile(this,clientFrame));
         jButton2 = new JButton("删除 ");
         jButton3 = new JButton("返回");

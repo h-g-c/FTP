@@ -66,7 +66,11 @@ public class GetFiles {
             File[] files = file.listFiles();
             datas = new String[files.length][4];
             for(int i = 0; i < files.length; i++){
-                datas[i][0] = files[i].getName()+File.separator;
+                if(OSinfo.getOS() == OSinfo.OS.LINUX){
+                    datas[i][0] = files[i].getName()+File.separator;
+                }else{
+                    datas[i][0] = files[i].getName();
+                }
                 datas[i][1] = fileSize(getTotalSizeOfFilesInDir(files[i]));
                 datas[i][2] = getFileDate(files[i]);
                 datas[i][3] = String.valueOf(getFileType(files[i]));

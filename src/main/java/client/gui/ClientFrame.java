@@ -29,7 +29,7 @@ public class ClientFrame extends JFrame {
     private Protocol protocol = null;
     private DefaultInfoPanel jPanel2;
     private CenterPanel jPanel3;
-    private JTabbedPane jPanel4;
+    private TaskPanel jPanel4;
     private final int WEIGHT = 1000;
     private final int HEIGHT = 720;
     private final ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("FTP图标.jpg"));

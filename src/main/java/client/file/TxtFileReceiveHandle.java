@@ -15,7 +15,7 @@ public class TxtFileReceiveHandle {
     private static BufferedReader bufferedReader;
     public static void receiveBinaryFile(InputStream inputStream, FileModel fileModel, ClientFrame clientFrame) throws IOException {
        bufferedReader=new BufferedReader(new InputStreamReader(inputStream));
-       fileLength=Integer.valueOf(fileModel.getFileSize());
+        fileLength=Integer.valueOf(fileModel.getFileSize());
         tempFile=new File(Constant.DEFAULT_PATH + fileModel.getFileName() + ".temp");
         int tempLength= FileUtil.getFileLine(Constant.DEFAULT_PATH + fileModel.getFileName() + ".temp");
         FileWriter fileWriter=new FileWriter(tempFile);

@@ -1,7 +1,13 @@
 package server;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
+import client.socket.SocketUtil;
+import configuration_and_constant.Constant;
+import entity.FileModel;
+import lombok.*;
+import util.FileUtil;
+
+import java.io.*;
+import java.net.Socket;
 
 /**
  * @类名 ExceptFileByLine
@@ -9,12 +15,50 @@ import java.io.DataInputStream;
  * @作者 heguicai
  * @创建日期 2020/7/6 下午5:26
  **/
-public class ExceptFileByLine {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class ExceptFileByLine implements Runnable{
+InputStream inputStream;
+FileModel fileModel;
 
-    BufferedReader bufferedReader;
-    String filePath;
-    int  alreadySendLine;
+public void breakoutPoint(InputStream cin,FileModel fileModel) throws IOException {
+   BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(cin));
+    int fileLength=Integer.valueOf(fileModel.getFileSize());
+    File tempFile=new File(Constant.UPLOAD_PATH + fileModel.getFileName() + ".temp");
+    FileWriter   fileWriter=new FileWriter(tempFile);
+    int tempLength= 0;
+    try {
+        tempLength = FileUtil.getFileLine(Constant.UPLOAD_PATH + fileModel.getFileName() + ".temp");
+        String value=null;
+        while ((value=bufferedReader.readLine())!=null)
+        {
+            fileWriter.write(value+"\r\n");
+            fileWriter.flush();
+            tempLength++;
+        }
+        fileWriter.close();
+        bufferedReader.close();
+        if(tempLength>=fileLength)
+        {
+            boolean pan=tempFile.renameTo(new File(Constant.UPLOAD_PATH + fileModel.getFileName()));
+            System.out.println("更名成功？："+pan);
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    finally {
+        fileWriter.close();
+        bufferedReader.close();
+    }
 
-//    public void
+}
 
+
+    @SneakyThrows
+    @Override
+    public void run() {
+        breakoutPoint(inputStream,fileModel);
+    }
 }

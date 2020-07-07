@@ -41,6 +41,7 @@ public class StopConnect implements ActionListener {
         if((clientFrame.getSocket() != null && !clientFrame.getSocket().isClosed())){
             clientFrame.getSocket().close();
             clientFrame.setSocket(null);
+            clientFrame.setDataSocket(null);
             clientFrame.getJPanel3().getJPanel2().getModel().setRowCount(0);
             DefaultTableModel model = new DefaultTableModel(data,tableInfo);
             clientFrame.getJPanel3().getJPanel2().getJTable().setModel(model);
@@ -53,10 +54,10 @@ public class StopConnect implements ActionListener {
             defaultInfoPanel.remove(defaultInfoPanel.getJLabel());
             defaultInfoPanel.add(defaultInfoPanel.getJButton());
             defaultInfoPanel.updateUI();
-            log.info("连接状态：" + clientFrame.getSocket());
+            log.info("连接状态：" + clientFrame.getDataSocket());
         }else {
             log.info("连接状态：" + false);
-            new MessageDialog("提示","请先连接服务器！").init();
+            new MessageDialog("提示","请先连接服务器！",clientFrame).init();
         }
     }
 }
