@@ -22,7 +22,6 @@ public class BinaryFileReceiveHandler {
 
     public static void receiveBinaryFile(InputStream inputStream, FileModel fileModel, ClientFrame clientFrame) throws IOException {
         try{
-            System.out.println(inputStream);
             dataInputStream = new DataInputStream(inputStream);
             fileLength = Long.parseLong(fileModel.getFileSize());
             tempFile = new File(Constant.DEFAULT_PATH + fileModel.getFileName() + ".temp");
@@ -48,7 +47,6 @@ public class BinaryFileReceiveHandler {
             dataInputStream.close();
             randomAccessFile.close();
             //对文件重命名
-            System.out.println(size + "以及"+ fileLength);
             if(size >= fileLength){
                 boolean pan=tempFile.renameTo(new File(Constant.DEFAULT_PATH + fileModel.getFileName()));
                 System.out.println("重命名"+pan);
@@ -57,6 +55,9 @@ public class BinaryFileReceiveHandler {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        }finally {
+            dataInputStream.close();
+            randomAccessFile.close();
         }
     }
 }

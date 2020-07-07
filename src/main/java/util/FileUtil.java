@@ -54,9 +54,9 @@ public class FileUtil {
         String time = sdf.format(cal.getTime());
         return time;
     }
-//
-//    public static void main(String[] args) {
-//        System.out.println(judgeFileType("/home/heguicai/node-v10.9.0-linux-x64.tar.xz"));
+
+//    public static void main(String[] args) throws IOException {
+//        System.out.println(getFileLine("C:\\Download\\test.html"));
 //    }
 
     /**
@@ -208,6 +208,8 @@ public class FileUtil {
 
     public static int getFileLine(String filePath) throws IOException {
         File file=new File(filePath);
+        if(file.length()==0)
+            return 0;
         FileReader fileReader=new FileReader(file);
         LineNumberReader lineNumberReader=new LineNumberReader(fileReader);
         lineNumberReader.skip(Long.MAX_VALUE);

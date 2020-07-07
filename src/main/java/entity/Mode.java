@@ -73,7 +73,11 @@ public abstract class Mode {
                     .filePath(fileModel.getFilePath()).point(Long.valueOf(alreadySendLength)).build();
             threadPool.submit(sendFileByByte);
         } else {
-//            threadPool.submit(new SendFileByLine((String) protocolFromSocket.getData()));
+            SendFileByLine sendFileByLine=SendFileByLine.builder()
+                    .sendOutputStream(getDataSocket(protocolFromSocket.getClientIp(),protocolFromSocket.getDataPort()).getOutputStream())
+                            .fileLength(Integer.valueOf(alreadySendLength))
+                            .filePath(fileModel.filePath).build();
+            threadPool.submit(sendFileByLine);
         }
     }
 
