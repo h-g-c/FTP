@@ -78,6 +78,7 @@ public class ClientCommandHandler implements Runnable {
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
+//            new MessageDialog("提示","连接已断开！",clientFrame).init();
             e.printStackTrace();
         }
     }

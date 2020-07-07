@@ -56,7 +56,7 @@ public class StopConnect implements ActionListener {
             log.info("连接状态：" + clientFrame.getSocket());
         }else {
             log.info("连接状态：" + false);
-            new MessageDialog("提示","请先连接服务器！").init();
+            new MessageDialog("提示","请先连接服务器！",clientFrame).init();
         }
     }
 }

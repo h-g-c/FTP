@@ -41,7 +41,7 @@ public class BinaryFileReceiveHandler {
                     break;
                 }
                 randomAccessFile.write(value,0,length);
-
+                System.out.println(randomAccessFile.length());
                 size += length;
                 if(size >= fileLength){
                     break;
@@ -49,6 +49,8 @@ public class BinaryFileReceiveHandler {
             }
             dataInputStream.close();
             randomAccessFile.close();
+            inputStream.close();
+            clientFrame.getDataSocket().close();
             //对文件重命名
             if(size >= fileLength){
                 tempFile.renameTo(new File(Constant.DEFAULT_PATH + fileModel.getFileName()));
