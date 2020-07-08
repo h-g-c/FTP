@@ -7,7 +7,6 @@ import client.file.TxtFileSendHandler;
 import client.gui.ClientFrame;
 import client.gui.panel.ServerFilePanel;
 import client.util.DefaultMsg;
-import client.util.IPUtil;
 import entity.FileEnum;
 import entity.FileModel;
 import entity.Protocol;
