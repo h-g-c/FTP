@@ -1,15 +1,20 @@
 package client.mode;
 
+import client.file.BinaryFileReceiveHandler;
+import client.file.TxtFileReceiveHandler;
 import client.gui.ClientFrame;
 import client.gui.panel.ServerFilePanel;
 import client.util.DefaultMsg;
+import entity.FileEnum;
 import entity.FileModel;
 import entity.Protocol;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.table.DefaultTableModel;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -21,7 +26,11 @@ import java.util.ArrayList;
 @Slf4j(topic = "PsaaiveModeCli")
 
 public class PassiveMode extends Mode {
-    private final  String[] tableInfo = {"文件名", "大小", "日期","文件类型"};
+
+    private FileModel fileModel;
+    private InputStream inputStream;
+    private OutputStream outputStream;
+    private Socket socket;
 
     @Override
     public void showServerDir(Protocol protocolFromSocket, ServerFilePanel serverFilePanel, DefaultTableModel model, ClientFrame clientFrame) {
@@ -55,6 +64,26 @@ public class PassiveMode extends Mode {
             serverFilePanel.getJTable().setModel(model);
             log.info("请求文件路径：" + filepath);
             serverFilePanel.getJTextField().setText(filepath);
+        }
+    }
+
+
+    @Override
+    public void download(Protocol protocolFromSocket, ClientFrame clientFrame,ArrayList<String[]> data) {
+        try{
+            if(clientFrame.getDataSocket() != null){
+                System.out.println("socket connect");
+                socket = clientFrame.PsvdataSocket;
+                inputStream = socket.getInputStream();
+                fileModel = (FileModel)protocolFromSocket.getData();
+                if(fileModel.getFileType().equals(FileEnum.BINARY)){
+                    BinaryFileReceiveHandler.receiveBinaryFile(inputStream,fileModel,clientFrame,data);
+                }else{
+                    TxtFileReceiveHandler.receiveTxtFile(inputStream,fileModel,clientFrame,data);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

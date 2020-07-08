@@ -71,9 +71,11 @@ public class BinaryFileReceiveThread implements Runnable{
                         break;
                     }
                 }
-                dataInputStream.close();
-                randomAccessFile.close();
-                inputStream.close();
+                if(!clientFrame.PsvdataSocket.isConnected()){
+                    dataInputStream.close();
+                    randomAccessFile.close();
+                    inputStream.close();
+                }
                 if(clientFrame.getDataSocket() != null){
                     clientFrame.getDataSocket().close();
                     clientFrame.setDataSocket(null);
