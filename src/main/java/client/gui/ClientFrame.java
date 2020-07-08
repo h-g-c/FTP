@@ -21,6 +21,7 @@ import java.net.Socket;
  */
 @Data
 public class ClientFrame extends JFrame {
+    public Socket PsvdataSocket=new Socket();
     public ServerSocket dataSocket = null;
     public Socket socket = null;
     public ServerSocket serverSocket=null;
