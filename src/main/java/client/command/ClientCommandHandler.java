@@ -49,19 +49,21 @@ public class ClientCommandHandler implements Runnable {
         model = clientFrame.getJPanel3().getJPanel2().getModel();
 
         try {
+            //读入服务端命令的协议
+            Protocol protocolFromSocket = (Protocol) objectInputStream.readObject();
+            log.info(protocolFromSocket.toString());
+            while(objectInputStream.readObject()!=null) {
+                socket.shutdownInput();
+            }
+            //如果是主动模式
+            if(ConnectType.INITIATIVE.equals(protocolFromSocket.getConnectType())){
+                mode = new InitiativeMode();
+            }else {
+                //被动模式
+                mode = new PassiveMode();
+                clientFrame.PsvdataSocket = new Socket(protocolFromSocket.getServiceIp(), protocolFromSocket.getDataPort());
+            }
             while (true){
-                //读入服务端命令的协议
-                Protocol protocolFromSocket = (Protocol) objectInputStream.readObject();
-                while(objectInputStream.readObject()!=null) {
-                    socket.shutdownInput();
-                }
-                //如果是主动模式
-                if(ConnectType.INITIATIVE.equals(protocolFromSocket.getConnectType())){
-                    mode = new InitiativeMode();
-                }else {
-                    //被动模式
-                    mode = new PassiveMode();
-                }
                 //下面是对各种操作的处理
                 switch (protocolFromSocket.getOperateType()){
                     case FILE_PATH:
@@ -82,13 +84,14 @@ public class ClientCommandHandler implements Runnable {
                         mode.upload(protocolFromSocket,clientFrame,sendData);
                         break;
                     }
-                    case DELETE:{
-                        mode.delete(protocolFromSocket,clientFrame);
-                    }
                     case ERROR:{
                         mode.error(clientFrame);
                         break;
                     }
+                }
+                protocolFromSocket = (Protocol) objectInputStream.readObject();
+                while(objectInputStream.readObject()!=null) {
+                    socket.shutdownInput();
                 }
             }
         } catch (IOException | ClassNotFoundException e) {

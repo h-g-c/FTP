@@ -1,5 +1,6 @@
 package entity;
 
+import client.util.IPUtil;
 import configuration_and_constant.Constant;
 import configuration_and_constant.ThreadPool;
 import lombok.AllArgsConstructor;
@@ -31,6 +32,7 @@ public class PassiveMode extends Mode{
         // 构造协议信息(server 数据端口号)
         protocolFromSocket.setDataPort(port);
         protocolFromSocket.setOperateType(OperateType.CONNECT);
+        protocolFromSocket.setServiceIp(IPUtil.getLocalIP());
         protocolFromSocket.setData(FileUtil.getFileList(Constant.DEFAULT_FILE_PATH));
         objectOutputStream.writeObject(protocolFromSocket);
         objectOutputStream.writeObject(null);

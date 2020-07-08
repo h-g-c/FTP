@@ -38,7 +38,9 @@ public class ServerCommandHandler implements Runnable {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(commandSocket.getOutputStream()); ObjectInputStream objectInputStream = new ObjectInputStream(new BufferedInputStream(commandSocket.getInputStream()))) {
             // 读入协议信息
             Protocol protocolFromSocket = (Protocol) objectInputStream.readObject();
-            while(objectInputStream.readObject()!=null);
+            while(objectInputStream.readObject()!=null) {
+
+            }
             // 如果是被动模式
             if (ConnectType.PASSIVE.equals(protocolFromSocket.getConnectType())) {
                 mode = new PassiveMode();

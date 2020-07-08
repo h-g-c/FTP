@@ -71,7 +71,7 @@ public class ConnectToServer implements ActionListener {
                 defaultInfoPanel.updateUI();
             }
         }else{
-            //主动模式的第一次连接
+            //被动模式的第一次连接
             //TODO something
             new ConnectServer(protocol,clientFrame);
             if(clientFrame.getSocket() != null && clientFrame.getSocket().isConnected()){
