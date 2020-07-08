@@ -12,7 +12,7 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
  */
 public class RunClient {
     public static void main(String[] args) {
-        //设置GUI的
+        //设置GUI的模式
         try {
             UIManager.setLookAndFeel(new NimbusLookAndFeel());
         } catch (UnsupportedLookAndFeelException e) {
