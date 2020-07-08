@@ -208,8 +208,9 @@ public class FileUtil {
 
     public static int getFileLine(String filePath) throws IOException {
         File file=new File(filePath);
-        if(file.length()==0)
+        if(file.length()==0) {
             return 0;
+        }
         FileReader fileReader=new FileReader(file);
         LineNumberReader lineNumberReader=new LineNumberReader(fileReader);
         lineNumberReader.skip(Long.MAX_VALUE);

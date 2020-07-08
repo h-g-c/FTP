@@ -41,26 +41,30 @@ public class StopConnect implements ActionListener {
     @SneakyThrows
     @Override
     public void actionPerformed(ActionEvent e) {
-        if((clientFrame.getSocket() != null && !clientFrame.getSocket().isClosed())){
-            clientFrame.getSocket().close();
-            clientFrame.setSocket(null);
-            clientFrame.setDataSocket(null);
-            clientFrame.getJPanel3().getJPanel2().getModel().setRowCount(0);
-            DefaultTableModel model = new DefaultTableModel(data,tableInfo);
-            clientFrame.getJPanel3().getJPanel2().getJTable().setModel(model);
-            clientFrame.getJPanel3().getJPanel2().getJTextField().setText("");
-            defaultInfoPanel.getJComboBox().setEnabled(true);
-            defaultInfoPanel.getJt1().setEditable(true);
-            defaultInfoPanel.getJt2().setEditable(true);
-            defaultInfoPanel.getJt3().setEditable(true);
-            defaultInfoPanel.getJPasswordField().setEditable(true);
-            defaultInfoPanel.remove(defaultInfoPanel.getJLabel());
-            defaultInfoPanel.add(defaultInfoPanel.getJButton());
-            defaultInfoPanel.updateUI();
-            log.info("连接状态：" + clientFrame.getDataSocket());
-        }else {
-            log.info("连接状态：" + false);
-            new MessageDialog("提示","请先连接服务器！",clientFrame).init();
+        try{
+            if((clientFrame.getSocket() != null && !clientFrame.getSocket().isClosed())){
+                clientFrame.getSocket().close();
+                clientFrame.setSocket(null);
+                clientFrame.setDataSocket(null);
+                clientFrame.getJPanel3().getJPanel2().getModel().setRowCount(0);
+                DefaultTableModel model = new DefaultTableModel(data,tableInfo);
+                clientFrame.getJPanel3().getJPanel2().getJTable().setModel(model);
+                clientFrame.getJPanel3().getJPanel2().getJTextField().setText("");
+                defaultInfoPanel.getJComboBox().setEnabled(true);
+                defaultInfoPanel.getJt1().setEditable(true);
+                defaultInfoPanel.getJt2().setEditable(true);
+                defaultInfoPanel.getJt3().setEditable(true);
+                defaultInfoPanel.getJPasswordField().setEditable(true);
+                defaultInfoPanel.remove(defaultInfoPanel.getJLabel());
+                defaultInfoPanel.add(defaultInfoPanel.getJButton());
+                defaultInfoPanel.updateUI();
+                log.info("连接状态：" + clientFrame.getDataSocket());
+            }else {
+                log.info("连接状态：" + false);
+                new MessageDialog("提示","请先连接服务器！",clientFrame).init();
+            }
+        }catch (NullPointerException e1){
+            //TODO something
         }
     }
 }

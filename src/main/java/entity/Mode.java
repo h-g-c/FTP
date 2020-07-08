@@ -118,5 +118,6 @@ public abstract class Mode {
         protocol.setData(future.get());
         objectOutputStream.writeObject(protocol);
         objectOutputStream.writeObject(null);
+        objectOutputStream.flush();
     }
 }

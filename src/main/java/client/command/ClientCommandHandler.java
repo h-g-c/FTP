@@ -78,6 +78,9 @@ public class ClientCommandHandler implements Runnable {
                         mode.upload(protocolFromSocket,clientFrame,sendData);
                         break;
                     }
+                    case DELETE:{
+                        mode.delete(protocolFromSocket,clientFrame);
+                    }
                 }
             }
         } catch (IOException | ClassNotFoundException e) {

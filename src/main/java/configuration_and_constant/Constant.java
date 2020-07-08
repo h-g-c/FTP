@@ -28,15 +28,15 @@ public class Constant {
     /**
      * 客户端的下载目录
      */
-    public static final String DEFAULT_PATH = "C:\\Download\\";
-//    public static final String DEFAULT_PATH = "D:\\下载\\";
+//    public static final String DEFAULT_PATH = "C:\\Download\\";
+    public static final String DEFAULT_PATH = "D:\\下载\\";
     /**
      * 服务端的上传目录
      */
-    public static final String UPLOAD_PATH="C:\\UPLOAD\\";
-//    public static final String UPLOAD_PATH="D:\\上传\\";
+//    public static final String UPLOAD_PATH="C:\\UPLOAD\\";
+    public static final String UPLOAD_PATH="D:\\上传\\";
     /**
      *  每次传输的字节量大小
      */
-    public static final Integer DATASIZE=16;
+    public static final Integer DATASIZE=1024;
 }

@@ -73,10 +73,11 @@ public class BinaryFileSendThread implements Runnable{
                             dataOutputStream.write(value, low, (int) (fileLength - point -low));
                             jTable.setValueAt(fileLength,num,2);
                             size = fileLength;
+                            System.out.println(fileLength);
                             dataOutputStream.flush();
                             dataOutputStream.close();
                             randomAccessFile.close();
-//                            outputStream.close();
+                            outputStream.close();
                             break;
                         } else {
                             dataOutputStream.write(value, low,sendCont);
