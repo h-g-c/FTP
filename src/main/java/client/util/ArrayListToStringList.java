@@ -1,7 +1,9 @@
 package client.util;
 
 import configuration_and_constant.Constant;
+import entity.FileModel;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -36,7 +38,21 @@ public class ArrayListToStringList {
                 if(!String.valueOf(length).equals(size)){
                     arrayList.get(i)[2] = String.valueOf(length);
                 }else{
-                    arrayList.get(i)[2] = "下载已完成！文件地址：" + Constant.DEFAULT_PATH + name;
+                    arrayList.get(i)[2] = "传输已完成！文件地址：" + Constant.DEFAULT_PATH + name;
+                }
+            }
+        }
+        return getData(arrayList);
+    }
+
+    public static String[][] receiveFlushData(ArrayList<String[]> arrayList,String name,String size,Long length){
+        int clo = arrayList.size();
+        for(int i = clo -1; i >= 0;i--){
+            if(name.equals(arrayList.get(i)[0]) && size.equals(arrayList.get(i)[1])){
+                if(!String.valueOf(length).equals(size)){
+                    arrayList.get(i)[2] = String.valueOf(length);
+                }else{
+                    arrayList.get(i)[2] = "传输已完成！文件地址：" + Constant.UPLOAD_PATH+ name;
                 }
             }
         }

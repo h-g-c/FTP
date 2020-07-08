@@ -1,6 +1,7 @@
 package client.mode;
 
 import client.gui.ClientFrame;
+import client.gui.msg.MessageDialog;
 import client.gui.panel.ServerFilePanel;
 import client.util.DefaultMsg;
 import entity.FileModel;
@@ -54,15 +55,20 @@ public abstract class Mode {
         }
     }
 
-    public void upload(Protocol protocolFromSocket, ClientFrame clientFrame) {
+    public void upload(Protocol protocolFromSocket, ClientFrame clientFrame, ArrayList<String[]> data) {
         //上传文件处理
     }
 
-    public void download(Protocol protocolFromSocket, ClientFrame clientFrame){
+    public void download(Protocol protocolFromSocket, ClientFrame clientFrame, ArrayList<String[]> data){
         //下载文件处理
     }
 
-    public void pause() {
+    public void delete(Protocol protocolFromSocket, ClientFrame clientFrame){
+        String delMsg = (String) protocolFromSocket.getData();
+        new MessageDialog("提示",delMsg,clientFrame).del();
     }
 
+    public void pause(){
+
+    }
 }

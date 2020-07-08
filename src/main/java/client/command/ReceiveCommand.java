@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * @author LvHao
@@ -25,6 +26,7 @@ public class ReceiveCommand {
     private static DefaultTableModel model;
     private static Socket socket;
     private static Mode mode;
+    private static ArrayList<String[]> data = new ArrayList<>();
 
     public static void receiveCommand(ClientFrame clientFrame, ObjectInputStream objectInputStream){
         socket = clientFrame.getSocket();
@@ -54,12 +56,14 @@ public class ReceiveCommand {
                     mode.pause();
                 }
                 case DOWNLOAD:{
-                    mode.download(protocolFromSocket,clientFrame);
+                    mode.download(protocolFromSocket,clientFrame,data);
                 }
                 case UPLOAD:{
-//                    mode.upload();
+                    mode.upload(protocolFromSocket,clientFrame,data);
                 }
-
+                case DELETE:{
+                    mode.delete(protocolFromSocket,clientFrame);
+                }
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

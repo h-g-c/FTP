@@ -2,6 +2,7 @@ package client.gui.action;
 
 import client.command.SendCommand;
 import client.gui.ClientFrame;
+import client.gui.msg.MessageDialog;
 import client.gui.panel.LocalFilePanel;
 import client.util.GetTaskFilePath;
 import client.util.IPUtil;
@@ -10,6 +11,7 @@ import entity.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import server.Server;
+import util.FileUtil;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -65,14 +67,10 @@ public class FileUpload implements ActionListener {
             fileModel.setFilePath(fileNames[0]);
             if(fileType.equals("BINARY")){
                 fileModel.setFileType(FileEnum.BINARY);
-                File file = new File(Constant.DEFAULT_PATH + oneFile);
-                long size = 0;
-                if(file.exists() && file.isFile()){
-                    size = file.length();
-                }
-                fileModel.setFileSize(String.valueOf(size));
+                fileModel.setFileSize(String.valueOf(new File(fileNames[0]).length()));
             }else if(fileType.equals("TEXT")){
                 fileModel.setFileType(FileEnum.TEXT);
+                fileModel.setFileSize(String.valueOf(FileUtil.getFileLine(fileNames[0])));
             }else{
                 fileModel.setFileType(FileEnum.DIR);
             }
@@ -81,7 +79,7 @@ public class FileUpload implements ActionListener {
             protocol.setServiceIp(clientFrame.getJPanel2().getJt1().getText());
             protocol.setCommandPort(Integer.valueOf(clientFrame.getJPanel2().getJt3().getText()));
             protocol.setDataPort(socketServer.getLocalPort());
-            protocol.setOperateType(OperateType.DOWNLOAD);
+            protocol.setOperateType(OperateType.UPLOAD);
             protocol.setClientIp(IPUtil.getLocalIP());
             protocol.setConnectType(ConnectType.INITIATIVE);
             clientFrame.dataSocket = socketServer;
@@ -89,7 +87,7 @@ public class FileUpload implements ActionListener {
             SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
 
         }catch (Exception e1){
-
+            new MessageDialog("提示","连接已断开！",clientFrame).init();
         }
     }
 }

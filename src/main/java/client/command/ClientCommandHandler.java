@@ -13,6 +13,7 @@ import lombok.*;
 import javax.swing.table.DefaultTableModel;
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * @author LvHao
@@ -28,6 +29,8 @@ public class ClientCommandHandler implements Runnable {
     private static DefaultTableModel model;
     private static Socket socket;
     private static Mode mode;
+    private static ArrayList<String[]> receiveData = new ArrayList<>();
+    private static ArrayList<String[]> sendData = new ArrayList<>();
 
     @NonNull
     private ClientFrame clientFrame;
@@ -68,11 +71,11 @@ public class ClientCommandHandler implements Runnable {
                         break;
                     }
                     case DOWNLOAD:{
-                        mode.download(protocolFromSocket,clientFrame);
+                        mode.download(protocolFromSocket,clientFrame,receiveData);
                         break;
                     }
                     case UPLOAD:{
-                        mode.upload(protocolFromSocket,clientFrame);
+                        mode.upload(protocolFromSocket,clientFrame,sendData);
                         break;
                     }
                 }

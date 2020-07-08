@@ -2,10 +2,7 @@ package client.gui.panel;
 
 import client.gui.ClientFrame;
 import client.gui.MyGridBagConstraints;
-import client.gui.action.DownloadFile;
-import client.gui.action.FindServerDir;
-import client.gui.action.GetServerDir;
-import client.gui.action.ReturnServerDir;
+import client.gui.action.*;
 import client.gui.table.LocalFileTable;
 import lombok.Data;
 
@@ -44,6 +41,7 @@ public class ServerFilePanel extends JPanel {
         jButton1 = new JButton("下载 ");
         jButton1.addActionListener(new DownloadFile(this,clientFrame));
         jButton2 = new JButton("删除 ");
+        jButton2.addActionListener(new DelServerFile(this,clientFrame));
         jButton3 = new JButton("返回");
         jButton3.addActionListener(new ReturnServerDir(clientFrame,this));
         jButton4 = new JButton("获取远程目录");

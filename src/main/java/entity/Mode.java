@@ -57,7 +57,7 @@ public abstract class Mode {
         objectOutputStream.flush();
         fileModel.setFileSize(fileLength.toString());
         final ThreadPoolExecutor threadPool = ThreadPool.getThreadPool();
-        if(protocolFromSocket.getOperateType().equals(FileEnum.BINARY))
+        if(fileModel.getFileType().equals(FileEnum.BINARY))
         {
             ExceptFileByByte exceptFileByByte=ExceptFileByByte.builder().fileModel(fileModel)
                     .dis(new DataInputStream(getDataSocket(protocolFromSocket.clientIp,protocolFromSocket.dataPort).getInputStream()))
@@ -66,7 +66,7 @@ public abstract class Mode {
         }
         else {
             ExceptFileByLine exceptFileByLine=ExceptFileByLine.builder().fileModel(fileModel)
-                    .inputStream(getDataSocket().getInputStream()).build();
+                    .inputStream(getDataSocket(protocolFromSocket.clientIp,protocolFromSocket.dataPort).getInputStream()).build();
             threadPool.submit(exceptFileByLine);
         }
     }
@@ -91,7 +91,7 @@ public abstract class Mode {
         System.out.println(protocolFromSocket.toString());
         //传输即将发送的文件的大小给客户端
         final ThreadPoolExecutor threadPool = ThreadPool.getThreadPool();
-        if (FileUtil.judgeFileType(fileModel.getFilePath()).equals(FileEnum.BINARY)) {
+        if (fileModel.getFileType().equals(FileEnum.BINARY)) {
             SendFileByByte sendFileByByte = SendFileByByte.builder()
                     .das(new DataOutputStream(getDataSocket(protocolFromSocket.getClientIp(), protocolFromSocket.getDataPort()).getOutputStream()))
                     .filePath(fileModel.getFilePath()).point(Long.valueOf(alreadySendLength)).build();

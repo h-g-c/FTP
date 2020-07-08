@@ -1,16 +1,20 @@
 package client.mode;
 
 import client.file.BinaryFileReceiveHandler;
-import client.file.TxtFileReceiveHandle;
+import client.file.BinaryFileSendHandler;
+import client.file.TxtFileReceiveHandler;
+import client.file.TxtFileSendHandler;
 import client.gui.ClientFrame;
 import entity.FileEnum;
 import entity.FileModel;
 import entity.Protocol;
+import org.checkerframework.checker.units.qual.A;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * @author LvHao
@@ -25,7 +29,7 @@ public class InitiativeMode extends Mode {
     private Socket socket;
 
     @Override
-    public void download(Protocol protocolFromSocket, ClientFrame clientFrame) {
+    public void download(Protocol protocolFromSocket, ClientFrame clientFrame,ArrayList<String[]> data) {
         try{
             if(clientFrame.getDataSocket() != null){
                 System.out.println("socket connect");
@@ -33,9 +37,9 @@ public class InitiativeMode extends Mode {
                 inputStream = socket.getInputStream();
                 fileModel = (FileModel)protocolFromSocket.getData();
                 if(fileModel.getFileType().equals(FileEnum.BINARY)){
-                    BinaryFileReceiveHandler.receiveBinaryFile(inputStream,fileModel,clientFrame);
+                    BinaryFileReceiveHandler.receiveBinaryFile(inputStream,fileModel,clientFrame,data);
                 }else{
-                    TxtFileReceiveHandle.receiveBinaryFile(inputStream,fileModel,clientFrame);
+                    TxtFileReceiveHandler.receiveTxtFile(inputStream,fileModel,clientFrame,data);
                 }
             }
         } catch (IOException e) {
@@ -44,13 +48,17 @@ public class InitiativeMode extends Mode {
     }
 
     @Override
-    public void upload(Protocol protocolFromSocket, ClientFrame clientFrame){
+    public void upload(Protocol protocolFromSocket, ClientFrame clientFrame,ArrayList<String[]> data){
         try{
             if(clientFrame.getDataSocket() != null){
                 socket = clientFrame.getDataSocket().accept();
-                outputStream = socket.getOutputStream();
+                outputStream=socket.getOutputStream();
+                System.out.println(outputStream);
                 fileModel = (FileModel)protocolFromSocket.getData();
                 if(fileModel.getFileType().equals(FileEnum.BINARY)){
+                    BinaryFileSendHandler.sendBinaryFile(outputStream,fileModel,clientFrame,data);
+                }else if(fileModel.getFileType().equals(FileEnum.TEXT)){
+                    TxtFileSendHandler.sendTxtFile(outputStream,fileModel,clientFrame,data);
                 }else{
                     //TODO something
                 }

@@ -21,6 +21,13 @@ public class ExceptFileByByte implements Runnable{
     DataInputStream dis;
     FileModel fileModel;
 
+
+    /**
+     * @describe 用字节数组的形式接受文件
+     * @param dis
+     * @param fileModel
+     * @throws IOException
+     */
     public  void breakPoint(DataInputStream dis, FileModel fileModel) throws IOException {
         RandomAccessFile rad=null;
         try {
@@ -32,7 +39,7 @@ public class ExceptFileByByte implements Runnable{
                 point = file.length();
             }
             rad.seek(point);
-            byte[] value = new byte[1024 * 8];
+            byte[] value = new byte[Constant.DATASIZE];
             while (true) {
                 int length = dis.read(value);
                 if (length == -1) {

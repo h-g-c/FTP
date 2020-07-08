@@ -3,34 +3,30 @@ package client.file;
 import client.gui.ClientFrame;
 import client.util.ArrayListToStringList;
 import entity.FileModel;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import util.FileUtil;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.io.File;
-import java.io.InputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
 /**
  * @author LvHao
  * @Description :
- * @date 2020-07-06 17:23
+ * @date 2020-07-08 2:39
  */
-@Slf4j(topic = "BinaryFileReceiveHandler")
-@RequiredArgsConstructor
-public class BinaryFileSendHandler {
+public class TxtFileSendHandler {
 
     private static String[] clo = null;
     private static String[] tableInfo = {"文件名","文件大小","传输状态"};
     private static DefaultTableModel model;
 
-    public static void sendBinaryFile(OutputStream outputStream, FileModel fileModel, ClientFrame clientFrame,ArrayList<String[]> data){
+    public static void sendTxtFile(OutputStream outputStream, FileModel fileModel, ClientFrame clientFrame,ArrayList<String[]> data) throws IOException {
         JTable jTable = clientFrame.getJPanel4().getJTable2();
         clo = new String[3];
         clo[0] = fileModel.getFileName();
-        clo[1] = String.valueOf(new File(fileModel.getFilePath()).length());
+        clo[1] = String.valueOf(FileUtil.getFileLine(fileModel.getFilePath()));
         clo[2] = "";
         data.add(clo);
 
@@ -41,8 +37,7 @@ public class BinaryFileSendHandler {
         model=new DefaultTableModel(ArrayListToStringList.getData(data), tableInfo);
         jTable.setModel(model);
 
-
-        new Thread(new BinaryFileSendThread(outputStream,fileModel,clientFrame,jTable,data,0)).start();
+        new Thread(new TxtFileSendThread(outputStream,fileModel,clientFrame,jTable,data,0)).start();
     }
 
 }

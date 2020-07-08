@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * @author yinchao
+ * @author heguicai
  * @date 2020/7/4 22:31
  */
 public class InitiativeMode extends Mode {
@@ -37,6 +37,7 @@ public class InitiativeMode extends Mode {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println(super.dataSocket);
         return super.dataSocket;
     }
 
