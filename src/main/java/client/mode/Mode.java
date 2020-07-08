@@ -31,7 +31,9 @@ public abstract class Mode {
 
     public final  String[] tableInfo = {"文件名", "大小", "日期","文件类型"};
 
-    public abstract void showServerDir(Protocol protocolFromSocket, ServerFilePanel serverFilePanel, DefaultTableModel model,ClientFrame clientFrame);
+    public void showServerDir(Protocol protocolFromSocket, ServerFilePanel serverFilePanel, DefaultTableModel model, ClientFrame clientFrame){
+
+    }
 
     public void upload(Protocol protocolFromSocket, ClientFrame clientFrame, ArrayList<String[]> data) {
         //上传文件处理

@@ -23,6 +23,7 @@ import java.util.ArrayList;
 public class PassiveMode extends Mode {
     private final  String[] tableInfo = {"文件名", "大小", "日期","文件类型"};
 
+    @Override
     public void showServerDir(Protocol protocolFromSocket, ServerFilePanel serverFilePanel, DefaultTableModel model, ClientFrame clientFrame) {
         log.info(clientFrame.getPsvdataSocket().toString());
         if(clientFrame.getPsvdataSocket().isConnected()){

@@ -84,6 +84,7 @@ public class ClientCommandHandler implements Runnable {
                     }
                     case DELETE:{
                         mode.delete(protocolFromSocket,clientFrame);
+                    }
                     case ERROR:{
                         mode.error(clientFrame);
                         break;
