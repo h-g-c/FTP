@@ -3,6 +3,7 @@ package client.mode;
 import client.file.BinaryFileReceiveHandler;
 import client.file.BinaryFileSendHandler;
 import client.file.TxtFileReceiveHandler;
+import client.file.TxtFileSendHandler;
 import client.gui.ClientFrame;
 import entity.FileEnum;
 import entity.FileModel;
@@ -47,16 +48,17 @@ public class InitiativeMode extends Mode {
     }
 
     @Override
-    public void upload(Protocol protocolFromSocket, ClientFrame clientFrame){
+    public void upload(Protocol protocolFromSocket, ClientFrame clientFrame,ArrayList<String[]> data){
         try{
             if(clientFrame.getDataSocket() != null){
                 socket = clientFrame.getDataSocket().accept();
-                System.out.println("socket connect");
-                outputStream = socket.getOutputStream();
+                System.out.println(outputStream);
                 fileModel = (FileModel)protocolFromSocket.getData();
                 if(fileModel.getFileType().equals(FileEnum.BINARY)){
-                    BinaryFileSendHandler.sendBinaryFile(outputStream,fileModel,clientFrame);
+                    BinaryFileSendHandler.sendBinaryFile(outputStream,fileModel,clientFrame,data);
                 }else if(fileModel.getFileType().equals(FileEnum.TEXT)){
+                    TxtFileSendHandler.sendTxtFile(outputStream,fileModel,clientFrame,data);
+                }else{
                     //TODO something
                 }
             }

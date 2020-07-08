@@ -48,6 +48,7 @@ public class BinaryFileSendThread implements Runnable{
             while (true){
                 dataOutputStream = new DataOutputStream(outputStream);
                 point = Long.parseLong(fileModel.getFileSize());
+                jTable.setValueAt(point,num,2);
                 File file = new File(fileModel.getFilePath());
                 RandomAccessFile randomAccessFile = new RandomAccessFile(file,"rw");
                 byte[] value = null;
@@ -66,13 +67,13 @@ public class BinaryFileSendThread implements Runnable{
                 int sendCont = Constant.DATASIZE;
                 int low = 0;
                 long size = 0;
-                jTable.setValueAt(low,num,2);
+                System.out.println(fileLength);
                 while(clientFrame.getDataSocket() != null) {
                     try {
                         if (low + sendCont >= fileLength - point) {
                             dataOutputStream.write(value, low, (int) (fileLength - point -low));
-                            jTable.setValueAt(value.length,num,2);
-                            size+=value.length;
+                            jTable.setValueAt(fileLength,num,2);
+                            size = fileLength;
                             dataOutputStream.flush();
                             dataOutputStream.close();
                             randomAccessFile.close();
@@ -83,7 +84,8 @@ public class BinaryFileSendThread implements Runnable{
                             jTable.setValueAt(value.length,num,2);
                             dataOutputStream.flush();
                             low+=sendCont;
-                            size+=low;
+                            size = low + point;
+                            jTable.setValueAt(low+point,num,2);
                         }
                     }catch (IOException e)
                     {
@@ -98,7 +100,7 @@ public class BinaryFileSendThread implements Runnable{
                     clientFrame.getDataSocket().close();
                     clientFrame.setDataSocket(null);
                 }
-                model = new DefaultTableModel(ArrayListToStringList.flushData(data,fileModel.getFileName(),fileModel.getFileSize(), (long) size),tableInfo);
+                model = new DefaultTableModel(ArrayListToStringList.receiveFlushData(data,fileModel.getFileName(), String.valueOf(fileLength), size),tableInfo);
                 jTable.setModel(model);
                 break;
             }

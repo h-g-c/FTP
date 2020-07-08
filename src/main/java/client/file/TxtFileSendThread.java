@@ -67,7 +67,7 @@ public class TxtFileSendThread implements Runnable{
                     clientFrame.getDataSocket().close();
                     clientFrame.setDataSocket(null);
                 }
-                model = new DefaultTableModel(ArrayListToStringList.flushData(data,fileModel.getFileName(),fileModel.getFileSize(), (long) fileLine),tableInfo);
+                model = new DefaultTableModel(ArrayListToStringList.flushData(data,fileModel.getFileName(), String.valueOf(fileLine), (long) fileLine),tableInfo);
                 jTable.setModel(model);
                 break;
             }

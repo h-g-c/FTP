@@ -59,7 +59,7 @@ public class ReceiveCommand {
                     mode.download(protocolFromSocket,clientFrame,data);
                 }
                 case UPLOAD:{
-                    mode.upload(protocolFromSocket,clientFrame);
+                    mode.upload(protocolFromSocket,clientFrame,data);
                 }
                 case DELETE:{
                     mode.delete(protocolFromSocket,clientFrame);
