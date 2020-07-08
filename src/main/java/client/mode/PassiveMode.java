@@ -1,7 +1,9 @@
 package client.mode;
 
 import client.file.BinaryFileReceiveHandler;
+import client.file.BinaryFileSendHandler;
 import client.file.TxtFileReceiveHandler;
+import client.file.TxtFileSendHandler;
 import client.gui.ClientFrame;
 import client.gui.panel.ServerFilePanel;
 import client.util.DefaultMsg;
@@ -80,6 +82,26 @@ public class PassiveMode extends Mode {
                     BinaryFileReceiveHandler.receiveBinaryFile(inputStream,fileModel,clientFrame,data);
                 }else{
                     TxtFileReceiveHandler.receiveTxtFile(inputStream,fileModel,clientFrame,data);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public void upload(Protocol protocolFromSocket, ClientFrame clientFrame,ArrayList<String[]> data){
+        try{
+            if(clientFrame.PsvdataSocket != null){
+                outputStream = clientFrame.PsvdataSocket.getOutputStream();
+                fileModel = (FileModel)protocolFromSocket.getData();
+                if(fileModel.getFileType().equals(FileEnum.BINARY)){
+                    BinaryFileSendHandler.sendBinaryFile(outputStream,fileModel,clientFrame,data);
+                }else if(fileModel.getFileType().equals(FileEnum.TEXT)){
+                    TxtFileSendHandler.sendTxtFile(outputStream,fileModel,clientFrame,data);
+                }else{
+                    //TODO something
                 }
             }
         } catch (IOException e) {

@@ -51,7 +51,7 @@ public class ExceptFileByByte implements Runnable{
                     break;
                 }
             }
-            dis.close();
+//            dis.close();
             rad.close();
             //文件重命名
             if (point >= fileLength) {

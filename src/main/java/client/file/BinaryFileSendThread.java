@@ -75,9 +75,11 @@ public class BinaryFileSendThread implements Runnable{
                             size = fileLength;
                             System.out.println(fileLength);
                             dataOutputStream.flush();
-                            dataOutputStream.close();
                             randomAccessFile.close();
-                            outputStream.close();
+                            if(clientFrame .PsvdataSocket != null && !clientFrame.PsvdataSocket.isConnected()){
+                                dataOutputStream.close();
+                                outputStream.close();
+                            }
                             break;
                         } else {
                             dataOutputStream.write(value, low,sendCont);
