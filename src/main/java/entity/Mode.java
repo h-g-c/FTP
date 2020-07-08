@@ -9,6 +9,8 @@ import util.FileUtil;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -105,7 +107,16 @@ public abstract class Mode {
     public void pause() {
     }
 
+
     public Object getFileList(String filePath) {
         return FileUtil.getFileList(filePath);
+    }
+    public void delete(String fileName, ObjectOutputStream objectOutputStream, Protocol protocol) throws InterruptedException, IOException, ExecutionException {
+        final ThreadPoolExecutor threadPool = ThreadPool.getThreadPool();
+        final Future future = threadPool.submit(new DeleteFileThread(fileName));
+        protocol.setData(future.get());
+        objectOutputStream.writeObject(protocol);
+        objectOutputStream.writeObject(null);
+        objectOutputStream.flush();
     }
 }

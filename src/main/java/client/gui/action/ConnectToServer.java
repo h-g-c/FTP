@@ -3,7 +3,6 @@ package client.gui.action;
 import client.gui.ClientFrame;
 import client.gui.panel.DefaultInfoPanel;
 import client.socket.ConnectServer;
-import client.socket.ConnectServerPsv;
 import client.util.IPUtil;
 import entity.ConnectType;
 import entity.OperateType;
@@ -74,7 +73,7 @@ public class ConnectToServer implements ActionListener {
         }else{
             //主动模式的第一次连接
             //TODO something
-            new ConnectServerPsv(protocol,clientFrame);
+            new ConnectServer(protocol,clientFrame);
             if(clientFrame.getSocket() != null && clientFrame.getSocket().isConnected()){
                 jComboBox.setEnabled(false);
                 defaultInfoPanel.getJt1().setEditable(false);

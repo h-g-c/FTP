@@ -11,6 +11,7 @@ import util.FileUtil;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 /**
  * 服务端处理命令输入的线程
@@ -89,6 +90,10 @@ public class ServerCommandHandler implements Runnable {
                         objectOutputStream.writeObject(null);
                         objectOutputStream.flush();
                     }
+                    case DELETE:{
+                        mode.delete((String)protocolFromSocket.getData(),objectOutputStream,protocolFromSocket);
+                        break;
+                    }
                 }
                 // 读入协议信息
                 protocolFromSocket = (Protocol) objectInputStream.readObject();
@@ -101,6 +106,8 @@ public class ServerCommandHandler implements Runnable {
         } catch (ClassNotFoundException e) {
             log.error("反序列化失败");
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
             e.printStackTrace();
         }
     }
