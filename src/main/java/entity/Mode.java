@@ -74,7 +74,7 @@ public abstract class Mode {
         final FileUtil fileUtil = new FileUtil();
         if (FileUtil.judgeFileType(fileModel.getFilePath()).equals(FileEnum.BINARY)) {
             fileModel.setFileType(FileEnum.BINARY);
-            File file = new File(fileModel.getFilePath()+".temp");
+            File file = new File(fileModel.getFilePath());
             long fileLength=file.length();
             fileModel.setFileSize(String.valueOf(fileLength));
         } else {

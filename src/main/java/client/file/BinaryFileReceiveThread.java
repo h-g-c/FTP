@@ -60,12 +60,14 @@ public class BinaryFileReceiveThread implements Runnable{
                 while(clientFrame.getDataSocket() != null){
                     int length = dataInputStream.read(value);
                     if(length == -1){
+                        System.out.println("end");
                         break;
                     }
                     randomAccessFile.write(value,0,length);
                     jTable.setValueAt(size,num,2);
                     size += length;
                     if(size >= fileLength){
+                        System.out.println("end");
                         break;
                     }
                 }

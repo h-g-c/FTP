@@ -52,6 +52,7 @@ public class InitiativeMode extends Mode {
         try{
             if(clientFrame.getDataSocket() != null){
                 socket = clientFrame.getDataSocket().accept();
+                outputStream=socket.getOutputStream();
                 System.out.println(outputStream);
                 fileModel = (FileModel)protocolFromSocket.getData();
                 if(fileModel.getFileType().equals(FileEnum.BINARY)){
