@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 二进制文件传输的处理 新开一个线程 避免对客户端其他操作的影响
  * @date 2020-07-06 17:23
  */
 @Slf4j(topic = "BinaryFileReceiveHandler")

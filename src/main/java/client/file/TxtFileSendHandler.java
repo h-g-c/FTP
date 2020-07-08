@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 客户端文本文件的上传处理  新开一个线程  避免对客户端其他操作的影响
  * @date 2020-07-08 2:39
  */
 public class TxtFileSendHandler {

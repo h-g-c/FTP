@@ -10,7 +10,7 @@ import java.awt.*;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 顶部新建连接和断开连接的面板
  * @date 2020-07-03 1:50
  */
 public class TopPanel extends JPanel {

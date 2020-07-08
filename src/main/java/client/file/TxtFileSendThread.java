@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 文本文件的上传线程  包括断点续传
  * @date 2020-07-08 2:44
  */
 @Data

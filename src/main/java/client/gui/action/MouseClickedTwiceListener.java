@@ -14,7 +14,7 @@ import java.util.TimerTask;
 
 /**
  * @author LvHao
- * @Description : 表格鼠标点击两次事件
+ * @Description : 表格鼠标点击两次事件 进入到文件夹的下一级
  * @date 2020-07-03 2:05
  */
 @Data

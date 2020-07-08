@@ -22,7 +22,9 @@ import java.net.ServerSocket;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 删除按钮的监听
+ * 点击删除按钮给服务端发送删除命令
+ * 命令包括需要删除服务端的文件路径
  * @date 2020-07-08 1:04
  */
 @Data

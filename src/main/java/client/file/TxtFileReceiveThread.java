@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 文本文件接受的线程  包括了断点续传原理
  * @date 2020-07-08 2:02
  */
 @Data

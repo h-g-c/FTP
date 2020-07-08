@@ -18,6 +18,8 @@ import java.util.ArrayList;
  * 初步初始化了客户端连接到服务端遍历客户端文件夹的实现
  * 下载 上传 暂停的处理逻辑还未完成
  * 后续的删除考虑是否添加
+ * 完成上传下载
+ * 完成删除
  * @date 2020-07-05 22:24
  */
 @Slf4j(topic = "showServerDir")

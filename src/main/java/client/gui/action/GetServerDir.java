@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 遍历服务端初始文件列表
  * @date 2020-07-05 18:10
  */
 @AllArgsConstructor

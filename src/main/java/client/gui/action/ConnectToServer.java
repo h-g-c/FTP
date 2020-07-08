@@ -17,6 +17,8 @@ import java.awt.event.ActionListener;
 /**
  * @author LvHao
  * @Description : 对连接按钮的事件监听 区分主动模式和被动模式
+ * 主动模式打开命令端口
+ * 被动模式还应该获取服务端送来的数据端口的相关信息
  * @date 2020-07-03 11:16
  */
 @Data

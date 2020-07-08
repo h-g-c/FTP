@@ -7,12 +7,12 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 启动客户端GUI界面
  * @date 2020-07-02 12:27
  */
-public class Test {
+public class RunClient {
     public static void main(String[] args) {
-        //测试GUI
+        //设置GUI的
         try {
             UIManager.setLookAndFeel(new NimbusLookAndFeel());
         } catch (UnsupportedLookAndFeelException e) {

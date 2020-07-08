@@ -20,7 +20,7 @@ import java.util.TimerTask;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 遍历服务端文件夹功能  返回服务端文件夹的上一级
  * @date 2020-07-05 4:10
  */
 @Data

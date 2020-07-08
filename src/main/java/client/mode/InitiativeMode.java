@@ -18,6 +18,7 @@ import java.util.ArrayList;
 /**
  * @author LvHao
  * @Description : 主动模式下对服务端命令的处理
+ * 重写了上传和下载方法实现了对应的功能
  * @date 2020-07-05 22:14
  */
 public class InitiativeMode extends Mode {
@@ -51,7 +52,7 @@ public class InitiativeMode extends Mode {
         try{
             if(clientFrame.getDataSocket() != null){
                 socket = clientFrame.getDataSocket().accept();
-                System.out.println(outputStream);
+                outputStream = socket.getOutputStream();
                 fileModel = (FileModel)protocolFromSocket.getData();
                 if(fileModel.getFileType().equals(FileEnum.BINARY)){
                     BinaryFileSendHandler.sendBinaryFile(outputStream,fileModel,clientFrame,data);

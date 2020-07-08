@@ -6,7 +6,7 @@ import java.io.File;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 目录信息
  * @date 2020-07-06 10:28
  */
 public class DefaultMsg {

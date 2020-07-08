@@ -8,7 +8,8 @@ import java.util.ArrayList;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 对上传下载表格信息的处理的工具类
+ * 主要逻辑是将ArrayList转换为String类型的二维数组
  * @date 2020-07-07 16:25
  */
 public class ArrayListToStringList {

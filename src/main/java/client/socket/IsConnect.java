@@ -7,7 +7,7 @@ import lombok.Data;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 判断命令端口是否是连接状态的线程
  * @date 2020-07-05 3:19
  */
 @Data

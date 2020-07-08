@@ -15,7 +15,8 @@ import java.util.Date;
 
 /**
  * @author LvHao
- * @Description : 获取文件目录 并转换成具体大小
+ * @Description : 获取文件目录 并转换成具体大小 这里转化成了MB GB等
+ * 与服务端信息有点出入  但是不影响系统的正常使用
  * @date 2020-07-03 2:02
  */
 public class GetFiles {

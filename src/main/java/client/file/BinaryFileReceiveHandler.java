@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 对二进制文件接受的处理 这里要新开一个线程避免对其他操作的影响
  * @date 2020-07-06 17:00
  */
 @Slf4j(topic = "BinaryFileReceiveHandler")

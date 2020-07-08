@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 接受文本文件的处理 新开线程  避免对客户端其他操作的影响
  * @date 2020-07-08 1:53
  */
 @RequiredArgsConstructor

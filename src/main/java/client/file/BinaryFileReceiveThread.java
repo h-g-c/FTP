@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 接受二进制文件的线程 包括断点续传
  * @date 2020-07-07 19:03
  */
 @RequiredArgsConstructor

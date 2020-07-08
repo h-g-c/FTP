@@ -27,7 +27,7 @@ import java.util.jar.JarOutputStream;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 服务端下载文件监听的实现目前只实现的单个文件的下载
  * @date 2020-07-04 23:12
  */
 @Data

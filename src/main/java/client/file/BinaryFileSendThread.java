@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 二进制文件上传的线程  包括断点续传
  * @date 2020-07-07 23:56
  */
 @Data
@@ -66,7 +66,6 @@ public class BinaryFileSendThread implements Runnable{
                 int sendCont = 5*1024;
                 int low = 0;
                 long size = 0;
-                System.out.println(fileLength);
                 while(clientFrame.getDataSocket() != null) {
                     try {
                         if (low + sendCont >= fileLength - point) {

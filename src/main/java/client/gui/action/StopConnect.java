@@ -18,6 +18,9 @@ import java.awt.event.ActionListener;
 /**
  * @author LvHao
  * @Description : 关闭连接按钮的相关动作
+ * 断开数据端口
+ * 断开命令端口
+ * 将他们的值设置为null
  * @date 2020-07-03 12:11
  */
 @Data

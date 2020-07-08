@@ -2,7 +2,7 @@ package client.util;
 
 /**
  * @author LvHao
- * @Description :
+ * @Description : 判断系统类型 windows linux
  * @date 2020-07-04 19:37
  */
 public class OSinfo {
