@@ -7,6 +7,7 @@ import entity.FileModel;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import util.FileUtil;
 
 import javax.swing.*;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
  */
 @Data
 @RequiredArgsConstructor
+@Slf4j(topic = "TxtFileReceiveThread")
 public class TxtFileReceiveThread implements Runnable{
 
     private File tempFile;
@@ -67,7 +69,10 @@ public class TxtFileReceiveThread implements Runnable{
                 if(tempLength>=fileLength)
                 {
                     model = new DefaultTableModel(ArrayListToStringList.flushData(data,fileModel.getFileName(),fileModel.getFileSize(), (long) fileLength),tableInfo);
-                    tempFile.renameTo(new File(Constant.DEFAULT_PATH + fileModel.getFileName()));
+                    if(tempFile.renameTo(new File(Constant.DEFAULT_PATH + fileModel.getFileName())))
+                        log.info("文件接收成功");
+                    else log.info("文件更名失败");
+
                 }
                 jTable.setModel(model);
                 break;

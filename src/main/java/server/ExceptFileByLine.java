@@ -1,13 +1,12 @@
 package server;
 
-import client.socket.SocketUtil;
 import configuration_and_constant.Constant;
 import entity.FileModel;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import util.FileUtil;
 
 import java.io.*;
-import java.net.Socket;
 
 /**
  * @类名 ExceptFileByLine
@@ -19,6 +18,7 @@ import java.net.Socket;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Slf4j(topic = "ExceptFileByLine")
 public class ExceptFileByLine implements Runnable{
 InputStream inputStream;
 FileModel fileModel;
@@ -49,8 +49,10 @@ FileModel fileModel;
         bufferedReader.close();
         if(tempLength>=fileLength)
         {
-            boolean pan=tempFile.renameTo(new File(Constant.UPLOAD_PATH + fileModel.getFileName()));
-            System.out.println("更名成功？："+pan);
+            if(tempFile.renameTo(new File(Constant.UPLOAD_PATH + fileModel.getFileName())))
+                log.info("文件接收成功");
+            else log.info("文件更名失败");
+
         }
     } catch (IOException e) {
         e.printStackTrace();

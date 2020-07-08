@@ -43,18 +43,14 @@ public class SendFileByLine implements Runnable {
             LineNumberReader lineNumberReader=new LineNumberReader(fileReader);
             lineNumberReader.skip(fileLength);
             String str;
-//            PrintWriter printWriter=new PrintWriter(sendOutputStream);
             OutputStreamWriter outputStreamWriter=new OutputStreamWriter(sendOutputStream);
             while(fileLength<=fileLine)
             {
                 str=lineNumberReader.readLine();
                 outputStreamWriter.write(str+"\r\n");
                 outputStreamWriter.flush();
-//                printWriter.println(str);
                 fileLength++;
             }
-            System.out.println(fileLength);
-            System.out.println(fileLine);
         } catch (IOException e) {
             e.printStackTrace();
         }finally {

@@ -3,6 +3,7 @@ package server;
 import configuration_and_constant.Constant;
 import entity.FileModel;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import util.FileUtil;
 
 import java.io.*;
@@ -17,6 +18,7 @@ import java.io.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Slf4j(topic = "ExceptFileByByte")
 public class ExceptFileByByte implements Runnable{
     DataInputStream dis;
     FileModel fileModel;
@@ -55,7 +57,10 @@ public class ExceptFileByByte implements Runnable{
             rad.close();
             //文件重命名
             if (point >= fileLength) {
-                file.renameTo(new File(Constant.UPLOAD_PATH + fileModel.getFileName()));
+                if( file.renameTo(new File(Constant.UPLOAD_PATH + fileModel.getFileName())))
+                    log.info("文件接收成功");
+                else log.info("文件更名失败");
+
             }
         } catch (IOException e) {
             e.printStackTrace();

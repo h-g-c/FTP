@@ -6,6 +6,7 @@ import configuration_and_constant.Constant;
 import entity.FileModel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
  * @date 2020-07-07 19:03
  */
 @RequiredArgsConstructor
+@Slf4j(topic = "BinaryFileReceiveThread")
 public class BinaryFileReceiveThread implements Runnable{
 
     private File tempFile;
@@ -60,14 +62,12 @@ public class BinaryFileReceiveThread implements Runnable{
                 while(clientFrame.getDataSocket() != null){
                     int length = dataInputStream.read(value);
                     if(length == -1){
-                        System.out.println("end");
                         break;
                     }
                     randomAccessFile.write(value,0,length);
                     jTable.setValueAt(size,num,2);
                     size += length;
                     if(size >= fileLength){
-                        System.out.println("end");
                         break;
                     }
                 }
@@ -82,7 +82,10 @@ public class BinaryFileReceiveThread implements Runnable{
                 //对文件重命名
                 if(size >= fileLength){
                     model = new DefaultTableModel(ArrayListToStringList.flushData(data,fileModel.getFileName(),fileModel.getFileSize(),fileLength),tableInfo);
-                    tempFile.renameTo(new File(Constant.DEFAULT_PATH + fileModel.getFileName()));
+                    if(tempFile.renameTo(new File(Constant.DEFAULT_PATH + fileModel.getFileName())))
+                        log.info("文件接收成功");
+                    else log.info("文件更名失败");
+
                 }
                 jTable.setModel(model);
                 break;

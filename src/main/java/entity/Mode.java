@@ -48,8 +48,11 @@ public abstract class Mode {
         {
           File file=new File(Constant.UPLOAD_PATH + fileModel.getFileName() + ".temp");
           fileModel.setFileSize(String.valueOf(file.length()));
-        }else {
+        }else  if(fileModel.getFileType().equals(FileEnum.TEXT)){
           fileModel.setFileSize(String.valueOf(FileUtil.getFileLine(Constant.UPLOAD_PATH + fileModel.getFileName() + ".temp")));
+        }
+        else {// todo 文件夹不能上传
+            return;
         }
         protocolFromSocket.setData(fileModel);
         objectOutputStream.writeObject(protocolFromSocket);
@@ -64,7 +67,7 @@ public abstract class Mode {
                     .build();
             threadPool.submit(exceptFileByByte);
         }
-        else {
+        else if(fileModel.getFileType().equals(FileEnum.TEXT)){
             ExceptFileByLine exceptFileByLine=ExceptFileByLine.builder().fileModel(fileModel)
                     .inputStream(getDataSocket(protocolFromSocket.clientIp,protocolFromSocket.dataPort).getInputStream()).build();
             threadPool.submit(exceptFileByLine);
@@ -75,20 +78,20 @@ public abstract class Mode {
         FileModel fileModel = (FileModel) protocolFromSocket.getData();
         String alreadySendLength = fileModel.getFileSize();
         final FileUtil fileUtil = new FileUtil();
-        if (FileUtil.judgeFileType(fileModel.getFilePath()).equals(FileEnum.BINARY)) {
-            fileModel.setFileType(FileEnum.BINARY);
+        if (fileModel.getFileType().equals(FileEnum.BINARY)) {
             File file = new File(fileModel.getFilePath());
             long fileLength = file.length();
             fileModel.setFileSize(String.valueOf(fileLength));
-        } else {
-            fileModel.setFileType(FileEnum.TEXT);
+        } else if(fileModel.getFileType().equals(FileEnum.TEXT)){
             fileModel.setFileSize(String.valueOf(FileUtil.getFileLine(fileModel.getFilePath())));
+        }
+        else {// TODO 上传的文件类型为DIR的话不做任何反应
+            return;
         }
         protocolFromSocket.setData(fileModel);
         objectOutputStream.writeObject(protocolFromSocket);
         objectOutputStream.writeObject(null);
         objectOutputStream.flush();
-        System.out.println(protocolFromSocket.toString());
         //传输即将发送的文件的大小给客户端
         final ThreadPoolExecutor threadPool = ThreadPool.getThreadPool();
         if (fileModel.getFileType().equals(FileEnum.BINARY)) {
