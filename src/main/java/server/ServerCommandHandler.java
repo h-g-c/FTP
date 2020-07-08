@@ -91,6 +91,7 @@ public class ServerCommandHandler implements Runnable {
                         objectOutputStream.flush();
                     }
                     case DELETE:{
+                        log.info("CommandType DELLETE");
                         mode.delete((String)protocolFromSocket.getData(),objectOutputStream,protocolFromSocket);
                         break;
                     }

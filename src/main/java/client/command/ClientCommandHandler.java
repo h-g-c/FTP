@@ -87,6 +87,9 @@ public class ClientCommandHandler implements Runnable {
                         mode.error(clientFrame);
                         break;
                     }
+                    case DELETE:{
+                        mode.delete(protocolFromSocket,clientFrame);
+                    }
                 }
                 protocolFromSocket = (Protocol) objectInputStream.readObject();
                 while(objectInputStream.readObject()!=null) {

@@ -35,8 +35,7 @@ public class InitiativeMode extends Mode {
     private OutputStream outputStream;
     private Socket socket;
 
-    @Override
-    public void showServerDir(Protocol protocolFromSocket, ServerFilePanel serverFilePanel, DefaultTableModel model, ClientFrame clientFrame){
+    public void showServerDir(Protocol protocolFromSocket, ServerFilePanel serverFilePanel, DefaultTableModel model,ClientFrame clientFrame){
         if (protocolFromSocket.getData() != null) {
             log.info(protocolFromSocket.getOperateType().toString());
             int i = 0;

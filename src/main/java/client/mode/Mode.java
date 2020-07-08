@@ -1,11 +1,15 @@
 package client.mode;
 
+import client.command.SendCommand;
 import client.gui.ClientFrame;
 import client.gui.msg.MessageDialog;
 import client.gui.panel.ServerFilePanel;
 import client.util.DefaultMsg;
+import client.util.IPUtil;
 import entity.FileModel;
+import entity.OperateType;
 import entity.Protocol;
+import entity.User;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.table.DefaultTableModel;
@@ -27,7 +31,9 @@ public abstract class Mode {
 
     public final  String[] tableInfo = {"文件名", "大小", "日期","文件类型"};
 
-    public abstract void showServerDir(Protocol protocolFromSocket, ServerFilePanel serverFilePanel, DefaultTableModel model,ClientFrame clientFrame);
+    public void showServerDir(Protocol protocolFromSocket, ServerFilePanel serverFilePanel, DefaultTableModel model,ClientFrame clientFrame){
+
+    }
 
     public void upload(Protocol protocolFromSocket, ClientFrame clientFrame, ArrayList<String[]> data) {
         //上传文件处理
@@ -38,8 +44,28 @@ public abstract class Mode {
     }
 
     public void delete(Protocol protocolFromSocket, ClientFrame clientFrame){
-        String delMsg = (String) protocolFromSocket.getData();
-        new MessageDialog("提示",delMsg,clientFrame).del();
+        boolean msg = (boolean) protocolFromSocket.getData();
+        if(msg && clientFrame.getSocket() != null &&clientFrame.getSocket().isConnected()){
+            new MessageDialog("提示","删除成功",clientFrame).del();
+
+            User user = new User();
+            user.setUserName(clientFrame.getJPanel2().getJt2().getText());
+            user.setPassword(clientFrame.getJPanel2().getJPasswordField().getText());
+
+            Protocol protocol = new Protocol();
+            protocol.setServiceIp(clientFrame.getProtocol().getServiceIp());
+            protocol.setCommandPort(clientFrame.getProtocol().getCommandPort());
+            protocol.setClientIp(IPUtil.getLocalIP());
+            protocol.setOperateType(OperateType.CONNECT);
+            protocol.setConnectType(clientFrame.getProtocol().getConnectType());
+            protocol.setData(user);
+            protocol.setDataPort(clientFrame.getProtocol().getDataPort());
+
+            SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
+
+        }else{
+            new MessageDialog("提示","删除失败！",clientFrame).del();
+        }
     }
 
     public void pause(){
