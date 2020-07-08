@@ -9,7 +9,7 @@ import util.FileUtil;
 import java.io.*;
 
 /**
- * @类名 ExceptFileByLine
+ * @类名 ReceiveFileByLine
  * @描述 用字符的形式接受文件
  * @作者 heguicai
  * @创建日期 2020/7/6 下午5:26
@@ -18,8 +18,8 @@ import java.io.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Slf4j(topic = "ExceptFileByLine")
-public class ExceptFileByLine implements Runnable{
+@Slf4j(topic = "ReceiveFileByLine")
+public class ReceiveFileByLine implements Runnable{
 InputStream inputStream;
 FileModel fileModel;
 

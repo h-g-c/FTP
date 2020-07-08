@@ -9,7 +9,6 @@ import util.FileUtil;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -62,15 +61,15 @@ public abstract class Mode {
         final ThreadPoolExecutor threadPool = ThreadPool.getThreadPool();
         if(fileModel.getFileType().equals(FileEnum.BINARY))
         {
-            ExceptFileByByte exceptFileByByte=ExceptFileByByte.builder().fileModel(fileModel)
+            ReceiveFileByByte receiveFileByByte = ReceiveFileByByte.builder().fileModel(fileModel)
                     .dis(new DataInputStream(getDataSocket(protocolFromSocket.clientIp,protocolFromSocket.dataPort).getInputStream()))
                     .build();
-            threadPool.submit(exceptFileByByte);
+            threadPool.submit(receiveFileByByte);
         }
         else if(fileModel.getFileType().equals(FileEnum.TEXT)){
-            ExceptFileByLine exceptFileByLine=ExceptFileByLine.builder().fileModel(fileModel)
+            ReceiveFileByLine receiveFileByLine = ReceiveFileByLine.builder().fileModel(fileModel)
                     .inputStream(getDataSocket(protocolFromSocket.clientIp,protocolFromSocket.dataPort).getInputStream()).build();
-            threadPool.submit(exceptFileByLine);
+            threadPool.submit(receiveFileByLine);
         }
     }
 

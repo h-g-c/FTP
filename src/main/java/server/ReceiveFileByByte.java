@@ -9,7 +9,7 @@ import util.FileUtil;
 import java.io.*;
 
 /**
- * @类名 ExceptFileByByte
+ * @类名 ReceiveFileByByte
  * @描述 用字节数组的形式接受文件
  * @作者 heguicai
  * @创建日期 2020/7/4 下午5:02
@@ -18,8 +18,8 @@ import java.io.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Slf4j(topic = "ExceptFileByByte")
-public class ExceptFileByByte implements Runnable{
+@Slf4j(topic = "ReceiveFileByByte")
+public class ReceiveFileByByte implements Runnable{
     DataInputStream dis;
     FileModel fileModel;
 
