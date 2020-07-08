@@ -65,12 +65,7 @@ public class FileUpload implements ActionListener {
             fileModel.setFilePath(fileNames[0]);
             if(fileType.equals("BINARY")){
                 fileModel.setFileType(FileEnum.BINARY);
-                File file = new File(Constant.DEFAULT_PATH + oneFile);
-                long size = 0;
-                if(file.exists() && file.isFile()){
-                    size = file.length();
-                }
-                fileModel.setFileSize(String.valueOf(size));
+                fileModel.setFileSize(String.valueOf(new File(fileNames[0]).length()));
             }else if(fileType.equals("TEXT")){
                 fileModel.setFileType(FileEnum.TEXT);
             }else{

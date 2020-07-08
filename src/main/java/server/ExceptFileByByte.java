@@ -32,7 +32,7 @@ public class ExceptFileByByte implements Runnable{
                 point = file.length();
             }
             rad.seek(point);
-            byte[] value = new byte[1024 * 8];
+            byte[] value = new byte[8];
             while (true) {
                 int length = dis.read(value);
                 if (length == -1) {
@@ -47,6 +47,8 @@ public class ExceptFileByByte implements Runnable{
             dis.close();
             rad.close();
             //文件重命名
+            System.out.println(point);
+            System.out.println(fileLength);
             if (point >= fileLength) {
                 file.renameTo(new File(Constant.UPLOAD_PATH + fileModel.getFileName()));
             }

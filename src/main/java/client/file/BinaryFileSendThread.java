@@ -62,7 +62,7 @@ public class BinaryFileSendThread implements Runnable{
                 }
 
                 //每次读取的数量大小
-                int sendCont = 8*1024;
+                int sendCont = 8;
                 int low = 0;
                 long size = 0;
                 jTable.setValueAt(low,num,2);
@@ -75,7 +75,7 @@ public class BinaryFileSendThread implements Runnable{
                             dataOutputStream.flush();
                             dataOutputStream.close();
                             randomAccessFile.close();
-                            outputStream.flush();
+//                            outputStream.close();
                             break;
                         } else {
                             dataOutputStream.write(value, low,sendCont);
@@ -90,6 +90,9 @@ public class BinaryFileSendThread implements Runnable{
                         break;
                     }
                 }
+                dataOutputStream.close();
+                randomAccessFile.close();
+                outputStream.close();
                 if(clientFrame.getDataSocket() != null){
                     clientFrame.getDataSocket().close();
                     clientFrame.setDataSocket(null);
