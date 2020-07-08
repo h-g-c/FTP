@@ -101,7 +101,6 @@ public class FindServerDir extends MouseAdapter {
             protocol.setOperateType(OperateType.FILE_PATH);
             protocol.setData(fileName);
             protocol.setDataPort(clientFrame.getProtocol().getDataPort());
-
             SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
         }
     }

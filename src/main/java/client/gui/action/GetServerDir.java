@@ -5,6 +5,7 @@ import client.command.SendCommand;
 import client.gui.ClientFrame;
 import client.gui.msg.MessageDialog;
 import client.util.IPUtil;
+import configuration_and_constant.Constant;
 import entity.OperateType;
 import entity.Protocol;
 import entity.User;
@@ -35,9 +36,16 @@ public class GetServerDir implements ActionListener {
             protocol.setServiceIp(clientFrame.getProtocol().getServiceIp());
             protocol.setCommandPort(clientFrame.getProtocol().getCommandPort());
             protocol.setClientIp(IPUtil.getLocalIP());
-            protocol.setOperateType(OperateType.CONNECT);
+            if(clientFrame .PsvdataSocket != null){
+                if(clientFrame.PsvdataSocket.isConnected()){
+                    protocol.setOperateType(OperateType.FILE_PATH);
+                    protocol.setData(Constant.DEFAULT_FILE_PATH);
+                }
+            }else{
+                protocol.setOperateType(OperateType.CONNECT);
+                protocol.setData(user);
+            }
             protocol.setConnectType(clientFrame.getProtocol().getConnectType());
-            protocol.setData(user);
             protocol.setDataPort(clientFrame.getProtocol().getDataPort());
 
             SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());

@@ -7,6 +7,7 @@ import entity.FileModel;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -42,15 +43,17 @@ public class BinaryFileSendThread implements Runnable{
     private int num;
 
 
+    @SneakyThrows
     @Override
     public void run() {
+        RandomAccessFile randomAccessFile = null;
         try{
             while (true){
                 dataOutputStream = new DataOutputStream(outputStream);
                 point = Long.parseLong(fileModel.getFileSize());
                 jTable.setValueAt(point,num,2);
                 File file = new File(fileModel.getFilePath());
-                RandomAccessFile randomAccessFile = new RandomAccessFile(file,"rw");
+                randomAccessFile = new RandomAccessFile(file,"rw");
                 byte[] value = null;
                 long fileLength = file.length();
                 try{
@@ -73,10 +76,13 @@ public class BinaryFileSendThread implements Runnable{
                             dataOutputStream.write(value, low, (int) (fileLength - point -low));
                             jTable.setValueAt(fileLength,num,2);
                             size = fileLength;
-                            System.out.println(fileLength);
-                            dataOutputStream.flush();
                             randomAccessFile.close();
-                            if(clientFrame .PsvdataSocket != null && !clientFrame.PsvdataSocket.isConnected()){
+                            if(clientFrame .PsvdataSocket != null){
+                                if(!clientFrame.PsvdataSocket.isConnected()){
+                                    dataOutputStream.close();
+                                    outputStream.close();
+                                }
+                            }else{
                                 dataOutputStream.close();
                                 outputStream.close();
                             }
@@ -95,9 +101,16 @@ public class BinaryFileSendThread implements Runnable{
                         break;
                     }
                 }
-                dataOutputStream.close();
                 randomAccessFile.close();
-                outputStream.close();
+                if(clientFrame .PsvdataSocket != null){
+                    if(!clientFrame.PsvdataSocket.isConnected()){
+                        dataOutputStream.close();
+                        outputStream.close();
+                    }
+                }else{
+                    dataOutputStream.close();
+                    outputStream.close();
+                }
                 if(clientFrame.getDataSocket() != null){
                     clientFrame.getDataSocket().close();
                     clientFrame.setDataSocket(null);
@@ -110,6 +123,10 @@ public class BinaryFileSendThread implements Runnable{
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (ArrayIndexOutOfBoundsException e){
+            //TODO nothing
+        }finally {
+            randomAccessFile.close();
         }
     }
 }

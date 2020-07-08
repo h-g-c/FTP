@@ -32,7 +32,7 @@ public class ExceptFileByByte implements Runnable{
         RandomAccessFile rad=null;
         try {
             File file = new File(Constant.UPLOAD_PATH  + fileModel.getFileName() + ".temp");
-             rad = new RandomAccessFile(Constant.UPLOAD_PATH +  fileModel.getFileName()  + ".temp", "rw");
+            rad = new RandomAccessFile(Constant.UPLOAD_PATH +  fileModel.getFileName()  + ".temp", "rw");
             long fileLength=Long.valueOf(fileModel.getFileSize());
             long point = 0;
             if (file.exists() && file.isFile()) {
@@ -51,7 +51,7 @@ public class ExceptFileByByte implements Runnable{
                     break;
                 }
             }
-            dis.close();
+            //dis.close();
             rad.close();
             //文件重命名
             if (point >= fileLength) {
@@ -61,7 +61,7 @@ public class ExceptFileByByte implements Runnable{
             e.printStackTrace();
         }
         finally {
-            dis.close();
+//            dis.close();
             rad.close();
         }
 
