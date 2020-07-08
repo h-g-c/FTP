@@ -90,13 +90,25 @@ public class BinaryFileSendThread implements Runnable{
                         break;
                     }
                 }
-                dataOutputStream.close();
-                randomAccessFile.close();
-                outputStream.close();
-                if(clientFrame.getDataSocket() != null){
-                    clientFrame.getDataSocket().close();
-                    clientFrame.setDataSocket(null);
+                if (clientFrame.getJPanel2().getJComboBox().getSelectedItem().equals("主动模式"))
+                {
+                    dataOutputStream.close();
+                    randomAccessFile.close();
+                    outputStream.close();
+                    if(clientFrame.PsvdataSocket != null){
+                        clientFrame.PsvdataSocket.close();
+                        clientFrame.setDataSocket(null);
+                    }
+                }else {
+                    //dataOutputStream.close();
+                    randomAccessFile.close();
+                    //outputStream.close();
+                    if(clientFrame.PsvdataSocket != null){
+                        //clientFrame.PsvdataSocket.close();
+                        //clientFrame.setDataSocket(null);
+                    }
                 }
+
                 model = new DefaultTableModel(ArrayListToStringList.receiveFlushData(data,fileModel.getFileName(), String.valueOf(fileLength), size),tableInfo);
                 jTable.setModel(model);
                 break;

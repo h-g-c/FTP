@@ -69,13 +69,24 @@ public class BinaryFileReceiveThread implements Runnable{
                         break;
                     }
                 }
-                dataInputStream.close();
-                randomAccessFile.close();
-                inputStream.close();
-                if(clientFrame.getDataSocket() != null){
-                    clientFrame.getDataSocket().close();
-                    clientFrame.setDataSocket(null);
+                if (clientFrame.getJPanel2().getJComboBox().getSelectedItem().equals("主动模式")){
+                    dataInputStream.close();
+                    randomAccessFile.close();
+                    inputStream.close();
+                    if(clientFrame.getDataSocket() != null){
+                        clientFrame.getDataSocket().close();
+                        clientFrame.setDataSocket(null);
+                    }
+                }else {
+                    //dataInputStream.close();
+                    randomAccessFile.close();
+                    //inputStream.close();
+                    if(clientFrame.getDataSocket() != null){
+                        //clientFrame.getDataSocket().close();
+                        //clientFrame.setDataSocket(null);
+                    }
                 }
+
                 model = new DefaultTableModel(ArrayListToStringList.flushData(data,fileModel.getFileName(),fileModel.getFileSize(),size),tableInfo);
                 //对文件重命名
                 if(size >= fileLength){

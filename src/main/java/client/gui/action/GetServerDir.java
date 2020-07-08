@@ -1,6 +1,5 @@
 package client.gui.action;
 
-import client.command.ReceiveCommand;
 import client.command.SendCommand;
 import client.gui.ClientFrame;
 import client.gui.msg.MessageDialog;

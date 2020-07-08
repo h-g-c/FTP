@@ -44,7 +44,7 @@ public class ExceptFileByByte implements Runnable{
                     break;
                 }
             }
-            dis.close();
+            //dis.close();
             rad.close();
             //文件重命名
             if (point >= fileLength) {
@@ -54,7 +54,7 @@ public class ExceptFileByByte implements Runnable{
             e.printStackTrace();
         }
         finally {
-            dis.close();
+            //dis.close();
             rad.close();
         }
 

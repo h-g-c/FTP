@@ -15,8 +15,8 @@ import java.io.ObjectOutputStream;
  * 发送主动模式 并开始命令接受线程
  * @date 2020-07-03 10:59
  */
-public class ConnectServer extends SocketUtil {
-    public ConnectServer(Protocol protocol, ClientFrame clientFrame) {
+public class ConnectServerPsv extends SocketUtil {
+    public ConnectServerPsv(Protocol protocol, ClientFrame clientFrame) {
         super(protocol,clientFrame);
         clientFrame.setSocket(this.createSocket());
         clientFrame.setProtocol(protocol);
