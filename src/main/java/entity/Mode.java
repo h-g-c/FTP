@@ -3,13 +3,15 @@ package entity;
 import configuration_and_constant.Constant;
 import configuration_and_constant.ThreadPool;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import server.*;
 import util.FileUtil;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -17,6 +19,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @date 2020/7/3 18:54
  */
 @Data
+@Slf4j
 public abstract class Mode {
     Socket dataSocket;
     Socket commandSocket;
@@ -75,7 +78,7 @@ public abstract class Mode {
         if (FileUtil.judgeFileType(fileModel.getFilePath()).equals(FileEnum.BINARY)) {
             fileModel.setFileType(FileEnum.BINARY);
             File file = new File(fileModel.getFilePath());
-            long fileLength=file.length();
+            long fileLength = file.length();
             fileModel.setFileSize(String.valueOf(fileLength));
         } else {
             fileModel.setFileType(FileEnum.TEXT);
@@ -88,9 +91,9 @@ public abstract class Mode {
         System.out.println(protocolFromSocket.toString());
         //传输即将发送的文件的大小给客户端
         final ThreadPoolExecutor threadPool = ThreadPool.getThreadPool();
-        if (FileUtil.judgeFileType(fileModel.getFilePath()).equals(FileEnum.BINARY)) {
+        if (fileModel.getFileType().equals(FileEnum.BINARY)) {
             SendFileByByte sendFileByByte = SendFileByByte.builder()
-                    .das(new DataOutputStream(getDataSocket(protocolFromSocket.getClientIp(),protocolFromSocket.getDataPort()).getOutputStream()))
+                    .das(new DataOutputStream(getDataSocket(protocolFromSocket.getClientIp(), protocolFromSocket.getDataPort()).getOutputStream()))
                     .filePath(fileModel.getFilePath()).point(Long.valueOf(alreadySendLength)).build();
             threadPool.submit(sendFileByByte);
         } else {
@@ -107,5 +110,13 @@ public abstract class Mode {
 
     public Object getFileList(String filePath) {
         return FileUtil.getFileList(filePath);
+    }
+
+    public void delete(String fileName, ObjectOutputStream objectOutputStream, Protocol protocol) throws InterruptedException, IOException, ExecutionException {
+        final ThreadPoolExecutor threadPool = ThreadPool.getThreadPool();
+        final Future future = threadPool.submit(new DeleteFileThread(fileName));
+        protocol.setData(future.get());
+        objectOutputStream.writeObject(protocol);
+        objectOutputStream.writeObject(null);
     }
 }

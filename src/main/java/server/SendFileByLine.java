@@ -26,6 +26,14 @@ public class SendFileByLine implements Runnable {
           sendFile(sendOutputStream,fileLength,filePath);
     }
 
+
+    /**
+     * @describe 字符文件以行的形式传输
+     * @param sendOutputStream
+     * @param fileLength
+     * @param filePath
+     * @throws IOException
+     */
     public void sendFile(OutputStream sendOutputStream,int fileLength,String filePath) throws IOException {
         int fileLine= 0;
         try {

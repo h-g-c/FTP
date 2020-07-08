@@ -1,7 +1,13 @@
+import configuration_and_constant.ThreadPool;
 import entity.FileEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import server.DeleteFileThread;
 import util.FileUtil;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author yinchao
@@ -37,5 +43,12 @@ public class FileTest {
         } catch (Exception e) {
             log.error(e.getMessage());
         }
+    }
+
+    @Test
+    public void deleteFile() throws InterruptedException, ExecutionException {
+        final ThreadPoolExecutor threadPool = ThreadPool.getThreadPool();
+        final Future future = threadPool.submit(new DeleteFileThread("/tmp/test1"));
+        System.out.println(future.get());
     }
 }

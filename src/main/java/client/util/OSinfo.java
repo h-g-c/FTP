@@ -16,7 +16,6 @@ public class OSinfo {
 
     public enum OS {
         WINdOWS,
-
         LINUX
     }
 }

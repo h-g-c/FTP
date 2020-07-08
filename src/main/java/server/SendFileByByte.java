@@ -1,5 +1,6 @@
 package server;
 
+import configuration_and_constant.Constant;
 import lombok.*;
 
 import java.io.*;
@@ -19,7 +20,14 @@ public class SendFileByByte implements Runnable{
     String filePath;
     long point;
 
-
+    /**
+     *
+     * @param das
+     * @param filePath
+     * @param point
+     * @throws IOException
+     * @describen  字节数组的断点续传
+     */
     public static boolean breakPoint(DataOutputStream das,String filePath,long point) throws IOException {
         File file=new File(filePath);
         RandomAccessFile raf = new RandomAccessFile(file, "rw");
@@ -36,7 +44,7 @@ public class SendFileByByte implements Runnable{
             return false;
         }
         //每次读取8k
-        int sendCont=8*1024;
+        int sendCont= Constant.DATASIZE;
         int low=0;
         while(true)
         {
@@ -45,7 +53,6 @@ public class SendFileByByte implements Runnable{
                     das.write(value, low, (int) (fileLength - point -low));
                     das.flush();
                     das.close();
-                    System.out.println("end");
                     return true;
                 } else {
                     das.write(value, low,sendCont);
@@ -59,6 +66,9 @@ public class SendFileByByte implements Runnable{
             }
         }
     }
+
+
+
 
     @SneakyThrows
     @Override

@@ -3,7 +3,6 @@ package client.file;
 import client.gui.ClientFrame;
 import client.util.ArrayListToStringList;
 import entity.FileModel;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import javax.swing.*;
@@ -22,6 +21,7 @@ import java.util.ArrayList;
 @RequiredArgsConstructor
 public class TxtFileReceiveHandler {
 
+    private static ArrayList<String[]> data = new ArrayList<String[]>();
     private static String[] clo = null;
     private static String[] tableInfo = {"文件名","文件大小","传输状态"};
     private static DefaultTableModel model;

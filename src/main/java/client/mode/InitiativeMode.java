@@ -8,6 +8,7 @@ import client.gui.ClientFrame;
 import entity.FileEnum;
 import entity.FileModel;
 import entity.Protocol;
+import org.checkerframework.checker.units.qual.A;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,7 +53,8 @@ public class InitiativeMode extends Mode {
         try{
             if(clientFrame.getDataSocket() != null){
                 socket = clientFrame.getDataSocket().accept();
-                outputStream = socket.getOutputStream();
+                outputStream=socket.getOutputStream();
+                System.out.println(outputStream);
                 fileModel = (FileModel)protocolFromSocket.getData();
                 if(fileModel.getFileType().equals(FileEnum.BINARY)){
                     BinaryFileSendHandler.sendBinaryFile(outputStream,fileModel,clientFrame,data);

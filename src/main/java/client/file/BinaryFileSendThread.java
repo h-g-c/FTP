@@ -2,6 +2,7 @@ package client.file;
 
 import client.gui.ClientFrame;
 import client.util.ArrayListToStringList;
+import configuration_and_constant.Constant;
 import entity.FileModel;
 import lombok.Data;
 import lombok.NonNull;
@@ -63,7 +64,7 @@ public class BinaryFileSendThread implements Runnable{
                 }
 
                 //每次读取的数量大小
-                int sendCont = 5*1024;
+                int sendCont = Constant.DATASIZE;
                 int low = 0;
                 long size = 0;
                 while(clientFrame.getDataSocket() != null) {
@@ -75,10 +76,11 @@ public class BinaryFileSendThread implements Runnable{
                             dataOutputStream.flush();
                             dataOutputStream.close();
                             randomAccessFile.close();
-                            outputStream.close();
+//                            outputStream.close();
                             break;
                         } else {
                             dataOutputStream.write(value, low,sendCont);
+                            jTable.setValueAt(value.length,num,2);
                             dataOutputStream.flush();
                             low+=sendCont;
                             size = low + point;
