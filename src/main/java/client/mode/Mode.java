@@ -29,37 +29,9 @@ import java.util.ArrayList;
 @Slf4j(topic = "showServerDir")
 public abstract class Mode {
 
-    private final  String[] tableInfo = {"文件名", "大小", "日期","文件类型"};
+    public final  String[] tableInfo = {"文件名", "大小", "日期","文件类型"};
 
-    public void showServerDir(Protocol protocolFromSocket, ServerFilePanel serverFilePanel, DefaultTableModel model) {
-        if (protocolFromSocket.getData() != null) {
-            log.info(protocolFromSocket.getOperateType().toString());
-            int i = 0;
-            ArrayList<FileModel> fileList = (ArrayList<FileModel>) protocolFromSocket.getData();
-            log.info("客户端文件数量：" + fileList.size());
-            String[][] data = new String[fileList.size()][4];
-            String filepath = null;
-            if (fileList.size() == 0) {
-                data = null;
-                filepath = DefaultMsg.getFilePath();
-            } else {
-                for (FileModel f : fileList) {
-                    data[i][0] = f.getFileName();
-                    data[i][1] = f.getFileSize();
-                    data[i][2] = f.getChangeTime();
-                    data[i][3] = String.valueOf(f.getFileType());
-                    i++;
-                }
-                i = 0;
-                filepath = fileList.get(0).getFilePath().replace(fileList.get(0).getFileName(), "");
-            }
-            model.setRowCount(0);
-            model = new DefaultTableModel(data, tableInfo);
-            serverFilePanel.getJTable().setModel(model);
-            log.info("请求文件路径：" + filepath);
-            serverFilePanel.getJTextField().setText(filepath);
-        }
-    }
+    public abstract void showServerDir(Protocol protocolFromSocket, ServerFilePanel serverFilePanel, DefaultTableModel model,ClientFrame clientFrame);
 
     public void upload(Protocol protocolFromSocket, ClientFrame clientFrame, ArrayList<String[]> data) {
         //上传文件处理
@@ -96,5 +68,8 @@ public abstract class Mode {
 
     public void pause(){
 
+    }
+    public void error(ClientFrame clientFrame){
+        new MessageDialog("连接失败","登陆密码错误",clientFrame).init();
     }
 }

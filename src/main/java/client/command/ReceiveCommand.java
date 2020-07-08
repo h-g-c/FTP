@@ -50,7 +50,7 @@ public class ReceiveCommand {
                 case FILE_PATH:
                 case RETURN_FATHER_DIR:
                 case CONNECT:{
-                    mode.showServerDir(protocolFromSocket,serverFilePanel,model);
+                    mode.showServerDir(protocolFromSocket,serverFilePanel,model,clientFrame);
                 }
                 case PAUSE:{
                     mode.pause();

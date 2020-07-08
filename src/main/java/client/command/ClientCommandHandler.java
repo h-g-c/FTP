@@ -9,6 +9,7 @@ import client.mode.PassiveMode;
 import entity.ConnectType;
 import entity.Protocol;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.table.DefaultTableModel;
 import java.io.*;
@@ -23,6 +24,9 @@ import java.util.ArrayList;
  * 不断监听服务端命令和数据
  * @date 2020-07-04 18:11
  */
+@Slf4j(topic = "showServerDir")
+
+
 @RequiredArgsConstructor
 public class ClientCommandHandler implements Runnable {
     private static ServerFilePanel serverFilePanel;
@@ -63,7 +67,7 @@ public class ClientCommandHandler implements Runnable {
                     case FILE_PATH:
                     case RETURN_FATHER_DIR:
                     case CONNECT:{
-                        mode.showServerDir(protocolFromSocket,serverFilePanel,model);
+                        mode.showServerDir(protocolFromSocket,serverFilePanel,model,clientFrame);
                         break;
                     }
                     case PAUSE:{
@@ -80,6 +84,9 @@ public class ClientCommandHandler implements Runnable {
                     }
                     case DELETE:{
                         mode.delete(protocolFromSocket,clientFrame);
+                    case ERROR:{
+                        mode.error(clientFrame);
+                        break;
                     }
                 }
             }

@@ -73,7 +73,17 @@ public class ConnectToServer implements ActionListener {
         }else{
             //主动模式的第一次连接
             //TODO something
-
+            new ConnectServer(protocol,clientFrame);
+            if(clientFrame.getSocket() != null && clientFrame.getSocket().isConnected()){
+                jComboBox.setEnabled(false);
+                defaultInfoPanel.getJt1().setEditable(false);
+                defaultInfoPanel.getJt2().setEditable(false);
+                defaultInfoPanel.getJt3().setEditable(false);
+                defaultInfoPanel.getJPasswordField().setEditable(false);
+                defaultInfoPanel.remove(defaultInfoPanel.getJButton());
+                defaultInfoPanel.add(defaultInfoPanel.getJLabel());
+                defaultInfoPanel.updateUI();
+            }
         }
     }
 }
