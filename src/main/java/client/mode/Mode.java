@@ -55,7 +55,7 @@ public abstract class Mode {
         }
     }
 
-    public void upload(Protocol protocolFromSocket, ClientFrame clientFrame) {
+    public void upload(Protocol protocolFromSocket, ClientFrame clientFrame, ArrayList<String[]> data) {
         //上传文件处理
     }
 

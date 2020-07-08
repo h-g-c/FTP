@@ -47,14 +47,14 @@ public class InitiativeMode extends Mode {
     }
 
     @Override
-    public void upload(Protocol protocolFromSocket, ClientFrame clientFrame){
+    public void upload(Protocol protocolFromSocket, ClientFrame clientFrame,ArrayList<String[]> data){
         try{
             if(clientFrame.getDataSocket() != null){
                 socket = clientFrame.getDataSocket().accept();
                 outputStream = socket.getOutputStream();
                 fileModel = (FileModel)protocolFromSocket.getData();
                 if(fileModel.getFileType().equals(FileEnum.BINARY)){
-                    BinaryFileSendHandler.sendBinaryFile(outputStream,fileModel,clientFrame);
+                    BinaryFileSendHandler.sendBinaryFile(outputStream,fileModel,clientFrame,data);
                 }else if(fileModel.getFileType().equals(FileEnum.TEXT)){
                     //TODO something
                 }
