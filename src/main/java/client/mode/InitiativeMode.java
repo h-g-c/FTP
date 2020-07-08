@@ -27,10 +27,8 @@ public class InitiativeMode extends Mode {
     private OutputStream outputStream;
     private Socket socket;
 
-    private ArrayList<String[]> data = new ArrayList<>();
-
     @Override
-    public void download(Protocol protocolFromSocket, ClientFrame clientFrame) {
+    public void download(Protocol protocolFromSocket, ClientFrame clientFrame,ArrayList<String[]> data) {
         try{
             if(clientFrame.getDataSocket() != null){
                 System.out.println("socket connect");

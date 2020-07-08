@@ -23,7 +23,14 @@ public class ExceptFileByLine implements Runnable{
 InputStream inputStream;
 FileModel fileModel;
 
-public void breakoutPoint(InputStream cin,FileModel fileModel) throws IOException {
+
+    /**
+     * 字符文件以行的形式接收
+     * @param cin
+     * @param fileModel
+     * @throws IOException
+     */
+    public void breakoutPoint(InputStream cin,FileModel fileModel) throws IOException {
    BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(cin));
     int fileLength=Integer.valueOf(fileModel.getFileSize());
     File tempFile=new File(Constant.UPLOAD_PATH + fileModel.getFileName() + ".temp");
