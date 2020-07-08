@@ -2,6 +2,7 @@ package client.gui.action;
 
 import client.command.SendCommand;
 import client.gui.ClientFrame;
+import client.gui.msg.MessageDialog;
 import client.gui.panel.LocalFilePanel;
 import client.util.GetTaskFilePath;
 import client.util.IPUtil;
@@ -10,6 +11,7 @@ import entity.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import server.Server;
+import util.FileUtil;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -68,6 +70,7 @@ public class FileUpload implements ActionListener {
                 fileModel.setFileSize(String.valueOf(new File(fileNames[0]).length()));
             }else if(fileType.equals("TEXT")){
                 fileModel.setFileType(FileEnum.TEXT);
+                fileModel.setFileSize(String.valueOf(FileUtil.getFileLine(fileNames[0])));
             }else{
                 fileModel.setFileType(FileEnum.DIR);
             }
@@ -84,7 +87,7 @@ public class FileUpload implements ActionListener {
             SendCommand.sendCommend(protocol,clientFrame.getSocket(),clientFrame.getSocketObjectOutputStream());
 
         }catch (Exception e1){
-
+            new MessageDialog("提示","连接已断开！",clientFrame).init();
         }
     }
 }

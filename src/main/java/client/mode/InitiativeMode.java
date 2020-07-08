@@ -3,11 +3,11 @@ package client.mode;
 import client.file.BinaryFileReceiveHandler;
 import client.file.BinaryFileSendHandler;
 import client.file.TxtFileReceiveHandler;
+import client.file.TxtFileSendHandler;
 import client.gui.ClientFrame;
 import entity.FileEnum;
 import entity.FileModel;
 import entity.Protocol;
-import org.checkerframework.checker.units.qual.A;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,11 +51,13 @@ public class InitiativeMode extends Mode {
         try{
             if(clientFrame.getDataSocket() != null){
                 socket = clientFrame.getDataSocket().accept();
-                outputStream = socket.getOutputStream();
+                System.out.println(outputStream);
                 fileModel = (FileModel)protocolFromSocket.getData();
                 if(fileModel.getFileType().equals(FileEnum.BINARY)){
                     BinaryFileSendHandler.sendBinaryFile(outputStream,fileModel,clientFrame,data);
                 }else if(fileModel.getFileType().equals(FileEnum.TEXT)){
+                    TxtFileSendHandler.sendTxtFile(outputStream,fileModel,clientFrame,data);
+                }else{
                     //TODO something
                 }
             }

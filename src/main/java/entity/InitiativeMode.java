@@ -37,6 +37,7 @@ public class InitiativeMode extends Mode {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println(super.dataSocket);
         return super.dataSocket;
     }
 

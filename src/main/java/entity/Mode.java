@@ -63,7 +63,7 @@ public abstract class Mode {
         }
         else {
             ExceptFileByLine exceptFileByLine=ExceptFileByLine.builder().fileModel(fileModel)
-                    .inputStream(getDataSocket().getInputStream()).build();
+                    .inputStream(getDataSocket(protocolFromSocket.clientIp,protocolFromSocket.dataPort).getInputStream()).build();
             threadPool.submit(exceptFileByLine);
         }
     }
